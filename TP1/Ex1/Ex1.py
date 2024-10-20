@@ -1,7 +1,19 @@
 import re
 
-file = open("processos.txt","r")
+file = open("miniprocessos.txt","r")
 lines = file.readlines()
+
+## opcional
+
+def TextCleanup():
+    #clean = open("processosTrimmed.txt","w")
+
+    for pr in lines:
+        process = re.search("([0-9]+)[:]{2}.+",pr)
+        if process != None:
+            print(process)
+            print(process.group(1))
+
 ## alínea a)
 
 def YearlyFrequency():
@@ -111,10 +123,12 @@ def MoreThanOneChildFrequency():
         if len(progenitores[pai]) > 1:
             print(pai)
 
+TextCleanup()
+
 #YearlyFrequency()
 
 #NameFrequency()
 
 #RecommendedFrequency()
 
-MoreThanOneChildFrequency()
+#MoreThanOneChildFrequency()
