@@ -1,6 +1,6 @@
 import re
 
-file = open("miniprocessos.txt","r")
+file = open("processos.txt","r")
 lines = file.readlines()
 ## alínea a)
 
@@ -84,6 +84,32 @@ def RecommendedFrequency():
 
 def MoreThanOneChildFrequency():
 
+    progenitores = {}
+
+    for pr in lines:
+        data = re.search('([0-9]+)[:]{2}([0-9]{4}\-[0-9]{2}\-[0-9]{2})[:]{2}',pr)
+        names = re.search('([a-z|A-Z| ]+)[:]{2}([a-z|A-Z| ]+)[:]{2}([a-z|A-Z| ]+)[:]{2}',pr)
+        
+        if data != None and names != None:
+            confessado = names.group(1)
+            pai = names.group(2)
+            mae = names.group(3)
+
+            if pai not in progenitores:
+                progenitores[pai] = []
+            
+            if confessado not in progenitores[pai]:
+                progenitores[pai].append(confessado)
+            
+            if mae not in progenitores:
+                progenitores[mae] = []
+            
+            if confessado not in progenitores[mae]:
+                progenitores[mae].append(confessado)
+
+    for pai in progenitores:
+        if len(progenitores[pai]) > 1:
+            print(pai)
 
 #YearlyFrequency()
 
