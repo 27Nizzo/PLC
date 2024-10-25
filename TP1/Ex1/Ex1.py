@@ -177,54 +177,35 @@ def MoreThanOneChildFrequency():
 
 TextCleanup()
 
-years = YearlyFrequency()
+YearlyFrequency()
 
-names = NameFrequency()
+NameFrequency()
 
-recommended = RecommendedFrequency()
+RecommendedFrequency()
 
-progenitores = MoreThanOneChildFrequency()
+MoreThanOneChildFrequency()
 
 # alinea e)
 
 import json
 
-def DataToJson():
-    #YearlyFrequency
-    keys = list(years.keys())
-    keys.sort()
-    yearsOrd = {i: years[i] for i in keys}
-    json_object = json.dumps(yearsOrd, indent=4)
+def PrintToJson():
+    processo = re.search("([0-9]+)[:]{2}([0-9]{4}-[0-9]{2}-[0-9]{2})[:]{2}(.+)",lines[1])
+    componentesSemData = re.split("::",processo.group(3))
+    componentesSemData.pop()
+    processo_json = {
+        "Numero" : processo.group(1),
+        "Data" : processo.group(2),
+        "Confessado" : componentesSemData[0],
+        "Pai" : componentesSemData[1],
+        "Mae" : componentesSemData[2],
+        "Observacoes" : componentesSemData[3]
+    }
 
-    with open("YearlyFrequency.json", "w") as outfile:
+    json_object = json.dumps(processo_json, indent=4)
+
+    with open("PrimeiroRegisto.json", "w") as outfile:
         outfile.write(json_object)
-    
-    keys = list(names.keys())
-    keys.sort()
-    namesOrd = {i: names[i] for i in keys}
-    json_object = json.dumps(namesOrd, indent=4)
 
-    with open("NameFrequency.json", "w") as outfile:
-        outfile.write(json_object)
-    
-    keys = list(recommended.keys())
-    keys.sort()
-    recommendedOrd = {i: recommended[i] for i in keys}
-    json_object = json.dumps(recommendedOrd, indent=4)
 
-    with open("RecommendedFrequency.json", "w") as outfile:
-        outfile.write(json_object)
-    
-    keys = list(progenitores.keys())
-    keys.sort()
-    progenitoresOrd = {}
-    for i in keys:
-        if len(progenitores[i]) > 1:
-            progenitoresOrd[i] = progenitores[i]
-    json_object = json.dumps(progenitoresOrd, indent=4)
-
-    with open("MoreThanOneChildFrequency.json", "w") as outfile:
-        outfile.write(json_object)
-    
-
-DataToJson()
+PrintToJson()
