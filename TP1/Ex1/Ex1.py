@@ -1,21 +1,77 @@
 import re
-
-file = open("miniprocessos.txt","r")
-lines = file.readlines()
-
 ## opcional
 
 def TextCleanup():
-    #clean = open("processosTrimmed.txt","w")
+    file = open("processos.txt","r")
+    lines = file.readlines()
+    clean = open("processosTrimmed.txt","w")
+    clean.write("NumProc::Data::Confessado::Pai::Mae::Observacoes::\n")
+    processos = {}
+    processosRealocar = []
+    maxProcessNumber = 0
 
     for pr in lines:
-        process = re.search("([0-9]+)[:]{2}.+",pr)
+        process = re.search("([0-9]+)[:]{2}([0-9]{4}\-[0-9]{2}\-[0-9]{2})[:]{2}(.+)",pr)
         if process != None:
-            print(process)
-            print(process.group(1))
+            processNumber = process.group(1)
+            processData = re.split(r'-',process.group(2))
+            processPeople = re.split(r'::',process.group(3))
+            processPeople.pop()
+
+            if int(processNumber) > maxProcessNumber:
+                maxProcessNumber = int(processNumber)
+
+            if processNumber not in processos:
+                processos[processNumber] = {}
+                processos[processNumber]["string"] = pr
+                processos[processNumber]["ano"] = processData[0]
+                processos[processNumber]["mes"] = processData[1]
+                processos[processNumber]["dia"] = processData[2]
+                processos[processNumber]["pessoas"] = processPeople
+            
+            elif processos[processNumber]["ano"] > processData[0]:
+                processosRealocar.append(processos[processNumber]["string"])
+                processos[processNumber]["string"] = pr
+                processos[processNumber]["ano"] = processData[0]
+                processos[processNumber]["mes"] = processData[1]
+                processos[processNumber]["dia"] = processData[2]
+                processos[processNumber]["pessoas"] = processPeople
+            
+            elif processos[processNumber]["mes"] > processData[1]:
+                processosRealocar.append(processos[processNumber]["string"])
+                processos[processNumber]["string"] = pr
+                processos[processNumber]["ano"] = processData[0]
+                processos[processNumber]["mes"] = processData[1]
+                processos[processNumber]["dia"] = processData[2]
+                processos[processNumber]["pessoas"] = processPeople
+
+            elif processos[processNumber]["dia"] > processData[2]:
+                processosRealocar.append(processos[processNumber]["string"])
+                processos[processNumber]["string"] = pr
+                processos[processNumber]["ano"] = processData[0]
+                processos[processNumber]["mes"] = processData[1]
+                processos[processNumber]["dia"] = processData[2]
+                processos[processNumber]["pessoas"] = processPeople
+            elif processos[processNumber]["pessoas"][0] != processPeople[0] and processos[processNumber]["pessoas"][1] != processPeople[1] and processos[processNumber]["pessoas"][2] != processPeople[2]:
+                processosRealocar.append(pr)
+
+    for pr in processos:
+        processo = pr + "::" + processos[pr]["ano"] + "-" + processos[pr]["mes"] + "-" + processos[pr]["dia"] + "::"
+        for person in processos[pr]["pessoas"]:
+            processo = processo + person + "::"
+        processo = processo + "\n"
+        clean.write(processo)
+    
+    for pr in processosRealocar:
+        process = re.search("([0-9]+)(.+)",pr)
+        maxProcessNumber += 1
+        newProcess = str(maxProcessNumber) + process.group(2) + "\n"
+        clean.write(newProcess)
+
+file = open("processosTrimmed.txt","r")
+lines = file.readlines()
 
 ## alínea a)
-
 def YearlyFrequency():
     years = {}
 
@@ -31,7 +87,8 @@ def YearlyFrequency():
                 years[year] = 1
             else:
                 years[year] += 1
-    print(years)
+                
+    return years
 
 ## alínea b)
 def NameFrequency():
@@ -94,6 +151,8 @@ def RecommendedFrequency():
         print(familiar, end = " - ")
         print(recommended[familiar])
 
+## alinea d)
+
 def MoreThanOneChildFrequency():
 
     progenitores = {}
@@ -125,7 +184,22 @@ def MoreThanOneChildFrequency():
 
 TextCleanup()
 
-#YearlyFrequency()
+years = YearlyFrequency()
+
+# alinea e)
+
+import json
+
+def YearlyFrequencyToJson():
+    keys = list(years.keys())
+    keys.sort()
+    yearsOrd = {i: years[i] for i in keys}
+    json_object = json.dumps(yearsOrd, indent=4)
+
+    with open("YearlyFrequency.json", "w") as outfile:
+        outfile.write(json_object)
+
+YearlyFrequencyToJson()
 
 #NameFrequency()
 
