@@ -87,7 +87,7 @@ def YearlyFrequency():
                 years[year] = 1
             else:
                 years[year] += 1
-                
+
     return years
 
 ## alínea b)
@@ -98,7 +98,7 @@ def NameFrequency():
 
     for pr in lines:
         data = re.search('([0-9]+)[:]{2}([0-9]{4}\-[0-9]{2}\-[0-9]{2})[:]{2}',pr)
-        names = re.findall('([a-z|A-Z| ]+[:])',pr)
+        names = re.findall('([a-z|A-Z| ]+[:]{2})',pr)
 
         if data != None and names != None:
             date = data.group(2)
@@ -114,19 +114,18 @@ def NameFrequency():
             for name in names:
                 listNames = re.split('[ |:]',name)
 
-                if listNames[0] not in centuries[century][fn]:
-                    centuries[century][fn][listNames[0]] = 1
-                else:
-                    centuries[century][fn][listNames[0]] += 1
+                if listNames[0] != "":
+                    if listNames[0] not in centuries[century][fn]:
+                        centuries[century][fn][listNames[0]] = 1
+                    else:
+                        centuries[century][fn][listNames[0]] += 1
 
-                if listNames[len(listNames)-2] not in centuries[century][ln]:
-                    centuries[century][ln][listNames[len(listNames)-2]] = 1
-                else:
-                    centuries[century][ln][listNames[len(listNames)-2]] += 1
+                    if listNames[len(listNames)-2] not in centuries[century][ln]:
+                        centuries[century][ln][listNames[len(listNames)-2]] = 1
+                    else:
+                        centuries[century][ln][listNames[len(listNames)-2]] += 1
 
-    for century in centuries:
-        print("Século " + str(century) + ":")
-        print(centuries[century], end = "\n\n")
+    return centuries
 
 ## alínea c) 
 def RecommendedFrequency():
@@ -136,8 +135,6 @@ def RecommendedFrequency():
         data = re.findall('([A-Z][a-zA-Z ]+),([a-zA-Z ]+)\. ?(?i:(Proc\.[0-9]+))',pr)
         if data != None:
             familiar = []
-            if data != []:
-                print(data)
             for d in data:
                 referente = d[1]
                 if referente not in recommended:
@@ -147,9 +144,7 @@ def RecommendedFrequency():
                     familiar.append(referente)
                     recommended[referente] += 1
     
-    for familiar in recommended:
-        print(familiar, end = " - ")
-        print(recommended[familiar])
+    return recommended
 
 ## alinea d)
 
@@ -178,19 +173,24 @@ def MoreThanOneChildFrequency():
             if confessado not in progenitores[mae]:
                 progenitores[mae].append(confessado)
 
-    for pai in progenitores:
-        if len(progenitores[pai]) > 1:
-            print(pai)
+    return progenitores
 
 TextCleanup()
 
 years = YearlyFrequency()
 
+names = NameFrequency()
+
+recommended = RecommendedFrequency()
+
+progenitores = MoreThanOneChildFrequency()
+
 # alinea e)
 
 import json
 
-def YearlyFrequencyToJson():
+def DataToJson():
+    #YearlyFrequency
     keys = list(years.keys())
     keys.sort()
     yearsOrd = {i: years[i] for i in keys}
@@ -198,11 +198,33 @@ def YearlyFrequencyToJson():
 
     with open("YearlyFrequency.json", "w") as outfile:
         outfile.write(json_object)
+    
+    keys = list(names.keys())
+    keys.sort()
+    namesOrd = {i: names[i] for i in keys}
+    json_object = json.dumps(namesOrd, indent=4)
 
-YearlyFrequencyToJson()
+    with open("NameFrequency.json", "w") as outfile:
+        outfile.write(json_object)
+    
+    keys = list(recommended.keys())
+    keys.sort()
+    recommendedOrd = {i: recommended[i] for i in keys}
+    json_object = json.dumps(recommendedOrd, indent=4)
 
-#NameFrequency()
+    with open("RecommendedFrequency.json", "w") as outfile:
+        outfile.write(json_object)
+    
+    keys = list(progenitores.keys())
+    keys.sort()
+    progenitoresOrd = {}
+    for i in keys:
+        if len(progenitores[i]) > 1:
+            progenitoresOrd[i] = progenitores[i]
+    json_object = json.dumps(progenitoresOrd, indent=4)
 
-#RecommendedFrequency()
+    with open("MoreThanOneChildFrequency.json", "w") as outfile:
+        outfile.write(json_object)
+    
 
-#MoreThanOneChildFrequency()
+DataToJson()
