@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>PLC TP1 - Grupo 22</h1>
+<h2>1 - Processador de Pessoas Listadas nos Róis de Confessados</h2>
+
+<select onchange="change_select(this.value)">
+    <option value="">Choose an option:</option>
+    <option value="YearlyFrequency">Frequência de processos por ano</option>
+    <option value="NameFrequency">Frequência de nomes</option>
+    <option value="RecommendedFrequency">Confessados Recomendados</option>
+    <option value="MoreThanOneChildFrequency">Pais com mais de um Filho Confessado</option>
+</select>
+
+<p id="table1"></p>
+<p id="table2"></p>
+<p id="table3"></p>
+
+<script>
+    function change_select(select) {
+        fetch(`./${select}.json`)
+                .then((res) => {
+                    if (!res.ok) {
+                        throw new Error
+                            (`HTTP error! Status: ${res.status}`);
+                    }
+                    return res.json();
+                })
+                .then((data) => {
+                        showData(data,select);
+                    }
+                )
+                .catch((error) =>
+                    console.error("Unable to fetch data:", error));
+
+        function showData(choice){
+            let text = "";
+            const fn = "FirstName"; 
+            const ln = "LastName";
+            for (let x in choice){
+                if (x == "child"){
+                    document.getElementById("table2").innerHTML = "";
+                    document.getElementById("table3").innerHTML = "";
+                    const l = Object.keys(choice[x]).length;
+                    text += `<select onchange="choose_parent(this.value)" >`
+                    text += `<option value="">Choose an option:</option>`
+                        for (let y in choice[x]){
+                            text += `<option value="${choice[x][y]}"> ${y} </option>` 
+                        }
+                    text += "</select>";
+                    text += ` ---  Número de Pais com mais de um Filho Confessado : ${l}`
+                }
+
+                else {
+                    if (x == "anos"){
+                        document.getElementById("table2").innerHTML = "";
+                        document.getElementById("table3").innerHTML = "";
+                        text += `Ano <select onchange="choose_year(this.value)" >`
+                        text += `<option value="0">Choose an option:</option>`
+                        for (let y in choice[x]){
+                            text += `<option value="${choice[x][y]}"> ${y} </option>`
+                        }
+                        text += `</select> `;
+                    }
+                    else {
+                        if (x == "seculos"){
+                        document.getElementById("table2").innerHTML = "";
+                        document.getElementById("table3").innerHTML = "";
+                        text += `Século <select onchange="choose_FLname(this.value)" >`
+                        text += `<option value="">Choose an option:</option>`
+                        for (let y in choice[x]){
+                            const data = JSON.stringify(choice[x][y]);
+                            text += `<option value="${data}"> ${y}</option>`
+                        }
+                        text += `</select> `;
+                        }
+                        
+                        else {
+                            if (x == "recomendacoes"){
+                                document.getElementById("table2").innerHTML = "";
+                                document.getElementById("table3").innerHTML = "";
+                                text += `Recomendador <select onchange="choose_recomended(this.value)" >`
+                                text += `<option value="0">Choose an option:</option>`
+                                for (let y in choice[x]){
+                                    text += `<option value="${choice[x][y]}"> ${y} </option>`
+                                }
+                                text += `</select> `;
+                            }
+                        }
+                    }
+                }
+            }
+            document.getElementById("table1").innerHTML = text;
+        }
+    }
+
+    function choose_parent(select){
+        const array = select.split(",");
+        text = "Número de Filhos Confessados : " + array.length.toString() + "<br />" + "<br />";
+        
+        for (let f in array){
+            text += `${array[f]}, <br />`
+        }
+
+        document.getElementById("table2").innerHTML = text;
+    }
+
+    function choose_year(select){
+        document.getElementById("table2").innerHTML = `Número de processos :: ${select}`;
+    }
+
+    function choose_recomended(select){
+        document.getElementById("table2").innerHTML = `Número de processos recomendados :: ${select}`;
+    }
+
+    function choose_FLname(select){
+        const obj = JSON.parse(select);
+        console.log(select[0]);
+        let text = "";
+        const fn = "FirstName"; 
+        const ln = "LastName";
+
+        text = `Nomes Próprios ou Apelidos: <select onchange="choose_name(this.value)" >`;
+        text += `<option value="0">Choose an option:</option>`;
+        text += `<option value="${select[fn]}"> Nomes Próprios </option>`;
+        text += `<option value="${select[ln]}"> Apelidos </option>`;
+        text += `</select> `;
+        document.getElementById("table2").innerHTML = text;
+    }
+
+    function choose_name(select){
+        console.log(select)
+    }
+
+</script>
+
+</body>
+</html>
