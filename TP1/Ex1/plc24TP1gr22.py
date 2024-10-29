@@ -327,15 +327,16 @@ if __name__ == "__main__":
             }
 
             function choose_FLname(select){
-                console.log(select)
                 const obj = JSON.parse(select);
+                const fn = Object.keys(obj)[0];
+                const ln = Object.keys(obj)[1];
                 console.log(obj)
                 let text = "";
 
                 text = `Nomes Próprios ou Apelidos: <select onchange="choose_name(this.value)" >`;
                 text += `<option value="0">Choose an option:</option>`;
-                text += `<option value=${JSON.stringify(obj["FirstName"])}> Nomes Próprios </option>`;
-                text += `<option value=${JSON.stringify(obj["LasttName"])}> Apelidos </option>`;
+                text += `<option value=${JSON.stringify(obj[fn])}> Nomes Próprios </option>`;
+                text += `<option value=${JSON.stringify(obj[ln])}> Apelidos </option>`;
                 text += `</select> `;
                 document.getElementById("table2").innerHTML = text;
             }
