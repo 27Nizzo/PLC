@@ -34,19 +34,7 @@ def p_declaracao(p):
         p[0] = "PUSHI 0"
     else:
         tabela_de_simbolos[p[1]] = p[3]
-        p[0] = f"PUSHI {p[3]}"
-
-def p_error(p):
-    if p:
-        print(f"Erro de sintaxe: token inesperado '{p.value}' na linha {p.lineno}")
-    else:
-        print("Erro de sintaxe: fim inesperado do ficheiro")
-
-parser = yacc.yacc()
-
-def compile(data):
-    result = parser.parse(data)
-    return result 
+        p[0] = f"PUSHI {p[3]}" 
 
 # Implementação das expressões aritméticas
 
@@ -153,7 +141,7 @@ def gerar_label():
     cont_labels += 1
     return f"L{cont_labels}"
 
-#? Meter no relatorio:
+# TODO: Meter no relatorio:
 '''
 Esta implementação:
 
@@ -171,6 +159,50 @@ Esta implementação:
 
 # Implementar a funcionalidade escolhida subprogramas:
 
+def p_funcao(p):
+    '''
+    funcao : FUNCTION ID INTEGER BEGIN comandos RETURN expressao SEMICOLON END'''
+    label_funcao = f"FUNC_{p[2]}"
+    p[0] = f"JUMP END_{label_funcao}\n"
+    p[0] += f"{label_funcao}:\n"
+    p[0] += f"{p[5]}\n"
+    p[0] += f"{p[7]}\n"
+
+    p[0] += "RETURN\n"
+    p[0] += f"END_{label_funcao}:"
+
+    tabela_simbolos[p[2]] = {
+        'tipo' : 'funcao',
+        'label' : label_funcao,
+        'return' : 'INTEGER'
+    }
+
+def p_chamadaF(p):
+    '''fator : ID LBRACKET RBRACKET'''
+    if p[1] not in tabela_de_simbolos or tabela_de_simbolos[p[1]]['tipo'] != 'funcao':
+        raise Exception(f"Função {p[1]} não declarada") #
+
+    label_funcao = tabela_de_simbolos[p[1]]['label']
+    p[0] = f"PUSHA {label_funcao}\n"
+    p[0] += "CALL\n"
+
+
+# TODO: Meter no relatório:
+'''  
+Esta implementação:
+
+   -> Permite definir funções sem parâmetros que retornam inteiro
+   
+   -> Gera código Assembly apropriado para chamadas de função
+   
+   -> Gerencia o retorno de valores através da pilha
+   
+   -> Verifica se a função foi declarada antes do uso
+   
+   -> Usa labels únicos para cada função
+   
+   -> Permite que funções sejam usadas em expressões
+'''
 
 
 # Desenvolver a geração de codigo assembly para VM
@@ -180,3 +212,16 @@ Esta implementação:
 # Criar um sistema de variáveis temporárias 
  
 
+
+
+def p_error(p):
+    if p:
+        print(f"Erro de sintaxe: token inesperado '{p.value}' na linha {p.lineno}")
+    else:
+        print("Erro de sintaxe: fim inesperado do ficheiro")
+
+parser = yacc.yacc()
+
+def compile(data):
+    result = parser.parse(data)
+    return result
