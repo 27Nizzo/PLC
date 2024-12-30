@@ -1,0 +1,47 @@
+Nome: João Silva  
+Telefone: 912--345-678  
+Telefone2: 912*345*678
+Rua: Rua das Flores, nº 123  
+Email: joao.silva123@gmail.com  
+
+Nome: Maria Santos  
+Telefone: 918-765-432  
+Telefone2: 918*765*432  
+Rua: Av. da Liberdade, 456  
+Email: maria.santos22@hotmail.com  
+
+Nome: Pedro Almeida  
+Telefone: 915-234-567  
+Telefone2: 915*234*567  
+Rua: Rua do Carmo, 789  
+Email: pedro.almeida98@yahoo.com  
+
+Nome: Ana Costa  
+Telefone: 916-789-012  
+Telefone: 916.789.012  
+Rua: Travessa da Paz, nº 321  
+Email: ana.costa77@gmail.com  
+
+Nome: Rui Ferreira  
+Telefone: 917-654-321  
+Rua: Avenida Central, nº 1000  
+Email: rui.ferreira@outlook.com
+
+
+321-555-4321
+123.555.1234
+123*555*1234
+800-555-1234
+900-555-1234
+
+
+cat
+mat 
+pat 
+bat
+
+Mr. Schafer
+Mr Smith 
+Ms Davis
+Mrs. Robinson 
+Mr. T

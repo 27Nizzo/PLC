@@ -1,0 +1,59 @@
+NumProc::Data::Confessado::Pai::Mae::Observacoes::
+575::1894-11-08::Aarao Pereira Silva::Antonio Pereira Silva::Francisca Campos Silva::::
+582::1909-05-12::Abel Almeida::Antonio Manuel Almeida::Teresa Maria Sousa::::
+569::1867-05-23::Abel Alves Barroso::Antonio Alves Barroso::Maria Jose Alvares Barroso::Bento Alvares Barroso,Tio Paterno. Proc.32057.   Domingos Jose Alvares Barroso,Tio Materno. Proc.32235.::
+576::1896-11-28::Abel Augusto Oliveira::Francisco Jose Oliveira::Antonia Rosa Rebelo::Jose Antonio Oliveira,Irmao. Proc.5020.::
+579::1904-05-27::Abel Gomes Abreu Reis::Antonio Gomes Abreu::Ana Sequeira Reis::::
+579::1904-05-21::Abel Marques Reis::Jose Joaquim Marques Reis::Bernardina Dantas::::
+578::1901-11-12::Abel Martins Pereira::Serafim Martins Pereira::Emilia Goncalves::::
+572::1883-02-01::Abel Pedro Pereira Freitas::Joao Freitas Oliveira::Cecilia Rosa Pereira::::
+578::1900-08-30::Abel Silva Carvalho::Constantino Silva Rego::Margarida Rosa Carvalho::::
+575::1894-04-30::Abelardo Jose Cerqueira Araujo::Jose Maria Araujo::Leopoldina Cerqueira Ribeiro Araujo::::
+575::1894-04-30::Abelardo Jose Cerqueira Araujo::Jose Maria Araujo::Leopoldina Cerqueira Ribeiro Araujo::::
+572::1883-11-24::Abilio Acacio Conceicao Guerreiro::Jose Antonio Pereira Dantas Guerreiro::Maria Rita Pereira Monteiro::::
+579::1902-10-23::Abilio Aires Sousa Pereira Guimaraes::Joaquim Aires Sousa Pereira Guimaraes::Josefa Rosa Gomes::::
+571::1880-01-24::Abilio Antonio Alves::Joao Francisco Alves::Maria Jesus Rocha::::
+573::1889-12-03::Abilio Augusto Arantes::Sebastiao Arantes::Maria Sousa::::
+581::1908-08-11::Abilio Augusto Galvao::Antonio Augusto Galvao::Perpetua Duarte Galvao::::
+581::1908-05-20::Abilio Augusto Magalhaes::::Maria Jesus Magalhaes::::
+581::1908-05-20::Abilio Augusto Magalhaes::::Maria Jesus Magalhaes::::
+581::1908-05-20::Abilio Augusto Magalhaes::::Maria Jesus Magalhaes::::
+569::1869-12-02::Abilio Augusto Santos::Jose Joaquim Santos::Teresa Jesus::Antonio Jose Adao,Tio Materno. Proc.12530.   Albino Antonio Ribeiro,Primo Paterno. Proc.12721.::
+575::1894-12-04::Abilio Fernandes Cunha Leite::Joao Fernandes Oliveira Leite::Ana Emilia Fernandes::::
+579::1902-11-06::Abilio Gomes Correia::Manuel Jose Gomes::Maria Gomes Correia::::
+567::1862-07-07::Abilio Jose Sousa Guimaraes::Jose Sousa Guimaraes::Flora Emiliana Sousa Guimaraes::Baptizado com o nome de JOSE, mudou no Crisma para ABILIO JOSE. Joaquim Fausto Sousa Guimaraes,Irmao. Proc.13046.::
+567::1862-07-07::Abilio Jose Sousa Guimaraes::Jose Sousa Guimaraes::Flora Emiliana Sousa Guimaraes::Baptizado com o nome de JOSE, mudou no Crisma para ABILIO JOSE. Joaquim Fausto Sousa Guimaraes,Irmao. Proc.13046.::
+580::1906-06-07::Abilio Manuel Goncalves Imperadeiro::Manuel Goncalves Imperadeiro::Teresa Lourenco::Manuel Goncalves Imperadeiro Junior,Irmao. Proc.11547.::
+581::1909-08-12::Abilio Pereira Araujo::Joaquim Azevedo Araujo Couto::Ermelinda Rosa Pereira Fonseca::::
+579::1902-10-31::Abilio Silva Ferreira::Jose Joaquim Ferreira::Florinda Pinheiro Silva::::
+564::1856-10-27::Abilio Teixeira Borges::Jose Teixeira::Teresa Borges::::
+570::1875-07-02::Acacio Antonio Barroso Pereira::Francisco Antonio Barroso::Albina Candida Morais Carneiro::Domingos Bernardino Barroso Pereira,Tio Paterno. Proc.34502.   Francisco Bento Morais Caldas,Tio Materno. Proc.15223.::
+574::1892-09-13::Acacio Antonio Ferreira Barbosa::Jose Antonio Aureliano Ferreira Barbosa::Leopoldina Ferreira Sousa::Aureliano Ferreira Barbosa,Irmao. Proc.13576.::
+307::1733-11-22::Acacio Jose Carvalho::Bento Carvalho::Josefa Maria::::
+357::1778-07-26::Adao Jose Nunes Azevedo::Domingos Nunes::Mariana Nunes Azevedo::::
+357::1778-07-26::Adao Jose Nunes Azevedo::Domingos Nunes::Mariana Nunes Azevedo::::
+581::1909-05-25::Adao Moura::Antonio Jose Moura::Amelia Mendes Carvalho::::
+23::1691-06-06::Adao Pereira::Joao Pereira::Bernarda Francisca::Doc.danificado.  Em Anexo: Inquiricao feita em 1695/06/18.::
+277::1730-11-12::Adao Rodrigues Vale::Jose Rodrigues Vale::Ana Ferreira::Doc.danificado.   Joao Jose,Irmao. Beneditino. CSB-42, fls.313-324v.::
+578::1899-12-09::Adelino Anselmo Sousa Matos::Jose Luis Matos::Maria Teresa Sousa::::
+569::1869-04-19::Adelino Antonio Alves Coelho::Jose Antonio Coelho::Maria Joana Alves Vieira Silva::::
+577::1898-11-18::Adelino Antonio Alves Dias::Antonio Manuel Alves Dias::Custodia Maria Silva::Albino Jose Alves Dias,Irmao. Proc.13333.::
+571::1880-07-30::Adelino Brito Ferreira::Bernardo Jose Ferreira::Rosa Barbosa Peixoto::::
+571::1880-07-30::Adelino Brito Ferreira::Bernardo Jose Ferreira::Rosa Barbosa Peixoto::::
+576::1896-11-26::Adelino Ferreira Costa::Manuel Ferreira Costa::Maria Cardoso::::
+576::1896-11-30::Adelino Goncalves Eiras::Manuel Goncalves Eiras::Ana Maria Goncalves::::
+570::1877-02-22::Adelino Goncalves Pereira::Manuel Antonio Goncalves Pereira::Maria Afonso::::
+582::1910-05-19::Adelino Jose Dias::Antonio Jose Dias::Teresa Maria Fernandes Amorim::::
+577::1898-11-21::Adelino Jose Goncalves Almeida::Joao Manuel Goncalves::Maria Jesus Goncalves Almeida::::
+571::1881-02-08::Adelino Jose Goncalves Campos::Jose Dias Pimenta::Maria Rosa Goncalves Campos::Adriano Jose Goncalves,Irmao. Proc.13398.  Eugenio Adelino Goncalves Campos,Irmao. Proc.28000.   Joao Maria Goncalves Campos,Irmao. Proc.5357.::
+581::1907-04-23::Adelino Jose Vieira Leite::Porfirio Antonio Vieira Leite::Bernardina Rosa Araujo Silva::::
+576::1896-11-14::Adelino Lima Miranda::Manuel Pedro Adelino Gaio Miranda::Rosalia Fernandes Eiras::::
+242::1899-11-24::Adelino Maria Lopes Pedrosa::Jose Lopes Balazeiro::Teresa Jesus Pedrosa::::
+581::1909-05-12::Adelino Silva::Francisco Silva Junior::Mariana Soares::::
+196::1884-12-10::Adelino Silva Barros::Antonio Jose Silva Barros::Joana Batista Sousa Carneiro Leite::::
+580::1904-08-17::Adelino Teixeira Pires::Joaquim Pires::Florinda Rosa Teixeira::::
+579::1902-11-22::Adelio Jose Gomes Silva::Joao Jose Gomes Silva::Antonia Maria Alves::::
+571::1879-01-31::Adolfo Abreu Sousa::Jose Caetano Abreu::Carlota Joaquina Abreu::::
+576::1895-11-29::Adolfo Albino Silva::Custodio Antonio Silva::Maria Rosa Vieira::Anselmo Conceicao,Irmao. Proc.13519.   Jose Maria Silva,Irmao. Proc.5047.::
+577::1897-06-30::Adolfo Cunha Leite Meireles::Joao Evangelista Leite Meireles::Emilia Rosa Moura::::
+276::1730-11-10::Adriano Antunes::Manuel Goncalves::Pascoa Antunes::::
