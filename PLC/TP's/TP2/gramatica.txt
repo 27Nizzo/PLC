@@ -1,0 +1,69 @@
+plc           : PLC ID declaracoes BEGIN comandos END 
+
+comentarios   : '//' texto
+              | '/*' texto '*/'
+
+declaracoes   : declaracao
+              | declaracoes declaracao
+
+declaracao    : ID SEMICOLON              # variavel sem valor inicial vai ser 0 LUIS CHEKA SE ISTO É VERDADE ON GOD
+              | ID EQ INTEGER SEMICOLON
+              | ID EQ leitura 
+                
+
+comandos      : comando 
+              | comandos comando 
+
+comando       : atribuicao
+              | leitura
+              | escrita
+              | selecao
+              | repeticao
+
+
+atribuicao    : ID ASSIGN expressao SEMICOLON
+
+leitura       : READ LBRACKET texto RBRACKET SEMICOLON
+
+escrita       : WRITE LBRACKET expressao RBRACKET SEMICOLON
+
+selecao       : IF condicao ':' comandos END
+              | IF condicao ':' comandos  ELSE comandos END
+
+repeticao     : FOR LBRACKET declaracao SEMICOLON condicao SEMICOLON incrementação RBRACKET ':' comando END
+              | WHILE LBRACKET condicao RBRACKET ':' comandos END
+
+
+expressao     : termo
+              | expressao PLUS termo 
+              | expressao MINUS termo
+
+termo         : fator 
+              | termo TIMES fator 
+              | termo DIVIDE fator
+
+texto         : '"' STRING '"'
+              |
+
+
+!!!!! no for loop nao tenho a certeza dar check dps !!!!
+
+condicao      : expressao operador expressao
+
+incrementação : ID '++'
+              | ID '--'
+              |
+
+operador      : GT
+              | LT 
+              | GE 
+              | LE 
+              | EQ 
+              | JUNGLE_DIFF
+
+funcaoAux     : FUNCTION ID ':' INTEGER BEGIN comandos RETURN expressao SEMICOLON END
+
+fator         : ID
+              | ID LBRACKET RBRACKET
+              | NUMERO
+              | LBRACKET expressao RBRACKET

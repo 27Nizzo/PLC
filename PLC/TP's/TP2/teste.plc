@@ -1,0 +1,11 @@
+PLC teste
+
+var
+    a = 10;
+    b = 20;
+
+begin
+    read a;
+    b := a + 1;
+    write b;
+end
