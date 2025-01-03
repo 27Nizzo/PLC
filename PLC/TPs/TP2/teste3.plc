@@ -1,9 +1,0 @@
-PLC teste3
-
-var
-    a = 10;
-
-begin
-    b = a + 1;
-    write (b);
-end
