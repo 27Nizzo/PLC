@@ -1,17 +1,30 @@
 import ply.yacc as yacc
-from analex import tokens
+from analex import lexer,LexerPLC
 
-codigo = []
+data = '''
+PLC teste3
 
-tabela_de_simbolos = {}
+var
+    a = 10;
 
+begin
+    b = a + 1;
+    write (b);
+end
+'''
+
+tokens = LexerPLC.tokens
 
 def p_programa(p):
     '''
-    programa : PLC ID VAR declaracoes BEGIN comandos END'''
-    p[0] = f"START\n{p[4]}\n{p[6]}\nSTOP"
-    codigo.append(p[0])
+    programa : plc
+    '''
+    parser.assembly = {p[1]}
 
+def p_plc(p):
+    '''
+    plc : PLC ID VAR declaracoes BEGIN comandos END'''
+    p[0] = f"START\n{p[4]}\n{p[6]}\nSTOP"
 
 
 def p_declaracoes(p):
@@ -31,96 +44,85 @@ def p_declaracao(p):
     '''
 
     if len(p) == 3:
-        tabela_de_simbolos[p[1]] = 0 
+        parser.registos[p[1]] = 0 
         p[0] = "PUSHI 0"
     else:
-        tabela_de_simbolos[p[1]] = p[3]
-        p[0] = f"PUSHI {p[3]}" 
+        parser.registos[p[1]] = p[3]
+        p[0] = f"PUSHI {p[3]}"
 
-
-def p_comados(p):
+def p_comandos(p):
     '''
     comandos : comando
-             | comandos
+             | comandos comando
     '''
-
+    p[0] = "".join(p[1:])
 
 def p_comando(p):
     '''
-    comando  : atribuicao
-             | leitura 
-             | escrita 
-             | selecao 
-             | repeticao
+    comando : atribuicao
+            | escrita
+            | selecao
+            | repeticao
     '''
-    p[0] = p[1] 
-
-def p_atribuicao(p):
-    '''
-    atribuicao : ID ASSIGN expressao SEMICOLON
-    '''
-    if p[1] not in tabela_de_simbolos:
-        raise Exception(f"Variável {p[1]} não declarada")
-    
-    p[0] = f"{p[3]}\nSTORE {p[1]}" # gera código para guardar o valor da expresssão na variável
-
-
+    p[0] = p[1]
 
 def p_leitura(p):
     '''
-    leitura  : READ LBRACKET texto RBRACKET SEMICOLON
+    leitura : READ LBRACKET texto RBRACKET SEMICOLON
     '''
-    if p[3] not in tabela_de_simbolos:
-        raise Exception(f"Variável {p[3]} não declarada")
-    p[0] = f"READ {p[3]}" # Lê a variável
+    p[0] = f'{p[3]}'
+
+# Implementação das expressões aritméticas
+
+def p_atribuicao_expr(p):
+    '''
+    atribuicao : ID ASSIGN expressao SEMICOLON
+    '''
+    if p[1] in p.parser.registos:
+        p[0] = f'{p[3]}STOREG {p.parser.registos.get(p[1])}\n'
+    else:
+        print(f"Erro, variável {p[1]} não definida.")
+        parser.success = False
+
+def p_atribuicao_leit(p):
+    '''
+    atribuicao : ID ASSIGN leitura SEMICOLON
+    '''
+    if p[1] in p.parser.registos:
+        p[0] = f'{p[3]}READ\nATOI\nSTOREG {p.parser.registos.get(p[1])}\n'
+    else:
+        print(f"Erro, variável {p[1]} não definida.")
+        parser.success = False
 
 def p_escrita(p):
     '''
-    escrita  : WRITE LBRACKET expressao RBRACKET SEMICOLON
+    escrita : WRITE LBRACKET argumento RBRACKET SEMICOLON
     '''
-    p[0] = f"WRITE {p[3]}" # Gera código em VM para escrever a expressão
+    p[0] = p[1]
 
-def p_selecao(p): 
+def p_argumento_texto(p):
     '''
-    selecao : IF condicao ':' comando END
-            | IF condicao ':' comando ELSE comando END'''
-    
-    #! NOTA: labels são marcadores no código assembly que indicam pontos especificos no programa para onde o fluxo de execução pode ser direcionado
-
-    if len(p) == 6:
-        # Condição if simples:
-
-        label_fim = gerar_label()
-        p[0] = f"{p[2]}\n"
-        p[0] += f"JZ {label_fim}\n"
-        p[0] += f"{p[4]}\n"
-        p[0] += f"{label_fim}:"
-    else:
-        # Comdição if-else:
-
-        label_else = gerar_label()
-        label_fim = gerar_label()
-        p[0] = f"{p[2]}\n"
-        p[0] += f"JZ {label_else}\n"
-        p[0] += f"{p[4]}\n"
-        p[0] += f"JUMP {label_fim}\n"
-        p[0] += f"f{label_else}:\n"
-        p[0] += f"{p[6]}\n"
-        p[0] += f"{label_fim}:"
-
-def p_repeticao(p):
+    argumento : texto
     '''
-    repeticao : WHILE condicao DO comandos END'''
-    label_inicio = gerar_label()
-    label_fim = gerar_label()
+    p[0] = p[1]
 
-    p[0] = f"{label_inicio}:\n"
-    p[0] += f"{p[2]}\n"
-    p[0] += f"JZ {label_fim}\n"
-    p[0] += f"JUMP {label_inicio}\n"
-    p[0] += f"{label_fim}:"
+def p_argumento_expr(p):
+    '''
+    argumento : expressao
+    '''
+    p[0] = f'{p[1]}WRITEI\nWRITELN\n'
 
-# Implementação das expressões aritméticas
+def p_texto(p):
+    '''
+    texto : '"' STRING '"'
+    '''
+    p[0] = f'PUSHS "{p[2]}"\nWRITES\n'
+
+def texto_vazio(p):
+    '''
+    texto : 
+    '''
+    p[0] = ''
 
 def p_expressao(p):
     '''
@@ -154,26 +156,97 @@ def p_fator(p):
     if p[1] == '(':
         p[0] = p[2]
     elif isinstance(p[1], str):
-        p[0] = f"PUSHG {tabela_de_simbolos[p[1]]}"
+        p[0] = f"PUSHG {parser.registos[p[1]]}"
     else:
         p[0] = f"PUSHI {p[1]}"
 
+def p_selecao(p): 
+    '''
+    selecao : IF condicao ':' comandos END
+            | IF condicao ':' comandos ELSE comandos END'''
+    
+    #! NOTA: labels são marcadores no código assembly que indicam pontos especificos no programa para onde o fluxo de execução pode ser direcionado
+
+    if len(p) == 6:
+        # Condição if simples:
+
+        label_fim = gerar_label()
+        p[0] = f"{p[2]}\n"
+        p[0] += f"JZ {label_fim}\n"
+        p[0] += f"{p[4]}\n"
+        p[0] += f"{label_fim}:"
+    else:
+        # Comdição if-else:
+
+        label_else = gerar_label()
+        label_fim = gerar_label()
+        p[0] = f"{p[2]}\n"
+        p[0] += f"JZ {label_else}\n"
+        p[0] += f"{p[4]}\n"
+        p[0] += f"JUMP {label_fim}\n"
+        p[0] += f"f{label_else}:\n"
+        p[0] += f"{p[6]}\n"
+        p[0] += f"{label_fim}:"
+
+def p_repeticao_for(p):
+    '''
+    repeticao : FOR LBRACKET declaracao SEMICOLON condicao SEMICOLON incrementacao RBRACKET ':' comando END
+    '''
+    label_inicio = gerar_label()
+    label_fim = gerar_label()
+
+    p[0] = f"{p[3]}\n{label_inicio}:\n{p[5]}\nJZ{label_fim}\n{p[10]}\n{p[7]}\nJUMP {label_inicio}\n{label_fim}:"
+
+def p_repeticao_while(p):
+    '''
+    repeticao : WHILE LBRACKET condicao RBRACKET ':' comandos END
+    '''
+    label_inicio = gerar_label()
+    label_fim = gerar_label()
+
+    p[0] = f"{label_inicio}:\n"
+    p[0] += f"{p[2]}\n"
+    p[0] += f"JZ {label_fim}\n"
+    p[0] += f"JUMP {label_inicio}\n"
+    p[0] += f"{label_fim}:"
+
+def p_incrementacao(p):
+    '''
+    incrementacao : ID INCREMENT
+                  | ID DECREMENT
+                  |
+    '''
+    p[0] = f'' #Por acabar Pedro faz isto depois basta ler a a documentação da vm do stor
 
 def p_condicao(p):
     '''
-    condicao : expressao operador expressao'''
-    if p[2] == '>':
-        p[0] = f"{p[1]}\n{p[3]}\nSUP"
-    elif p[2] == '<':
-        p[0] = f"{p[1]}\n{p[3]}\nINF"
-    elif p[2] == '>=':
-        p[0] = f"{p[1]}\n{p[3]}\nSUPEQ"
-    elif p[2] == '<=':
-        p[0] = f"{p[1]}\n{p[3]}\nINFEQ"
-    elif p[2] == '==':
-        p[0] = f"{p[1]}\n{p[3]}\nEQ"
-    else:
-        p[0] = f"{p[1]}\n{p[3]}\nNOTEQ"
+    condicao : expressao operador expressao
+    '''
+    p[0] = f'{p[1]}{p[3]}{p[2]}'
+
+condition_map ={
+    ">": "SUP\n",
+    "<": "INF\n",
+    ">=": "SUPEQ\n",
+    "<=": "INFEQ\n",
+    "==": "EQUAL\n",
+    "/=": "EQUAL\nNOT\n",
+    "or": "ADD\nPUSHI 1\nSUPEQ\n",
+    "and": "ADD\nPUSHI 2\nSUPEQ\n",
+}
+
+def p_operador(p):
+    '''
+    operador  : GT
+              | LT 
+              | GE 
+              | LE 
+              | EQ 
+              | JUNGLE_DIFF
+              | OR
+              | AND
+    '''
+    p[0] = f'{condition_map(p[1])}'
 
     
 
@@ -224,10 +297,10 @@ def p_funcao(p):
 
 def p_chamadaF(p):
     '''fator : ID LBRACKET RBRACKET'''
-    if p[1] not in tabela_de_simbolos or tabela_de_simbolos[p[1]]['tipo'] != 'funcao':
+    if p[1] not in parser.registos or parser.registos[p[1]]['tipo'] != 'funcao':
         raise Exception(f"Função {p[1]} não declarada") #
 
-    label_funcao = tabela_de_simbolos[p[1]]['label']
+    label_funcao = parser.registos[p[1]]['label']
     p[0] = f"PUSHA {label_funcao}\n"
     p[0] += "CALL\n"
 
@@ -265,8 +338,24 @@ def p_error(p):
     else:
         print("Erro de sintaxe: fim inesperado do ficheiro")
 
-parser = yacc.yacc()
+lexer = LexerPLC()
+parser = yacc.yacc(start="programa")
+
+parser.assembly = ""
+parser.registos = {}
+parser.success = True
 
 def compile(data):
-    result = parser.parse(data)
+    result = parser.parse(lexer=lexer)
+    print(parser.assembly)
+    if parser.success:
+        print("Ficheiro lido com sucesso")
+        with open(f'teste.vm', 'w+') as f_out:
+            f_out.write(parser.assembly)
+            f_out.close()
+        print("Código assembly gerado e guardado.")
+    else:
+        print("Erro ao gerar o código.")
     return result
+
+compile(data)

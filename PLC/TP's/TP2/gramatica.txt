@@ -1,3 +1,5 @@
+programa      : plc
+
 plc           : PLC ID declaracoes BEGIN comandos END 
 
 comentarios   : '//' texto
@@ -7,8 +9,8 @@ declaracoes   : declaracao
               | declaracoes declaracao
 
 declaracao    : ID SEMICOLON              # variavel sem valor inicial vai ser 0 LUIS CHEKA SE ISTO É VERDADE ON GOD
-              | ID EQ INTEGER SEMICOLON
-              | ID EQ leitura 
+              | ID ASSIGN INTEGER SEMICOLON
+              | ID ASSIGN leitura 
                 
 
 comandos      : comando 
@@ -22,10 +24,14 @@ comando       : atribuicao
 
 
 atribuicao    : ID ASSIGN expressao SEMICOLON
+              | ID ASSIGN leitura SEMICOLON
 
 leitura       : READ LBRACKET texto RBRACKET SEMICOLON
 
-escrita       : WRITE LBRACKET expressao RBRACKET SEMICOLON
+escrita       : WRITE LBRACKET argumento RBRACKET SEMICOLON
+
+argumento     : expressao
+              | texto
 
 selecao       : IF condicao ':' comandos END
               | IF condicao ':' comandos  ELSE comandos END
@@ -50,8 +56,8 @@ texto         : '"' STRING '"'
 
 condicao      : expressao operador expressao
 
-incrementação : ID '++'
-              | ID '--'
+incrementacao : ID INCREMENT
+              | ID DECREMENT
               |
 
 operador      : GT
@@ -60,6 +66,8 @@ operador      : GT
               | LE 
               | EQ 
               | JUNGLE_DIFF
+              | OR
+              | AND
 
 funcaoAux     : FUNCTION ID ':' INTEGER BEGIN comandos RETURN expressao SEMICOLON END
 
