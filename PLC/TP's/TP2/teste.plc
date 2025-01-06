@@ -1,10 +1,49 @@
-PLC teste
+plc teste
 
 var
-    a = 10;
-    b = 20;
+    counter = 0;
+    result = 10;
+    max = 100;
+    message = "Hello, testing!";
 
 begin
-    b = a + 1;
-    write (b);
+    write(message);
+    
+    // Testing basic arithmetic
+    result = (result * 2) + (max / 4);
+    write("Result: ");
+    write(result);
+    
+    // Testing if-else
+    if result > 50:
+        write("Result is greater than 50");
+    else 
+        write("Result is less than or equal to 50");
+    end
+    
+    // Testing while loop
+    while (counter < 5):
+        write("Counter: ");
+        write(counter);
+        counter++;
+    end
+    
+    // Testing for loop
+    for (i = 0; i < 3; i++):
+        write("For loop iteration: ");
+        write(i);
+    end
+    
+    // Testing read
+    a = read("Enter a number: ");
+    
+    // Testing compound conditions
+    if (a > 0 && a < 10):
+        write("Number is between 0 and 10");
+    end
+    
+    // Testing multiple operations
+    result = result + a * counter - max / 2;
+    write("Final result: ");
+    write(result);
 end
