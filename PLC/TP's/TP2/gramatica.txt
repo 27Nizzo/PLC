@@ -1,6 +1,6 @@
 programa      : plc
 
-plc           : PLC ID declaracoes BEGIN comandos END 
+plc           : PLC ID VAR declaracoes comandos 
 
 comentarios   : '//' texto
               | '/*' texto '*/'
@@ -10,7 +10,8 @@ declaracoes   : declaracao
 
 declaracao    : ID SEMICOLON              # variavel sem valor inicial vai ser 0 LUIS CHEKA SE ISTO É VERDADE ON GOD
               | ID ASSIGN INTEGER SEMICOLON
-              | ID ASSIGN leitura 
+              | ID ASSIGN leitura
+              | funcao
                 
 
 comandos      : comando 
@@ -33,22 +34,25 @@ escrita       : WRITE LBRACKET argumento RBRACKET SEMICOLON
 argumento     : expressao
               | texto
 
-selecao       : IF condicao ':' comandos END
-              | IF condicao ':' comandos  ELSE comandos END
+selecao       : IF condicao ':' comandos
+              | IF condicao ':' comandos  ELSE comandos
 
-repeticao     : FOR LBRACKET declaracao SEMICOLON condicao SEMICOLON incrementação RBRACKET ':' comando END
-              | WHILE LBRACKET condicao RBRACKET ':' comandos END
+repeticao     : FOR LBRACKET declaracao SEMICOLON condicao SEMICOLON incrementação RBRACKET ':' comando
+              | WHILE LBRACKET condicao RBRACKET ':' comandos
 
 
-expressao     : termo
-              | expressao PLUS termo 
-              | expressao MINUS termo
+expressao     : fator
+              | expressao PLUS expressao 
+              | expressao MINUS expressao
+              | expressao TIMES expressao 
+              | expressao DIVIDE expressao
 
-termo         : fator 
-              | termo TIMES fator 
-              | termo DIVIDE fator
+fator         : ID
+              | ID LBRACKET RBRACKET
+              | NUMERO
+              | LBRACKET expressao RBRACKET
 
-texto         : '"' STRING '"'
+texto         : QUOTE STRING QUOTE
               |
 
 
@@ -68,9 +72,4 @@ operador      : GT
               | OR
               | AND
 
-funcaoAux     : FUNCTION ID ':' INTEGER BEGIN comandos RETURN expressao SEMICOLON END
-
-fator         : ID
-              | ID LBRACKET RBRACKET
-              | NUMERO
-              | LBRACKET expressao RBRACKET
+funcao        : FUNCTION ID ':' comandos RETURN expressao SEMICOLON

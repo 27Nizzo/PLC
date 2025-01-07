@@ -4,10 +4,8 @@ var
     counter = 0;
     result = 10;
     max = 100;
-    message = "Hello, testing!";
 
 begin
-    write(message);
     
     // Testing basic arithmetic
     result = (result * 2) + (max / 4);

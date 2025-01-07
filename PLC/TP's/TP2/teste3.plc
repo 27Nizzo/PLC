@@ -2,8 +2,12 @@ PLC teste3
 
 var
     a = 10;
+    b = 0;
 
-begin
+    fun ola: 
+    write("vai te embora brazileiro"); 
+    return 0;
+
     b = a + 1;
     write (b);
-end
+    ola();

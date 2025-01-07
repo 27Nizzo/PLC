@@ -25,7 +25,9 @@ class LexerPLC(object):
         "NUMBER_REAL",
         "STRING",
         "OR",
-        "AND"
+        "AND",
+        "QUOTE",
+        "FUNCTION"
     ]
 
 
@@ -37,7 +39,6 @@ class LexerPLC(object):
         "else" : "ELSE",
         "then" : "THEN", 
         "while" : "WHILE",
-        "function" : "FUNCTION",
         "plc" : "PLC",
         "var" : "VAR",
         "begin" : "BEGIN",
@@ -59,6 +60,7 @@ class LexerPLC(object):
     t_LBRACKET = r'\('
     t_RBRACKET = r'\)'
     t_SEMICOLON = r'\;'
+    t_QUOTE = r'\"'
     t_GT = r'\>'
     t_LT = r'\<'
     t_EQ = r'\=\='
@@ -78,6 +80,10 @@ class LexerPLC(object):
 
 
     # Definição de tokens mais complexos 
+
+    def t_FUNCTION(self,t):
+        r'fun(?=[ ])'
+        return t
 
     def t_NUMBER(self,t):
         r'\d+'
@@ -127,24 +133,11 @@ class LexerPLC(object):
         self.lexer.input(s)
         self.token_stream = iter(self.lexer.token,None)
 
+with open(f"teste3.plc") as f:
+    content = f.read()
+
 lexer = LexerPLC()
-
-
-data = '''
-PLC teste3
-
-var
-    a = 10;
-
-begin
-    b = a + 1;
-    write (b);
-end
-'''
-
-
-lexer.input(data)
+lexer.input(content)
 
 for token in lexer.token_stream:
-    print(token)
-
+    print(f"({token.type} {repr(token.value)} {token.lineno})")
