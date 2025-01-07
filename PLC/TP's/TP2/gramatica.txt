@@ -8,7 +8,7 @@ comentarios   : '//' texto
 declaracoes   : declaracao
               | declaracoes declaracao
 
-declaracao    : ID SEMICOLON              # variavel sem valor inicial vai ser 0 LUIS CHEKA SE ISTO É VERDADE ON GOD
+declaracao    : ID SEMICOLON              
               | ID ASSIGN INTEGER SEMICOLON
               | ID ASSIGN leitura
               | funcao
@@ -56,7 +56,6 @@ texto         : QUOTE STRING QUOTE
               |
 
 
-!!!!! no for loop nao tenho a certeza dar check dps !!!!
 
 condicao      : expressao operador expressao
 
