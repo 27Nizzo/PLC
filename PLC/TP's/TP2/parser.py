@@ -12,7 +12,7 @@ def p_programa(p):
 def p_plc(p):
     '''
     plc : PLC ID VAR declaracoes comandos'''
-    p[0] = f"START\n{p[4]}\n{p[6]}\nSTOP"
+    p[0] = f"START\n{p[4]}\n{p[5]}\nSTOP"
 
 def p_declaracoes(p):
     '''
@@ -121,7 +121,7 @@ def p_argumento_expr(p):
     '''
     argumento : expressao
     '''
-    p[0] = f'{p[1]}WRITEI\nWRITELN\n'
+    p[0] = f'{p[1]}\nWRITEI\nWRITELN\n'
 
 def p_texto(p):
     '''
@@ -162,9 +162,9 @@ def p_fator(p):
     if p[1] == '(':
         p[0] = p[2]
     elif isinstance(p[1], str):
-        p[0] = f"PUSHG {parser.registos[p[1]]}"
+        p[0] = f"PUSHG {parser.registos[p[1]]}\n"
     else:
-        p[0] = f"PUSHI {p[1]}"
+        p[0] = f"PUSHI {p[1]}\n"
 
 def p_selecao(p): 
     '''
@@ -293,20 +293,22 @@ def p_funcao(p):
     '''
     funcao : FUNCTION ID ':' comandos RETURN expressao SEMICOLON'''
     label_funcao = f"FUNC_{p[2]}"
-    p[0] = f"JUMP END_{label_funcao}\n"
+    p[0] = f"JUMP {label_funcao}Ignore\n"
     p[0] += f"{label_funcao}:\n"
-    p[0] += f"{p[5]}\n"
-    p[0] += f"{p[7]}\n"
+    p[0] += f"{p[4]}\n"
+    p[0] += f"{p[6]}\n"
 
     p[0] += "RETURN\n"
-    p[0] += f"END_{label_funcao}:"
+    p[0] += f"{label_funcao}Ignore:"
+
+    p.parser.funcoes[p[2]+"()"] = label_funcao
 
 def p_chamadaF(p):
     '''call : ID LBRACKET RBRACKET SEMICOLON'''
-    if p[1] not in parser.registos or parser.registos[p[1]]['tipo'] != 'funcao':
+    nome = p[1]+"()"
+    if nome not in p.parser.funcoes:
         raise Exception(f"Função {p[1]} não declarada") #
-
-    label_funcao = parser.registos[p[1]]
+    label_funcao = p.parser.funcoes[nome]
     p[0] = f"PUSHA {label_funcao}\n"
     p[0] += "CALL\n"
 
@@ -351,7 +353,7 @@ parser.assembly = ""
 parser.registos = {}
 parser.gp = 0
 parser.success = True
-parser.registo
+parser.funcoes = {}
 
 
 

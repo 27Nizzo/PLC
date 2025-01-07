@@ -1,0 +1,25 @@
+START
+PUSHI 10
+PUSHI 0
+JUMP END_FUNC_olaIgnore
+FUNC_ola:
+PUSHS "vai te embora brazileiro"
+WRITES
+
+PUSHI 0
+
+RETURN
+END_FUNC_olaIgnore:
+PUSHG 0
+PUSHI 1
+
+ADD
+STOREG 1
+PUSHG 1
+
+WRITEI
+WRITELN
+PUSHA FUNC_ola
+CALL
+
+STOP
