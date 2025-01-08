@@ -279,24 +279,6 @@ def gerar_label():
     cont_labels += 1
     return f"L{cont_labels}"
 
-# TODO: Meter no relatorio:
-'''
-Esta implementação:
-
--> Gera código Assembly para estruturas IF e WHILE1
-
--> Usa labels para controle de fluxo
-
--> Implementa todas as comparações necessárias
-
--> Permite aninhamento das estruturas de controle1
-
--> Gera código otimizado para a máquina virtual VM
-'''
-        
-
-# Implementar a funcionalidade escolhida subprogramas:
-
 def p_funcao(p):
     '''
     funcao : FUNCTION ID LCBRACKET comandos RETURN expressao RCBRACKET SEMICOLON'''
@@ -319,34 +301,7 @@ def p_chamadaF(p):
     label_funcao = p.parser.funcoes[nome]
     p[0] = f"PUSHA {label_funcao}\n"
     p[0] += "CALL\n"
-
-
-# TODO: Meter no relatório:
-'''  
-Esta implementação:
-
-   -> Permite definir funções sem parâmetros que retornam inteiro
-   
-   -> Gera código Assembly apropriado para chamadas de função
-   
-   -> Gerencia o retorno de valores através da pilha
-   
-   -> Verifica se a função foi declarada antes do uso
-   
-   -> Usa labels únicos para cada função
-   
-   -> Permite que funções sejam usadas em expressões
-'''
-
-
-# Desenvolver a geração de codigo assembly para VM
-
-
-
-# Criar um sistema de variáveis temporárias 
  
-
-
 
 def p_error(p):
     if p:
