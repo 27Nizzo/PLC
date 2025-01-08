@@ -26,103 +26,106 @@ Rule 12    comando -> escrita
 Rule 13    comando -> selecao
 Rule 14    comando -> repeticao
 Rule 15    comando -> call
-Rule 16    leitura -> READ LBRACKET texto RBRACKET SEMICOLON
-Rule 17    atribuicao -> ID ASSIGN expressao SEMICOLON
-Rule 18    atribuicao -> ID ASSIGN leitura SEMICOLON
-Rule 19    escrita -> WRITE LBRACKET argumento RBRACKET SEMICOLON
-Rule 20    argumento -> texto
-Rule 21    argumento -> expressao
-Rule 22    texto -> QUOTE STRING QUOTE
-Rule 23    expressao -> fator
-Rule 24    expressao -> expressao PLUS expressao
-Rule 25    expressao -> expressao MINUS expressao
-Rule 26    expressao -> expressao TIMES expressao
-Rule 27    expressao -> expressao DIVIDE expressao
-Rule 28    fator -> ID
-Rule 29    fator -> NUMBER
-Rule 30    fator -> LBRACKET expressao RBRACKET
-Rule 31    selecao -> IF condicao : comandos
-Rule 32    selecao -> IF condicao : comandos ELSE comandos
-Rule 33    repeticao -> FOR LBRACKET declaracao SEMICOLON condicao SEMICOLON incrementacao RBRACKET : comando
-Rule 34    repeticao -> WHILE LBRACKET condicao RBRACKET : comandos
-Rule 35    incrementacao -> ID INCREMENT
-Rule 36    incrementacao -> ID DECREMENT
-Rule 37    condicao -> expressao operador expressao
-Rule 38    operador -> GT
-Rule 39    operador -> LT
-Rule 40    operador -> GE
-Rule 41    operador -> LE
-Rule 42    operador -> EQ
-Rule 43    operador -> JUNGLE_DIFF
-Rule 44    operador -> OR
-Rule 45    operador -> AND
-Rule 46    funcao -> FUNCTION ID : comandos RETURN expressao SEMICOLON
-Rule 47    call -> ID LBRACKET RBRACKET SEMICOLON
+Rule 16    comando -> incrementacao SEMICOLON
+Rule 17    leitura -> READ LBRACKET texto RBRACKET SEMICOLON
+Rule 18    atribuicao -> ID ASSIGN expressao SEMICOLON
+Rule 19    atribuicao -> ID ASSIGN leitura
+Rule 20    escrita -> WRITE LBRACKET argumento RBRACKET SEMICOLON
+Rule 21    argumento -> texto
+Rule 22    argumento -> expressao
+Rule 23    texto -> QUOTE STRING QUOTE
+Rule 24    expressao -> fator
+Rule 25    expressao -> expressao PLUS expressao
+Rule 26    expressao -> expressao MINUS expressao
+Rule 27    expressao -> expressao TIMES expressao
+Rule 28    expressao -> expressao DIVIDE expressao
+Rule 29    fator -> ID
+Rule 30    fator -> NUMBER
+Rule 31    fator -> LBRACKET expressao RBRACKET
+Rule 32    selecao -> IF LBRACKET condicao RBRACKET LCBRACKET comandos RCBRACKET
+Rule 33    selecao -> IF LBRACKET condicao RBRACKET LCBRACKET comandos RCBRACKET ELSE LCBRACKET comandos RCBRACKET
+Rule 34    repeticao -> FOR LBRACKET declaracao condicao SEMICOLON incrementacao RBRACKET LCBRACKET comandos RCBRACKET
+Rule 35    repeticao -> WHILE LBRACKET condicao RBRACKET LCBRACKET comandos RCBRACKET
+Rule 36    incrementacao -> ID INCREMENT
+Rule 37    incrementacao -> ID DECREMENT
+Rule 38    condicao -> condicao operador condicao
+Rule 39    condicao -> expressao
+Rule 40    operador -> GT
+Rule 41    operador -> LT
+Rule 42    operador -> GE
+Rule 43    operador -> LE
+Rule 44    operador -> EQ
+Rule 45    operador -> JUNGLE_DIFF
+Rule 46    operador -> OR
+Rule 47    operador -> AND
+Rule 48    funcao -> FUNCTION ID LCBRACKET comandos RETURN expressao RCBRACKET SEMICOLON
+Rule 49    call -> ID LBRACKET RBRACKET SEMICOLON
 
 Terminals, with rules where they appear
 
-:                    : 31 32 33 34 46
-AND                  : 45
-ASSIGN               : 6 7 17 18
+AND                  : 47
+ASSIGN               : 6 7 18 19
 BEGIN                : 
-DECREMENT            : 36
-DIVIDE               : 27
-ELSE                 : 32
+DECREMENT            : 37
+DIVIDE               : 28
+ELSE                 : 33
 END                  : 
-EQ                   : 42
-FOR                  : 33
-FUNCTION             : 46
-GE                   : 40
-GT                   : 38
-ID                   : 2 5 6 7 17 18 28 35 36 46 47
-IF                   : 31 32
-INCREMENT            : 35
+EQ                   : 44
+FOR                  : 34
+FUNCTION             : 48
+GE                   : 42
+GT                   : 40
+ID                   : 2 5 6 7 18 19 29 36 37 48 49
+IF                   : 32 33
+INCREMENT            : 36
 INTEGER              : 
-JUNGLE_DIFF          : 43
-LBRACKET             : 16 19 30 33 34 47
-LE                   : 41
-LT                   : 39
-MINUS                : 25
-NUMBER               : 6 29
+JUNGLE_DIFF          : 45
+LBRACKET             : 17 20 31 32 33 34 35 49
+LCBRACKET            : 32 33 33 34 35 48
+LE                   : 43
+LT                   : 41
+MINUS                : 26
+NUMBER               : 6 30
 NUMBER_REAL          : 
-OR                   : 44
+OR                   : 46
 PLC                  : 2
-PLUS                 : 24
-QUOTE                : 22 22
-RBRACKET             : 16 19 30 33 34 47
-READ                 : 16
-RETURN               : 46
-SEMICOLON            : 5 6 16 17 18 19 33 33 46 47
-STRING               : 22
+PLUS                 : 25
+QUOTE                : 23 23
+RBRACKET             : 17 20 31 32 33 34 35 49
+RCBRACKET            : 32 33 33 34 35 48
+READ                 : 17
+RETURN               : 48
+SEMICOLON            : 5 6 16 17 18 20 34 48 49
+STRING               : 23
 THEN                 : 
-TIMES                : 26
+TIMES                : 27
 VAR                  : 2
-WHILE                : 34
-WRITE                : 19
+WHILE                : 35
+WRITE                : 20
 error                : 
 
 Nonterminals, with rules where they appear
 
-argumento            : 19
+argumento            : 20
 atribuicao           : 11
 call                 : 15
-comando              : 9 10 33
-comandos             : 2 10 31 32 32 34 46
-condicao             : 31 32 33 34
-declaracao           : 3 4 33
+comando              : 9 10
+comandos             : 2 10 32 33 33 34 35 48
+condicao             : 32 33 34 35 38 38
+declaracao           : 3 4 34
 declaracoes          : 2 4
 escrita              : 12
-expressao            : 17 21 24 24 25 25 26 26 27 27 30 37 37 46
-fator                : 23
+expressao            : 18 22 25 25 26 26 27 27 28 28 31 39 48
+fator                : 24
 funcao               : 8
-incrementacao        : 33
-leitura              : 7 18
-operador             : 37
+incrementacao        : 16 34
+leitura              : 7 19
+operador             : 38
 plc                  : 1
 programa             : 0
 repeticao            : 14
 selecao              : 13
-texto                : 16 20
+texto                : 17 21
 
 Parsing method: LALR
 
@@ -173,7 +176,7 @@ state 5
     (6) declaracao -> . ID ASSIGN NUMBER SEMICOLON
     (7) declaracao -> . ID ASSIGN leitura
     (8) declaracao -> . funcao
-    (46) funcao -> . FUNCTION ID : comandos RETURN expressao SEMICOLON
+    (48) funcao -> . FUNCTION ID LCBRACKET comandos RETURN expressao RCBRACKET SEMICOLON
 
     ID              shift and go to state 6
     FUNCTION        shift and go to state 10
@@ -207,22 +210,25 @@ state 7
     (13) comando -> . selecao
     (14) comando -> . repeticao
     (15) comando -> . call
-    (46) funcao -> . FUNCTION ID : comandos RETURN expressao SEMICOLON
-    (17) atribuicao -> . ID ASSIGN expressao SEMICOLON
-    (18) atribuicao -> . ID ASSIGN leitura SEMICOLON
-    (19) escrita -> . WRITE LBRACKET argumento RBRACKET SEMICOLON
-    (31) selecao -> . IF condicao : comandos
-    (32) selecao -> . IF condicao : comandos ELSE comandos
-    (33) repeticao -> . FOR LBRACKET declaracao SEMICOLON condicao SEMICOLON incrementacao RBRACKET : comando
-    (34) repeticao -> . WHILE LBRACKET condicao RBRACKET : comandos
-    (47) call -> . ID LBRACKET RBRACKET SEMICOLON
+    (16) comando -> . incrementacao SEMICOLON
+    (48) funcao -> . FUNCTION ID LCBRACKET comandos RETURN expressao RCBRACKET SEMICOLON
+    (18) atribuicao -> . ID ASSIGN expressao SEMICOLON
+    (19) atribuicao -> . ID ASSIGN leitura
+    (20) escrita -> . WRITE LBRACKET argumento RBRACKET SEMICOLON
+    (32) selecao -> . IF LBRACKET condicao RBRACKET LCBRACKET comandos RCBRACKET
+    (33) selecao -> . IF LBRACKET condicao RBRACKET LCBRACKET comandos RCBRACKET ELSE LCBRACKET comandos RCBRACKET
+    (34) repeticao -> . FOR LBRACKET declaracao condicao SEMICOLON incrementacao RBRACKET LCBRACKET comandos RCBRACKET
+    (35) repeticao -> . WHILE LBRACKET condicao RBRACKET LCBRACKET comandos RCBRACKET
+    (49) call -> . ID LBRACKET RBRACKET SEMICOLON
+    (36) incrementacao -> . ID INCREMENT
+    (37) incrementacao -> . ID DECREMENT
 
     ID              shift and go to state 13
     FUNCTION        shift and go to state 10
-    WRITE           shift and go to state 22
-    IF              shift and go to state 23
-    FOR             shift and go to state 24
-    WHILE           shift and go to state 25
+    WRITE           shift and go to state 23
+    IF              shift and go to state 24
+    FOR             shift and go to state 25
+    WHILE           shift and go to state 26
 
     comandos                       shift and go to state 14
     declaracao                     shift and go to state 15
@@ -233,6 +239,7 @@ state 7
     selecao                        shift and go to state 19
     repeticao                      shift and go to state 20
     call                           shift and go to state 21
+    incrementacao                  shift and go to state 22
 
 state 8
 
@@ -256,14 +263,15 @@ state 9
     IF              reduce using rule 8 (declaracao -> funcao .)
     FOR             reduce using rule 8 (declaracao -> funcao .)
     WHILE           reduce using rule 8 (declaracao -> funcao .)
-    SEMICOLON       reduce using rule 8 (declaracao -> funcao .)
+    NUMBER          reduce using rule 8 (declaracao -> funcao .)
+    LBRACKET        reduce using rule 8 (declaracao -> funcao .)
 
 
 state 10
 
-    (46) funcao -> FUNCTION . ID : comandos RETURN expressao SEMICOLON
+    (48) funcao -> FUNCTION . ID LCBRACKET comandos RETURN expressao RCBRACKET SEMICOLON
 
-    ID              shift and go to state 26
+    ID              shift and go to state 27
 
 
 state 11
@@ -276,32 +284,37 @@ state 11
     IF              reduce using rule 5 (declaracao -> ID SEMICOLON .)
     FOR             reduce using rule 5 (declaracao -> ID SEMICOLON .)
     WHILE           reduce using rule 5 (declaracao -> ID SEMICOLON .)
-    SEMICOLON       reduce using rule 5 (declaracao -> ID SEMICOLON .)
+    NUMBER          reduce using rule 5 (declaracao -> ID SEMICOLON .)
+    LBRACKET        reduce using rule 5 (declaracao -> ID SEMICOLON .)
 
 
 state 12
 
     (6) declaracao -> ID ASSIGN . NUMBER SEMICOLON
     (7) declaracao -> ID ASSIGN . leitura
-    (16) leitura -> . READ LBRACKET texto RBRACKET SEMICOLON
+    (17) leitura -> . READ LBRACKET texto RBRACKET SEMICOLON
 
-    NUMBER          shift and go to state 27
-    READ            shift and go to state 29
+    NUMBER          shift and go to state 28
+    READ            shift and go to state 30
 
-    leitura                        shift and go to state 28
+    leitura                        shift and go to state 29
 
 state 13
 
     (5) declaracao -> ID . SEMICOLON
     (6) declaracao -> ID . ASSIGN NUMBER SEMICOLON
     (7) declaracao -> ID . ASSIGN leitura
-    (17) atribuicao -> ID . ASSIGN expressao SEMICOLON
-    (18) atribuicao -> ID . ASSIGN leitura SEMICOLON
-    (47) call -> ID . LBRACKET RBRACKET SEMICOLON
+    (18) atribuicao -> ID . ASSIGN expressao SEMICOLON
+    (19) atribuicao -> ID . ASSIGN leitura
+    (49) call -> ID . LBRACKET RBRACKET SEMICOLON
+    (36) incrementacao -> ID . INCREMENT
+    (37) incrementacao -> ID . DECREMENT
 
     SEMICOLON       shift and go to state 11
-    ASSIGN          shift and go to state 30
-    LBRACKET        shift and go to state 31
+    ASSIGN          shift and go to state 31
+    LBRACKET        shift and go to state 32
+    INCREMENT       shift and go to state 33
+    DECREMENT       shift and go to state 34
 
 
 state 14
@@ -313,28 +326,32 @@ state 14
     (13) comando -> . selecao
     (14) comando -> . repeticao
     (15) comando -> . call
-    (17) atribuicao -> . ID ASSIGN expressao SEMICOLON
-    (18) atribuicao -> . ID ASSIGN leitura SEMICOLON
-    (19) escrita -> . WRITE LBRACKET argumento RBRACKET SEMICOLON
-    (31) selecao -> . IF condicao : comandos
-    (32) selecao -> . IF condicao : comandos ELSE comandos
-    (33) repeticao -> . FOR LBRACKET declaracao SEMICOLON condicao SEMICOLON incrementacao RBRACKET : comando
-    (34) repeticao -> . WHILE LBRACKET condicao RBRACKET : comandos
-    (47) call -> . ID LBRACKET RBRACKET SEMICOLON
+    (16) comando -> . incrementacao SEMICOLON
+    (18) atribuicao -> . ID ASSIGN expressao SEMICOLON
+    (19) atribuicao -> . ID ASSIGN leitura
+    (20) escrita -> . WRITE LBRACKET argumento RBRACKET SEMICOLON
+    (32) selecao -> . IF LBRACKET condicao RBRACKET LCBRACKET comandos RCBRACKET
+    (33) selecao -> . IF LBRACKET condicao RBRACKET LCBRACKET comandos RCBRACKET ELSE LCBRACKET comandos RCBRACKET
+    (34) repeticao -> . FOR LBRACKET declaracao condicao SEMICOLON incrementacao RBRACKET LCBRACKET comandos RCBRACKET
+    (35) repeticao -> . WHILE LBRACKET condicao RBRACKET LCBRACKET comandos RCBRACKET
+    (49) call -> . ID LBRACKET RBRACKET SEMICOLON
+    (36) incrementacao -> . ID INCREMENT
+    (37) incrementacao -> . ID DECREMENT
 
     $end            reduce using rule 2 (plc -> PLC ID VAR declaracoes comandos .)
-    ID              shift and go to state 32
-    WRITE           shift and go to state 22
-    IF              shift and go to state 23
-    FOR             shift and go to state 24
-    WHILE           shift and go to state 25
+    ID              shift and go to state 35
+    WRITE           shift and go to state 23
+    IF              shift and go to state 24
+    FOR             shift and go to state 25
+    WHILE           shift and go to state 26
 
-    comando                        shift and go to state 33
+    comando                        shift and go to state 36
     atribuicao                     shift and go to state 17
     escrita                        shift and go to state 18
     selecao                        shift and go to state 19
     repeticao                      shift and go to state 20
     call                           shift and go to state 21
+    incrementacao                  shift and go to state 22
 
 state 15
 
@@ -359,7 +376,7 @@ state 16
     WHILE           reduce using rule 9 (comandos -> comando .)
     $end            reduce using rule 9 (comandos -> comando .)
     RETURN          reduce using rule 9 (comandos -> comando .)
-    ELSE            reduce using rule 9 (comandos -> comando .)
+    RCBRACKET       reduce using rule 9 (comandos -> comando .)
 
 
 state 17
@@ -373,7 +390,7 @@ state 17
     WHILE           reduce using rule 11 (comando -> atribuicao .)
     $end            reduce using rule 11 (comando -> atribuicao .)
     RETURN          reduce using rule 11 (comando -> atribuicao .)
-    ELSE            reduce using rule 11 (comando -> atribuicao .)
+    RCBRACKET       reduce using rule 11 (comando -> atribuicao .)
 
 
 state 18
@@ -387,7 +404,7 @@ state 18
     WHILE           reduce using rule 12 (comando -> escrita .)
     $end            reduce using rule 12 (comando -> escrita .)
     RETURN          reduce using rule 12 (comando -> escrita .)
-    ELSE            reduce using rule 12 (comando -> escrita .)
+    RCBRACKET       reduce using rule 12 (comando -> escrita .)
 
 
 state 19
@@ -401,7 +418,7 @@ state 19
     WHILE           reduce using rule 13 (comando -> selecao .)
     $end            reduce using rule 13 (comando -> selecao .)
     RETURN          reduce using rule 13 (comando -> selecao .)
-    ELSE            reduce using rule 13 (comando -> selecao .)
+    RCBRACKET       reduce using rule 13 (comando -> selecao .)
 
 
 state 20
@@ -415,7 +432,7 @@ state 20
     WHILE           reduce using rule 14 (comando -> repeticao .)
     $end            reduce using rule 14 (comando -> repeticao .)
     RETURN          reduce using rule 14 (comando -> repeticao .)
-    ELSE            reduce using rule 14 (comando -> repeticao .)
+    RCBRACKET       reduce using rule 14 (comando -> repeticao .)
 
 
 state 21
@@ -429,67 +446,60 @@ state 21
     WHILE           reduce using rule 15 (comando -> call .)
     $end            reduce using rule 15 (comando -> call .)
     RETURN          reduce using rule 15 (comando -> call .)
-    ELSE            reduce using rule 15 (comando -> call .)
+    RCBRACKET       reduce using rule 15 (comando -> call .)
 
 
 state 22
 
-    (19) escrita -> WRITE . LBRACKET argumento RBRACKET SEMICOLON
+    (16) comando -> incrementacao . SEMICOLON
 
-    LBRACKET        shift and go to state 34
+    SEMICOLON       shift and go to state 37
 
 
 state 23
 
-    (31) selecao -> IF . condicao : comandos
-    (32) selecao -> IF . condicao : comandos ELSE comandos
-    (37) condicao -> . expressao operador expressao
-    (23) expressao -> . fator
-    (24) expressao -> . expressao PLUS expressao
-    (25) expressao -> . expressao MINUS expressao
-    (26) expressao -> . expressao TIMES expressao
-    (27) expressao -> . expressao DIVIDE expressao
-    (28) fator -> . ID
-    (29) fator -> . NUMBER
-    (30) fator -> . LBRACKET expressao RBRACKET
+    (20) escrita -> WRITE . LBRACKET argumento RBRACKET SEMICOLON
 
-    ID              shift and go to state 38
-    NUMBER          shift and go to state 39
-    LBRACKET        shift and go to state 40
+    LBRACKET        shift and go to state 38
 
-    condicao                       shift and go to state 35
-    expressao                      shift and go to state 36
-    fator                          shift and go to state 37
 
 state 24
 
-    (33) repeticao -> FOR . LBRACKET declaracao SEMICOLON condicao SEMICOLON incrementacao RBRACKET : comando
+    (32) selecao -> IF . LBRACKET condicao RBRACKET LCBRACKET comandos RCBRACKET
+    (33) selecao -> IF . LBRACKET condicao RBRACKET LCBRACKET comandos RCBRACKET ELSE LCBRACKET comandos RCBRACKET
 
-    LBRACKET        shift and go to state 41
+    LBRACKET        shift and go to state 39
 
 
 state 25
 
-    (34) repeticao -> WHILE . LBRACKET condicao RBRACKET : comandos
+    (34) repeticao -> FOR . LBRACKET declaracao condicao SEMICOLON incrementacao RBRACKET LCBRACKET comandos RCBRACKET
 
-    LBRACKET        shift and go to state 42
+    LBRACKET        shift and go to state 40
 
 
 state 26
 
-    (46) funcao -> FUNCTION ID . : comandos RETURN expressao SEMICOLON
+    (35) repeticao -> WHILE . LBRACKET condicao RBRACKET LCBRACKET comandos RCBRACKET
 
-    :               shift and go to state 43
+    LBRACKET        shift and go to state 41
 
 
 state 27
 
-    (6) declaracao -> ID ASSIGN NUMBER . SEMICOLON
+    (48) funcao -> FUNCTION ID . LCBRACKET comandos RETURN expressao RCBRACKET SEMICOLON
 
-    SEMICOLON       shift and go to state 44
+    LCBRACKET       shift and go to state 42
 
 
 state 28
+
+    (6) declaracao -> ID ASSIGN NUMBER . SEMICOLON
+
+    SEMICOLON       shift and go to state 43
+
+
+state 29
 
     (7) declaracao -> ID ASSIGN leitura .
 
@@ -499,59 +509,80 @@ state 28
     IF              reduce using rule 7 (declaracao -> ID ASSIGN leitura .)
     FOR             reduce using rule 7 (declaracao -> ID ASSIGN leitura .)
     WHILE           reduce using rule 7 (declaracao -> ID ASSIGN leitura .)
-    SEMICOLON       reduce using rule 7 (declaracao -> ID ASSIGN leitura .)
-
-
-state 29
-
-    (16) leitura -> READ . LBRACKET texto RBRACKET SEMICOLON
-
-    LBRACKET        shift and go to state 45
+    NUMBER          reduce using rule 7 (declaracao -> ID ASSIGN leitura .)
+    LBRACKET        reduce using rule 7 (declaracao -> ID ASSIGN leitura .)
 
 
 state 30
 
-    (6) declaracao -> ID ASSIGN . NUMBER SEMICOLON
-    (7) declaracao -> ID ASSIGN . leitura
-    (17) atribuicao -> ID ASSIGN . expressao SEMICOLON
-    (18) atribuicao -> ID ASSIGN . leitura SEMICOLON
-    (16) leitura -> . READ LBRACKET texto RBRACKET SEMICOLON
-    (23) expressao -> . fator
-    (24) expressao -> . expressao PLUS expressao
-    (25) expressao -> . expressao MINUS expressao
-    (26) expressao -> . expressao TIMES expressao
-    (27) expressao -> . expressao DIVIDE expressao
-    (28) fator -> . ID
-    (29) fator -> . NUMBER
-    (30) fator -> . LBRACKET expressao RBRACKET
+    (17) leitura -> READ . LBRACKET texto RBRACKET SEMICOLON
 
-    NUMBER          shift and go to state 46
-    READ            shift and go to state 29
-    ID              shift and go to state 38
-    LBRACKET        shift and go to state 40
+    LBRACKET        shift and go to state 44
 
-    leitura                        shift and go to state 47
-    expressao                      shift and go to state 48
-    fator                          shift and go to state 37
 
 state 31
 
-    (47) call -> ID LBRACKET . RBRACKET SEMICOLON
+    (6) declaracao -> ID ASSIGN . NUMBER SEMICOLON
+    (7) declaracao -> ID ASSIGN . leitura
+    (18) atribuicao -> ID ASSIGN . expressao SEMICOLON
+    (19) atribuicao -> ID ASSIGN . leitura
+    (17) leitura -> . READ LBRACKET texto RBRACKET SEMICOLON
+    (24) expressao -> . fator
+    (25) expressao -> . expressao PLUS expressao
+    (26) expressao -> . expressao MINUS expressao
+    (27) expressao -> . expressao TIMES expressao
+    (28) expressao -> . expressao DIVIDE expressao
+    (29) fator -> . ID
+    (30) fator -> . NUMBER
+    (31) fator -> . LBRACKET expressao RBRACKET
 
-    RBRACKET        shift and go to state 49
+    NUMBER          shift and go to state 46
+    READ            shift and go to state 30
+    ID              shift and go to state 45
+    LBRACKET        shift and go to state 49
 
+    leitura                        shift and go to state 47
+    expressao                      shift and go to state 48
+    fator                          shift and go to state 50
 
 state 32
 
-    (17) atribuicao -> ID . ASSIGN expressao SEMICOLON
-    (18) atribuicao -> ID . ASSIGN leitura SEMICOLON
-    (47) call -> ID . LBRACKET RBRACKET SEMICOLON
+    (49) call -> ID LBRACKET . RBRACKET SEMICOLON
 
-    ASSIGN          shift and go to state 50
-    LBRACKET        shift and go to state 31
+    RBRACKET        shift and go to state 51
 
 
 state 33
+
+    (36) incrementacao -> ID INCREMENT .
+
+    SEMICOLON       reduce using rule 36 (incrementacao -> ID INCREMENT .)
+    RBRACKET        reduce using rule 36 (incrementacao -> ID INCREMENT .)
+
+
+state 34
+
+    (37) incrementacao -> ID DECREMENT .
+
+    SEMICOLON       reduce using rule 37 (incrementacao -> ID DECREMENT .)
+    RBRACKET        reduce using rule 37 (incrementacao -> ID DECREMENT .)
+
+
+state 35
+
+    (18) atribuicao -> ID . ASSIGN expressao SEMICOLON
+    (19) atribuicao -> ID . ASSIGN leitura
+    (49) call -> ID . LBRACKET RBRACKET SEMICOLON
+    (36) incrementacao -> ID . INCREMENT
+    (37) incrementacao -> ID . DECREMENT
+
+    ASSIGN          shift and go to state 52
+    LBRACKET        shift and go to state 32
+    INCREMENT       shift and go to state 33
+    DECREMENT       shift and go to state 34
+
+
+state 36
 
     (10) comandos -> comandos comando .
 
@@ -562,194 +593,111 @@ state 33
     WHILE           reduce using rule 10 (comandos -> comandos comando .)
     $end            reduce using rule 10 (comandos -> comandos comando .)
     RETURN          reduce using rule 10 (comandos -> comandos comando .)
-    ELSE            reduce using rule 10 (comandos -> comandos comando .)
+    RCBRACKET       reduce using rule 10 (comandos -> comandos comando .)
 
-
-state 34
-
-    (19) escrita -> WRITE LBRACKET . argumento RBRACKET SEMICOLON
-    (20) argumento -> . texto
-    (21) argumento -> . expressao
-    (22) texto -> . QUOTE STRING QUOTE
-    (23) expressao -> . fator
-    (24) expressao -> . expressao PLUS expressao
-    (25) expressao -> . expressao MINUS expressao
-    (26) expressao -> . expressao TIMES expressao
-    (27) expressao -> . expressao DIVIDE expressao
-    (28) fator -> . ID
-    (29) fator -> . NUMBER
-    (30) fator -> . LBRACKET expressao RBRACKET
-
-    QUOTE           shift and go to state 54
-    ID              shift and go to state 38
-    NUMBER          shift and go to state 39
-    LBRACKET        shift and go to state 40
-
-    argumento                      shift and go to state 51
-    texto                          shift and go to state 52
-    expressao                      shift and go to state 53
-    fator                          shift and go to state 37
-
-state 35
-
-    (31) selecao -> IF condicao . : comandos
-    (32) selecao -> IF condicao . : comandos ELSE comandos
-
-    :               shift and go to state 55
-
-
-state 36
-
-    (37) condicao -> expressao . operador expressao
-    (24) expressao -> expressao . PLUS expressao
-    (25) expressao -> expressao . MINUS expressao
-    (26) expressao -> expressao . TIMES expressao
-    (27) expressao -> expressao . DIVIDE expressao
-    (38) operador -> . GT
-    (39) operador -> . LT
-    (40) operador -> . GE
-    (41) operador -> . LE
-    (42) operador -> . EQ
-    (43) operador -> . JUNGLE_DIFF
-    (44) operador -> . OR
-    (45) operador -> . AND
-
-    PLUS            shift and go to state 57
-    MINUS           shift and go to state 58
-    TIMES           shift and go to state 59
-    DIVIDE          shift and go to state 60
-    GT              shift and go to state 61
-    LT              shift and go to state 62
-    GE              shift and go to state 63
-    LE              shift and go to state 64
-    EQ              shift and go to state 65
-    JUNGLE_DIFF     shift and go to state 66
-    OR              shift and go to state 67
-    AND             shift and go to state 68
-
-    operador                       shift and go to state 56
 
 state 37
 
-    (23) expressao -> fator .
+    (16) comando -> incrementacao SEMICOLON .
 
-    PLUS            reduce using rule 23 (expressao -> fator .)
-    MINUS           reduce using rule 23 (expressao -> fator .)
-    TIMES           reduce using rule 23 (expressao -> fator .)
-    DIVIDE          reduce using rule 23 (expressao -> fator .)
-    GT              reduce using rule 23 (expressao -> fator .)
-    LT              reduce using rule 23 (expressao -> fator .)
-    GE              reduce using rule 23 (expressao -> fator .)
-    LE              reduce using rule 23 (expressao -> fator .)
-    EQ              reduce using rule 23 (expressao -> fator .)
-    JUNGLE_DIFF     reduce using rule 23 (expressao -> fator .)
-    OR              reduce using rule 23 (expressao -> fator .)
-    AND             reduce using rule 23 (expressao -> fator .)
-    SEMICOLON       reduce using rule 23 (expressao -> fator .)
-    RBRACKET        reduce using rule 23 (expressao -> fator .)
-    :               reduce using rule 23 (expressao -> fator .)
+    ID              reduce using rule 16 (comando -> incrementacao SEMICOLON .)
+    WRITE           reduce using rule 16 (comando -> incrementacao SEMICOLON .)
+    IF              reduce using rule 16 (comando -> incrementacao SEMICOLON .)
+    FOR             reduce using rule 16 (comando -> incrementacao SEMICOLON .)
+    WHILE           reduce using rule 16 (comando -> incrementacao SEMICOLON .)
+    $end            reduce using rule 16 (comando -> incrementacao SEMICOLON .)
+    RETURN          reduce using rule 16 (comando -> incrementacao SEMICOLON .)
+    RCBRACKET       reduce using rule 16 (comando -> incrementacao SEMICOLON .)
 
 
 state 38
 
-    (28) fator -> ID .
+    (20) escrita -> WRITE LBRACKET . argumento RBRACKET SEMICOLON
+    (21) argumento -> . texto
+    (22) argumento -> . expressao
+    (23) texto -> . QUOTE STRING QUOTE
+    (24) expressao -> . fator
+    (25) expressao -> . expressao PLUS expressao
+    (26) expressao -> . expressao MINUS expressao
+    (27) expressao -> . expressao TIMES expressao
+    (28) expressao -> . expressao DIVIDE expressao
+    (29) fator -> . ID
+    (30) fator -> . NUMBER
+    (31) fator -> . LBRACKET expressao RBRACKET
 
-    PLUS            reduce using rule 28 (fator -> ID .)
-    MINUS           reduce using rule 28 (fator -> ID .)
-    TIMES           reduce using rule 28 (fator -> ID .)
-    DIVIDE          reduce using rule 28 (fator -> ID .)
-    GT              reduce using rule 28 (fator -> ID .)
-    LT              reduce using rule 28 (fator -> ID .)
-    GE              reduce using rule 28 (fator -> ID .)
-    LE              reduce using rule 28 (fator -> ID .)
-    EQ              reduce using rule 28 (fator -> ID .)
-    JUNGLE_DIFF     reduce using rule 28 (fator -> ID .)
-    OR              reduce using rule 28 (fator -> ID .)
-    AND             reduce using rule 28 (fator -> ID .)
-    SEMICOLON       reduce using rule 28 (fator -> ID .)
-    RBRACKET        reduce using rule 28 (fator -> ID .)
-    :               reduce using rule 28 (fator -> ID .)
+    QUOTE           shift and go to state 56
+    ID              shift and go to state 45
+    NUMBER          shift and go to state 57
+    LBRACKET        shift and go to state 49
 
+    argumento                      shift and go to state 53
+    texto                          shift and go to state 54
+    expressao                      shift and go to state 55
+    fator                          shift and go to state 50
 
 state 39
 
-    (29) fator -> NUMBER .
+    (32) selecao -> IF LBRACKET . condicao RBRACKET LCBRACKET comandos RCBRACKET
+    (33) selecao -> IF LBRACKET . condicao RBRACKET LCBRACKET comandos RCBRACKET ELSE LCBRACKET comandos RCBRACKET
+    (38) condicao -> . condicao operador condicao
+    (39) condicao -> . expressao
+    (24) expressao -> . fator
+    (25) expressao -> . expressao PLUS expressao
+    (26) expressao -> . expressao MINUS expressao
+    (27) expressao -> . expressao TIMES expressao
+    (28) expressao -> . expressao DIVIDE expressao
+    (29) fator -> . ID
+    (30) fator -> . NUMBER
+    (31) fator -> . LBRACKET expressao RBRACKET
 
-    PLUS            reduce using rule 29 (fator -> NUMBER .)
-    MINUS           reduce using rule 29 (fator -> NUMBER .)
-    TIMES           reduce using rule 29 (fator -> NUMBER .)
-    DIVIDE          reduce using rule 29 (fator -> NUMBER .)
-    GT              reduce using rule 29 (fator -> NUMBER .)
-    LT              reduce using rule 29 (fator -> NUMBER .)
-    GE              reduce using rule 29 (fator -> NUMBER .)
-    LE              reduce using rule 29 (fator -> NUMBER .)
-    EQ              reduce using rule 29 (fator -> NUMBER .)
-    JUNGLE_DIFF     reduce using rule 29 (fator -> NUMBER .)
-    OR              reduce using rule 29 (fator -> NUMBER .)
-    AND             reduce using rule 29 (fator -> NUMBER .)
-    RBRACKET        reduce using rule 29 (fator -> NUMBER .)
-    SEMICOLON       reduce using rule 29 (fator -> NUMBER .)
-    :               reduce using rule 29 (fator -> NUMBER .)
+    ID              shift and go to state 45
+    NUMBER          shift and go to state 57
+    LBRACKET        shift and go to state 49
 
+    condicao                       shift and go to state 58
+    expressao                      shift and go to state 59
+    fator                          shift and go to state 50
 
 state 40
 
-    (30) fator -> LBRACKET . expressao RBRACKET
-    (23) expressao -> . fator
-    (24) expressao -> . expressao PLUS expressao
-    (25) expressao -> . expressao MINUS expressao
-    (26) expressao -> . expressao TIMES expressao
-    (27) expressao -> . expressao DIVIDE expressao
-    (28) fator -> . ID
-    (29) fator -> . NUMBER
-    (30) fator -> . LBRACKET expressao RBRACKET
-
-    ID              shift and go to state 38
-    NUMBER          shift and go to state 39
-    LBRACKET        shift and go to state 40
-
-    expressao                      shift and go to state 69
-    fator                          shift and go to state 37
-
-state 41
-
-    (33) repeticao -> FOR LBRACKET . declaracao SEMICOLON condicao SEMICOLON incrementacao RBRACKET : comando
+    (34) repeticao -> FOR LBRACKET . declaracao condicao SEMICOLON incrementacao RBRACKET LCBRACKET comandos RCBRACKET
     (5) declaracao -> . ID SEMICOLON
     (6) declaracao -> . ID ASSIGN NUMBER SEMICOLON
     (7) declaracao -> . ID ASSIGN leitura
     (8) declaracao -> . funcao
-    (46) funcao -> . FUNCTION ID : comandos RETURN expressao SEMICOLON
+    (48) funcao -> . FUNCTION ID LCBRACKET comandos RETURN expressao RCBRACKET SEMICOLON
 
     ID              shift and go to state 6
     FUNCTION        shift and go to state 10
 
-    declaracao                     shift and go to state 70
+    declaracao                     shift and go to state 60
     funcao                         shift and go to state 9
+
+state 41
+
+    (35) repeticao -> WHILE LBRACKET . condicao RBRACKET LCBRACKET comandos RCBRACKET
+    (38) condicao -> . condicao operador condicao
+    (39) condicao -> . expressao
+    (24) expressao -> . fator
+    (25) expressao -> . expressao PLUS expressao
+    (26) expressao -> . expressao MINUS expressao
+    (27) expressao -> . expressao TIMES expressao
+    (28) expressao -> . expressao DIVIDE expressao
+    (29) fator -> . ID
+    (30) fator -> . NUMBER
+    (31) fator -> . LBRACKET expressao RBRACKET
+
+    ID              shift and go to state 45
+    NUMBER          shift and go to state 57
+    LBRACKET        shift and go to state 49
+
+    condicao                       shift and go to state 61
+    expressao                      shift and go to state 59
+    fator                          shift and go to state 50
 
 state 42
 
-    (34) repeticao -> WHILE LBRACKET . condicao RBRACKET : comandos
-    (37) condicao -> . expressao operador expressao
-    (23) expressao -> . fator
-    (24) expressao -> . expressao PLUS expressao
-    (25) expressao -> . expressao MINUS expressao
-    (26) expressao -> . expressao TIMES expressao
-    (27) expressao -> . expressao DIVIDE expressao
-    (28) fator -> . ID
-    (29) fator -> . NUMBER
-    (30) fator -> . LBRACKET expressao RBRACKET
-
-    ID              shift and go to state 38
-    NUMBER          shift and go to state 39
-    LBRACKET        shift and go to state 40
-
-    condicao                       shift and go to state 71
-    expressao                      shift and go to state 36
-    fator                          shift and go to state 37
-
-state 43
-
-    (46) funcao -> FUNCTION ID : . comandos RETURN expressao SEMICOLON
+    (48) funcao -> FUNCTION ID LCBRACKET . comandos RETURN expressao RCBRACKET SEMICOLON
     (9) comandos -> . comando
     (10) comandos -> . comandos comando
     (11) comando -> . atribuicao
@@ -757,30 +705,34 @@ state 43
     (13) comando -> . selecao
     (14) comando -> . repeticao
     (15) comando -> . call
-    (17) atribuicao -> . ID ASSIGN expressao SEMICOLON
-    (18) atribuicao -> . ID ASSIGN leitura SEMICOLON
-    (19) escrita -> . WRITE LBRACKET argumento RBRACKET SEMICOLON
-    (31) selecao -> . IF condicao : comandos
-    (32) selecao -> . IF condicao : comandos ELSE comandos
-    (33) repeticao -> . FOR LBRACKET declaracao SEMICOLON condicao SEMICOLON incrementacao RBRACKET : comando
-    (34) repeticao -> . WHILE LBRACKET condicao RBRACKET : comandos
-    (47) call -> . ID LBRACKET RBRACKET SEMICOLON
+    (16) comando -> . incrementacao SEMICOLON
+    (18) atribuicao -> . ID ASSIGN expressao SEMICOLON
+    (19) atribuicao -> . ID ASSIGN leitura
+    (20) escrita -> . WRITE LBRACKET argumento RBRACKET SEMICOLON
+    (32) selecao -> . IF LBRACKET condicao RBRACKET LCBRACKET comandos RCBRACKET
+    (33) selecao -> . IF LBRACKET condicao RBRACKET LCBRACKET comandos RCBRACKET ELSE LCBRACKET comandos RCBRACKET
+    (34) repeticao -> . FOR LBRACKET declaracao condicao SEMICOLON incrementacao RBRACKET LCBRACKET comandos RCBRACKET
+    (35) repeticao -> . WHILE LBRACKET condicao RBRACKET LCBRACKET comandos RCBRACKET
+    (49) call -> . ID LBRACKET RBRACKET SEMICOLON
+    (36) incrementacao -> . ID INCREMENT
+    (37) incrementacao -> . ID DECREMENT
 
-    ID              shift and go to state 32
-    WRITE           shift and go to state 22
-    IF              shift and go to state 23
-    FOR             shift and go to state 24
-    WHILE           shift and go to state 25
+    ID              shift and go to state 35
+    WRITE           shift and go to state 23
+    IF              shift and go to state 24
+    FOR             shift and go to state 25
+    WHILE           shift and go to state 26
 
-    comandos                       shift and go to state 72
+    comandos                       shift and go to state 62
     comando                        shift and go to state 16
     atribuicao                     shift and go to state 17
     escrita                        shift and go to state 18
     selecao                        shift and go to state 19
     repeticao                      shift and go to state 20
     call                           shift and go to state 21
+    incrementacao                  shift and go to state 22
 
-state 44
+state 43
 
     (6) declaracao -> ID ASSIGN NUMBER SEMICOLON .
 
@@ -790,800 +742,835 @@ state 44
     IF              reduce using rule 6 (declaracao -> ID ASSIGN NUMBER SEMICOLON .)
     FOR             reduce using rule 6 (declaracao -> ID ASSIGN NUMBER SEMICOLON .)
     WHILE           reduce using rule 6 (declaracao -> ID ASSIGN NUMBER SEMICOLON .)
-    SEMICOLON       reduce using rule 6 (declaracao -> ID ASSIGN NUMBER SEMICOLON .)
+    NUMBER          reduce using rule 6 (declaracao -> ID ASSIGN NUMBER SEMICOLON .)
+    LBRACKET        reduce using rule 6 (declaracao -> ID ASSIGN NUMBER SEMICOLON .)
 
+
+state 44
+
+    (17) leitura -> READ LBRACKET . texto RBRACKET SEMICOLON
+    (23) texto -> . QUOTE STRING QUOTE
+
+    QUOTE           shift and go to state 56
+
+    texto                          shift and go to state 63
 
 state 45
 
-    (16) leitura -> READ LBRACKET . texto RBRACKET SEMICOLON
-    (22) texto -> . QUOTE STRING QUOTE
+    (29) fator -> ID .
 
-    QUOTE           shift and go to state 54
+    SEMICOLON       reduce using rule 29 (fator -> ID .)
+    PLUS            reduce using rule 29 (fator -> ID .)
+    MINUS           reduce using rule 29 (fator -> ID .)
+    TIMES           reduce using rule 29 (fator -> ID .)
+    DIVIDE          reduce using rule 29 (fator -> ID .)
+    RBRACKET        reduce using rule 29 (fator -> ID .)
+    GT              reduce using rule 29 (fator -> ID .)
+    LT              reduce using rule 29 (fator -> ID .)
+    GE              reduce using rule 29 (fator -> ID .)
+    LE              reduce using rule 29 (fator -> ID .)
+    EQ              reduce using rule 29 (fator -> ID .)
+    JUNGLE_DIFF     reduce using rule 29 (fator -> ID .)
+    OR              reduce using rule 29 (fator -> ID .)
+    AND             reduce using rule 29 (fator -> ID .)
+    RCBRACKET       reduce using rule 29 (fator -> ID .)
 
-    texto                          shift and go to state 73
 
 state 46
 
     (6) declaracao -> ID ASSIGN NUMBER . SEMICOLON
-    (29) fator -> NUMBER .
+    (30) fator -> NUMBER .
 
   ! shift/reduce conflict for SEMICOLON resolved as shift
-    SEMICOLON       shift and go to state 44
-    PLUS            reduce using rule 29 (fator -> NUMBER .)
-    MINUS           reduce using rule 29 (fator -> NUMBER .)
-    TIMES           reduce using rule 29 (fator -> NUMBER .)
-    DIVIDE          reduce using rule 29 (fator -> NUMBER .)
+    SEMICOLON       shift and go to state 43
+    PLUS            reduce using rule 30 (fator -> NUMBER .)
+    MINUS           reduce using rule 30 (fator -> NUMBER .)
+    TIMES           reduce using rule 30 (fator -> NUMBER .)
+    DIVIDE          reduce using rule 30 (fator -> NUMBER .)
 
-  ! SEMICOLON       [ reduce using rule 29 (fator -> NUMBER .) ]
+  ! SEMICOLON       [ reduce using rule 30 (fator -> NUMBER .) ]
 
 
 state 47
 
     (7) declaracao -> ID ASSIGN leitura .
-    (18) atribuicao -> ID ASSIGN leitura . SEMICOLON
+    (19) atribuicao -> ID ASSIGN leitura .
 
+  ! reduce/reduce conflict for ID resolved using rule 7 (declaracao -> ID ASSIGN leitura .)
+  ! reduce/reduce conflict for WRITE resolved using rule 7 (declaracao -> ID ASSIGN leitura .)
+  ! reduce/reduce conflict for IF resolved using rule 7 (declaracao -> ID ASSIGN leitura .)
+  ! reduce/reduce conflict for FOR resolved using rule 7 (declaracao -> ID ASSIGN leitura .)
+  ! reduce/reduce conflict for WHILE resolved using rule 7 (declaracao -> ID ASSIGN leitura .)
     ID              reduce using rule 7 (declaracao -> ID ASSIGN leitura .)
     FUNCTION        reduce using rule 7 (declaracao -> ID ASSIGN leitura .)
     WRITE           reduce using rule 7 (declaracao -> ID ASSIGN leitura .)
     IF              reduce using rule 7 (declaracao -> ID ASSIGN leitura .)
     FOR             reduce using rule 7 (declaracao -> ID ASSIGN leitura .)
     WHILE           reduce using rule 7 (declaracao -> ID ASSIGN leitura .)
-    SEMICOLON       shift and go to state 74
+    $end            reduce using rule 19 (atribuicao -> ID ASSIGN leitura .)
+
+  ! ID              [ reduce using rule 19 (atribuicao -> ID ASSIGN leitura .) ]
+  ! WRITE           [ reduce using rule 19 (atribuicao -> ID ASSIGN leitura .) ]
+  ! IF              [ reduce using rule 19 (atribuicao -> ID ASSIGN leitura .) ]
+  ! FOR             [ reduce using rule 19 (atribuicao -> ID ASSIGN leitura .) ]
+  ! WHILE           [ reduce using rule 19 (atribuicao -> ID ASSIGN leitura .) ]
 
 
 state 48
 
-    (17) atribuicao -> ID ASSIGN expressao . SEMICOLON
-    (24) expressao -> expressao . PLUS expressao
-    (25) expressao -> expressao . MINUS expressao
-    (26) expressao -> expressao . TIMES expressao
-    (27) expressao -> expressao . DIVIDE expressao
+    (18) atribuicao -> ID ASSIGN expressao . SEMICOLON
+    (25) expressao -> expressao . PLUS expressao
+    (26) expressao -> expressao . MINUS expressao
+    (27) expressao -> expressao . TIMES expressao
+    (28) expressao -> expressao . DIVIDE expressao
 
-    SEMICOLON       shift and go to state 75
-    PLUS            shift and go to state 57
-    MINUS           shift and go to state 58
-    TIMES           shift and go to state 59
-    DIVIDE          shift and go to state 60
+    SEMICOLON       shift and go to state 64
+    PLUS            shift and go to state 65
+    MINUS           shift and go to state 66
+    TIMES           shift and go to state 67
+    DIVIDE          shift and go to state 68
 
 
 state 49
 
-    (47) call -> ID LBRACKET RBRACKET . SEMICOLON
+    (31) fator -> LBRACKET . expressao RBRACKET
+    (24) expressao -> . fator
+    (25) expressao -> . expressao PLUS expressao
+    (26) expressao -> . expressao MINUS expressao
+    (27) expressao -> . expressao TIMES expressao
+    (28) expressao -> . expressao DIVIDE expressao
+    (29) fator -> . ID
+    (30) fator -> . NUMBER
+    (31) fator -> . LBRACKET expressao RBRACKET
 
-    SEMICOLON       shift and go to state 76
+    ID              shift and go to state 45
+    NUMBER          shift and go to state 57
+    LBRACKET        shift and go to state 49
 
+    expressao                      shift and go to state 69
+    fator                          shift and go to state 50
 
 state 50
 
-    (17) atribuicao -> ID ASSIGN . expressao SEMICOLON
-    (18) atribuicao -> ID ASSIGN . leitura SEMICOLON
-    (23) expressao -> . fator
-    (24) expressao -> . expressao PLUS expressao
-    (25) expressao -> . expressao MINUS expressao
-    (26) expressao -> . expressao TIMES expressao
-    (27) expressao -> . expressao DIVIDE expressao
-    (16) leitura -> . READ LBRACKET texto RBRACKET SEMICOLON
-    (28) fator -> . ID
-    (29) fator -> . NUMBER
-    (30) fator -> . LBRACKET expressao RBRACKET
+    (24) expressao -> fator .
 
-    READ            shift and go to state 29
-    ID              shift and go to state 38
-    NUMBER          shift and go to state 39
-    LBRACKET        shift and go to state 40
+    SEMICOLON       reduce using rule 24 (expressao -> fator .)
+    PLUS            reduce using rule 24 (expressao -> fator .)
+    MINUS           reduce using rule 24 (expressao -> fator .)
+    TIMES           reduce using rule 24 (expressao -> fator .)
+    DIVIDE          reduce using rule 24 (expressao -> fator .)
+    RBRACKET        reduce using rule 24 (expressao -> fator .)
+    GT              reduce using rule 24 (expressao -> fator .)
+    LT              reduce using rule 24 (expressao -> fator .)
+    GE              reduce using rule 24 (expressao -> fator .)
+    LE              reduce using rule 24 (expressao -> fator .)
+    EQ              reduce using rule 24 (expressao -> fator .)
+    JUNGLE_DIFF     reduce using rule 24 (expressao -> fator .)
+    OR              reduce using rule 24 (expressao -> fator .)
+    AND             reduce using rule 24 (expressao -> fator .)
+    RCBRACKET       reduce using rule 24 (expressao -> fator .)
 
-    expressao                      shift and go to state 48
-    leitura                        shift and go to state 77
-    fator                          shift and go to state 37
 
 state 51
 
-    (19) escrita -> WRITE LBRACKET argumento . RBRACKET SEMICOLON
+    (49) call -> ID LBRACKET RBRACKET . SEMICOLON
 
-    RBRACKET        shift and go to state 78
+    SEMICOLON       shift and go to state 70
 
 
 state 52
 
-    (20) argumento -> texto .
+    (18) atribuicao -> ID ASSIGN . expressao SEMICOLON
+    (19) atribuicao -> ID ASSIGN . leitura
+    (24) expressao -> . fator
+    (25) expressao -> . expressao PLUS expressao
+    (26) expressao -> . expressao MINUS expressao
+    (27) expressao -> . expressao TIMES expressao
+    (28) expressao -> . expressao DIVIDE expressao
+    (17) leitura -> . READ LBRACKET texto RBRACKET SEMICOLON
+    (29) fator -> . ID
+    (30) fator -> . NUMBER
+    (31) fator -> . LBRACKET expressao RBRACKET
 
-    RBRACKET        reduce using rule 20 (argumento -> texto .)
+    READ            shift and go to state 30
+    ID              shift and go to state 45
+    NUMBER          shift and go to state 57
+    LBRACKET        shift and go to state 49
 
+    expressao                      shift and go to state 48
+    leitura                        shift and go to state 71
+    fator                          shift and go to state 50
 
 state 53
 
-    (21) argumento -> expressao .
-    (24) expressao -> expressao . PLUS expressao
-    (25) expressao -> expressao . MINUS expressao
-    (26) expressao -> expressao . TIMES expressao
-    (27) expressao -> expressao . DIVIDE expressao
+    (20) escrita -> WRITE LBRACKET argumento . RBRACKET SEMICOLON
 
-    RBRACKET        reduce using rule 21 (argumento -> expressao .)
-    PLUS            shift and go to state 57
-    MINUS           shift and go to state 58
-    TIMES           shift and go to state 59
-    DIVIDE          shift and go to state 60
+    RBRACKET        shift and go to state 72
 
 
 state 54
 
-    (22) texto -> QUOTE . STRING QUOTE
+    (21) argumento -> texto .
 
-    STRING          shift and go to state 79
+    RBRACKET        reduce using rule 21 (argumento -> texto .)
 
 
 state 55
 
-    (31) selecao -> IF condicao : . comandos
-    (32) selecao -> IF condicao : . comandos ELSE comandos
-    (9) comandos -> . comando
-    (10) comandos -> . comandos comando
+    (22) argumento -> expressao .
+    (25) expressao -> expressao . PLUS expressao
+    (26) expressao -> expressao . MINUS expressao
+    (27) expressao -> expressao . TIMES expressao
+    (28) expressao -> expressao . DIVIDE expressao
+
+    RBRACKET        reduce using rule 22 (argumento -> expressao .)
+    PLUS            shift and go to state 65
+    MINUS           shift and go to state 66
+    TIMES           shift and go to state 67
+    DIVIDE          shift and go to state 68
+
+
+state 56
+
+    (23) texto -> QUOTE . STRING QUOTE
+
+    STRING          shift and go to state 73
+
+
+state 57
+
+    (30) fator -> NUMBER .
+
+    PLUS            reduce using rule 30 (fator -> NUMBER .)
+    MINUS           reduce using rule 30 (fator -> NUMBER .)
+    TIMES           reduce using rule 30 (fator -> NUMBER .)
+    DIVIDE          reduce using rule 30 (fator -> NUMBER .)
+    RBRACKET        reduce using rule 30 (fator -> NUMBER .)
+    GT              reduce using rule 30 (fator -> NUMBER .)
+    LT              reduce using rule 30 (fator -> NUMBER .)
+    GE              reduce using rule 30 (fator -> NUMBER .)
+    LE              reduce using rule 30 (fator -> NUMBER .)
+    EQ              reduce using rule 30 (fator -> NUMBER .)
+    JUNGLE_DIFF     reduce using rule 30 (fator -> NUMBER .)
+    OR              reduce using rule 30 (fator -> NUMBER .)
+    AND             reduce using rule 30 (fator -> NUMBER .)
+    SEMICOLON       reduce using rule 30 (fator -> NUMBER .)
+    RCBRACKET       reduce using rule 30 (fator -> NUMBER .)
+
+
+state 58
+
+    (32) selecao -> IF LBRACKET condicao . RBRACKET LCBRACKET comandos RCBRACKET
+    (33) selecao -> IF LBRACKET condicao . RBRACKET LCBRACKET comandos RCBRACKET ELSE LCBRACKET comandos RCBRACKET
+    (38) condicao -> condicao . operador condicao
+    (40) operador -> . GT
+    (41) operador -> . LT
+    (42) operador -> . GE
+    (43) operador -> . LE
+    (44) operador -> . EQ
+    (45) operador -> . JUNGLE_DIFF
+    (46) operador -> . OR
+    (47) operador -> . AND
+
+    RBRACKET        shift and go to state 74
+    GT              shift and go to state 76
+    LT              shift and go to state 77
+    GE              shift and go to state 78
+    LE              shift and go to state 79
+    EQ              shift and go to state 80
+    JUNGLE_DIFF     shift and go to state 81
+    OR              shift and go to state 82
+    AND             shift and go to state 83
+
+    operador                       shift and go to state 75
+
+state 59
+
+    (39) condicao -> expressao .
+    (25) expressao -> expressao . PLUS expressao
+    (26) expressao -> expressao . MINUS expressao
+    (27) expressao -> expressao . TIMES expressao
+    (28) expressao -> expressao . DIVIDE expressao
+
+    RBRACKET        reduce using rule 39 (condicao -> expressao .)
+    GT              reduce using rule 39 (condicao -> expressao .)
+    LT              reduce using rule 39 (condicao -> expressao .)
+    GE              reduce using rule 39 (condicao -> expressao .)
+    LE              reduce using rule 39 (condicao -> expressao .)
+    EQ              reduce using rule 39 (condicao -> expressao .)
+    JUNGLE_DIFF     reduce using rule 39 (condicao -> expressao .)
+    OR              reduce using rule 39 (condicao -> expressao .)
+    AND             reduce using rule 39 (condicao -> expressao .)
+    SEMICOLON       reduce using rule 39 (condicao -> expressao .)
+    PLUS            shift and go to state 65
+    MINUS           shift and go to state 66
+    TIMES           shift and go to state 67
+    DIVIDE          shift and go to state 68
+
+
+state 60
+
+    (34) repeticao -> FOR LBRACKET declaracao . condicao SEMICOLON incrementacao RBRACKET LCBRACKET comandos RCBRACKET
+    (38) condicao -> . condicao operador condicao
+    (39) condicao -> . expressao
+    (24) expressao -> . fator
+    (25) expressao -> . expressao PLUS expressao
+    (26) expressao -> . expressao MINUS expressao
+    (27) expressao -> . expressao TIMES expressao
+    (28) expressao -> . expressao DIVIDE expressao
+    (29) fator -> . ID
+    (30) fator -> . NUMBER
+    (31) fator -> . LBRACKET expressao RBRACKET
+
+    ID              shift and go to state 45
+    NUMBER          shift and go to state 57
+    LBRACKET        shift and go to state 49
+
+    condicao                       shift and go to state 84
+    expressao                      shift and go to state 59
+    fator                          shift and go to state 50
+
+state 61
+
+    (35) repeticao -> WHILE LBRACKET condicao . RBRACKET LCBRACKET comandos RCBRACKET
+    (38) condicao -> condicao . operador condicao
+    (40) operador -> . GT
+    (41) operador -> . LT
+    (42) operador -> . GE
+    (43) operador -> . LE
+    (44) operador -> . EQ
+    (45) operador -> . JUNGLE_DIFF
+    (46) operador -> . OR
+    (47) operador -> . AND
+
+    RBRACKET        shift and go to state 85
+    GT              shift and go to state 76
+    LT              shift and go to state 77
+    GE              shift and go to state 78
+    LE              shift and go to state 79
+    EQ              shift and go to state 80
+    JUNGLE_DIFF     shift and go to state 81
+    OR              shift and go to state 82
+    AND             shift and go to state 83
+
+    operador                       shift and go to state 75
+
+state 62
+
+    (48) funcao -> FUNCTION ID LCBRACKET comandos . RETURN expressao RCBRACKET SEMICOLON
+    (10) comandos -> comandos . comando
     (11) comando -> . atribuicao
     (12) comando -> . escrita
     (13) comando -> . selecao
     (14) comando -> . repeticao
     (15) comando -> . call
-    (17) atribuicao -> . ID ASSIGN expressao SEMICOLON
-    (18) atribuicao -> . ID ASSIGN leitura SEMICOLON
-    (19) escrita -> . WRITE LBRACKET argumento RBRACKET SEMICOLON
-    (31) selecao -> . IF condicao : comandos
-    (32) selecao -> . IF condicao : comandos ELSE comandos
-    (33) repeticao -> . FOR LBRACKET declaracao SEMICOLON condicao SEMICOLON incrementacao RBRACKET : comando
-    (34) repeticao -> . WHILE LBRACKET condicao RBRACKET : comandos
-    (47) call -> . ID LBRACKET RBRACKET SEMICOLON
+    (16) comando -> . incrementacao SEMICOLON
+    (18) atribuicao -> . ID ASSIGN expressao SEMICOLON
+    (19) atribuicao -> . ID ASSIGN leitura
+    (20) escrita -> . WRITE LBRACKET argumento RBRACKET SEMICOLON
+    (32) selecao -> . IF LBRACKET condicao RBRACKET LCBRACKET comandos RCBRACKET
+    (33) selecao -> . IF LBRACKET condicao RBRACKET LCBRACKET comandos RCBRACKET ELSE LCBRACKET comandos RCBRACKET
+    (34) repeticao -> . FOR LBRACKET declaracao condicao SEMICOLON incrementacao RBRACKET LCBRACKET comandos RCBRACKET
+    (35) repeticao -> . WHILE LBRACKET condicao RBRACKET LCBRACKET comandos RCBRACKET
+    (49) call -> . ID LBRACKET RBRACKET SEMICOLON
+    (36) incrementacao -> . ID INCREMENT
+    (37) incrementacao -> . ID DECREMENT
 
-    ID              shift and go to state 32
-    WRITE           shift and go to state 22
-    IF              shift and go to state 23
-    FOR             shift and go to state 24
-    WHILE           shift and go to state 25
+    RETURN          shift and go to state 86
+    ID              shift and go to state 35
+    WRITE           shift and go to state 23
+    IF              shift and go to state 24
+    FOR             shift and go to state 25
+    WHILE           shift and go to state 26
 
-    comandos                       shift and go to state 80
-    comando                        shift and go to state 16
+    comando                        shift and go to state 36
     atribuicao                     shift and go to state 17
     escrita                        shift and go to state 18
     selecao                        shift and go to state 19
     repeticao                      shift and go to state 20
     call                           shift and go to state 21
-
-state 56
-
-    (37) condicao -> expressao operador . expressao
-    (23) expressao -> . fator
-    (24) expressao -> . expressao PLUS expressao
-    (25) expressao -> . expressao MINUS expressao
-    (26) expressao -> . expressao TIMES expressao
-    (27) expressao -> . expressao DIVIDE expressao
-    (28) fator -> . ID
-    (29) fator -> . NUMBER
-    (30) fator -> . LBRACKET expressao RBRACKET
-
-    ID              shift and go to state 38
-    NUMBER          shift and go to state 39
-    LBRACKET        shift and go to state 40
-
-    expressao                      shift and go to state 81
-    fator                          shift and go to state 37
-
-state 57
-
-    (24) expressao -> expressao PLUS . expressao
-    (23) expressao -> . fator
-    (24) expressao -> . expressao PLUS expressao
-    (25) expressao -> . expressao MINUS expressao
-    (26) expressao -> . expressao TIMES expressao
-    (27) expressao -> . expressao DIVIDE expressao
-    (28) fator -> . ID
-    (29) fator -> . NUMBER
-    (30) fator -> . LBRACKET expressao RBRACKET
-
-    ID              shift and go to state 38
-    NUMBER          shift and go to state 39
-    LBRACKET        shift and go to state 40
-
-    expressao                      shift and go to state 82
-    fator                          shift and go to state 37
-
-state 58
-
-    (25) expressao -> expressao MINUS . expressao
-    (23) expressao -> . fator
-    (24) expressao -> . expressao PLUS expressao
-    (25) expressao -> . expressao MINUS expressao
-    (26) expressao -> . expressao TIMES expressao
-    (27) expressao -> . expressao DIVIDE expressao
-    (28) fator -> . ID
-    (29) fator -> . NUMBER
-    (30) fator -> . LBRACKET expressao RBRACKET
-
-    ID              shift and go to state 38
-    NUMBER          shift and go to state 39
-    LBRACKET        shift and go to state 40
-
-    expressao                      shift and go to state 83
-    fator                          shift and go to state 37
-
-state 59
-
-    (26) expressao -> expressao TIMES . expressao
-    (23) expressao -> . fator
-    (24) expressao -> . expressao PLUS expressao
-    (25) expressao -> . expressao MINUS expressao
-    (26) expressao -> . expressao TIMES expressao
-    (27) expressao -> . expressao DIVIDE expressao
-    (28) fator -> . ID
-    (29) fator -> . NUMBER
-    (30) fator -> . LBRACKET expressao RBRACKET
-
-    ID              shift and go to state 38
-    NUMBER          shift and go to state 39
-    LBRACKET        shift and go to state 40
-
-    expressao                      shift and go to state 84
-    fator                          shift and go to state 37
-
-state 60
-
-    (27) expressao -> expressao DIVIDE . expressao
-    (23) expressao -> . fator
-    (24) expressao -> . expressao PLUS expressao
-    (25) expressao -> . expressao MINUS expressao
-    (26) expressao -> . expressao TIMES expressao
-    (27) expressao -> . expressao DIVIDE expressao
-    (28) fator -> . ID
-    (29) fator -> . NUMBER
-    (30) fator -> . LBRACKET expressao RBRACKET
-
-    ID              shift and go to state 38
-    NUMBER          shift and go to state 39
-    LBRACKET        shift and go to state 40
-
-    expressao                      shift and go to state 85
-    fator                          shift and go to state 37
-
-state 61
-
-    (38) operador -> GT .
-
-    ID              reduce using rule 38 (operador -> GT .)
-    NUMBER          reduce using rule 38 (operador -> GT .)
-    LBRACKET        reduce using rule 38 (operador -> GT .)
-
-
-state 62
-
-    (39) operador -> LT .
-
-    ID              reduce using rule 39 (operador -> LT .)
-    NUMBER          reduce using rule 39 (operador -> LT .)
-    LBRACKET        reduce using rule 39 (operador -> LT .)
-
+    incrementacao                  shift and go to state 22
 
 state 63
 
-    (40) operador -> GE .
+    (17) leitura -> READ LBRACKET texto . RBRACKET SEMICOLON
 
-    ID              reduce using rule 40 (operador -> GE .)
-    NUMBER          reduce using rule 40 (operador -> GE .)
-    LBRACKET        reduce using rule 40 (operador -> GE .)
+    RBRACKET        shift and go to state 87
 
 
 state 64
 
-    (41) operador -> LE .
+    (18) atribuicao -> ID ASSIGN expressao SEMICOLON .
 
-    ID              reduce using rule 41 (operador -> LE .)
-    NUMBER          reduce using rule 41 (operador -> LE .)
-    LBRACKET        reduce using rule 41 (operador -> LE .)
+    ID              reduce using rule 18 (atribuicao -> ID ASSIGN expressao SEMICOLON .)
+    WRITE           reduce using rule 18 (atribuicao -> ID ASSIGN expressao SEMICOLON .)
+    IF              reduce using rule 18 (atribuicao -> ID ASSIGN expressao SEMICOLON .)
+    FOR             reduce using rule 18 (atribuicao -> ID ASSIGN expressao SEMICOLON .)
+    WHILE           reduce using rule 18 (atribuicao -> ID ASSIGN expressao SEMICOLON .)
+    $end            reduce using rule 18 (atribuicao -> ID ASSIGN expressao SEMICOLON .)
+    RETURN          reduce using rule 18 (atribuicao -> ID ASSIGN expressao SEMICOLON .)
+    RCBRACKET       reduce using rule 18 (atribuicao -> ID ASSIGN expressao SEMICOLON .)
 
 
 state 65
 
-    (42) operador -> EQ .
+    (25) expressao -> expressao PLUS . expressao
+    (24) expressao -> . fator
+    (25) expressao -> . expressao PLUS expressao
+    (26) expressao -> . expressao MINUS expressao
+    (27) expressao -> . expressao TIMES expressao
+    (28) expressao -> . expressao DIVIDE expressao
+    (29) fator -> . ID
+    (30) fator -> . NUMBER
+    (31) fator -> . LBRACKET expressao RBRACKET
 
-    ID              reduce using rule 42 (operador -> EQ .)
-    NUMBER          reduce using rule 42 (operador -> EQ .)
-    LBRACKET        reduce using rule 42 (operador -> EQ .)
+    ID              shift and go to state 45
+    NUMBER          shift and go to state 57
+    LBRACKET        shift and go to state 49
 
+    expressao                      shift and go to state 88
+    fator                          shift and go to state 50
 
 state 66
 
-    (43) operador -> JUNGLE_DIFF .
+    (26) expressao -> expressao MINUS . expressao
+    (24) expressao -> . fator
+    (25) expressao -> . expressao PLUS expressao
+    (26) expressao -> . expressao MINUS expressao
+    (27) expressao -> . expressao TIMES expressao
+    (28) expressao -> . expressao DIVIDE expressao
+    (29) fator -> . ID
+    (30) fator -> . NUMBER
+    (31) fator -> . LBRACKET expressao RBRACKET
 
-    ID              reduce using rule 43 (operador -> JUNGLE_DIFF .)
-    NUMBER          reduce using rule 43 (operador -> JUNGLE_DIFF .)
-    LBRACKET        reduce using rule 43 (operador -> JUNGLE_DIFF .)
+    ID              shift and go to state 45
+    NUMBER          shift and go to state 57
+    LBRACKET        shift and go to state 49
 
+    expressao                      shift and go to state 89
+    fator                          shift and go to state 50
 
 state 67
 
-    (44) operador -> OR .
+    (27) expressao -> expressao TIMES . expressao
+    (24) expressao -> . fator
+    (25) expressao -> . expressao PLUS expressao
+    (26) expressao -> . expressao MINUS expressao
+    (27) expressao -> . expressao TIMES expressao
+    (28) expressao -> . expressao DIVIDE expressao
+    (29) fator -> . ID
+    (30) fator -> . NUMBER
+    (31) fator -> . LBRACKET expressao RBRACKET
 
-    ID              reduce using rule 44 (operador -> OR .)
-    NUMBER          reduce using rule 44 (operador -> OR .)
-    LBRACKET        reduce using rule 44 (operador -> OR .)
+    ID              shift and go to state 45
+    NUMBER          shift and go to state 57
+    LBRACKET        shift and go to state 49
 
+    expressao                      shift and go to state 90
+    fator                          shift and go to state 50
 
 state 68
 
-    (45) operador -> AND .
+    (28) expressao -> expressao DIVIDE . expressao
+    (24) expressao -> . fator
+    (25) expressao -> . expressao PLUS expressao
+    (26) expressao -> . expressao MINUS expressao
+    (27) expressao -> . expressao TIMES expressao
+    (28) expressao -> . expressao DIVIDE expressao
+    (29) fator -> . ID
+    (30) fator -> . NUMBER
+    (31) fator -> . LBRACKET expressao RBRACKET
 
-    ID              reduce using rule 45 (operador -> AND .)
-    NUMBER          reduce using rule 45 (operador -> AND .)
-    LBRACKET        reduce using rule 45 (operador -> AND .)
+    ID              shift and go to state 45
+    NUMBER          shift and go to state 57
+    LBRACKET        shift and go to state 49
 
+    expressao                      shift and go to state 91
+    fator                          shift and go to state 50
 
 state 69
 
-    (30) fator -> LBRACKET expressao . RBRACKET
-    (24) expressao -> expressao . PLUS expressao
-    (25) expressao -> expressao . MINUS expressao
-    (26) expressao -> expressao . TIMES expressao
-    (27) expressao -> expressao . DIVIDE expressao
+    (31) fator -> LBRACKET expressao . RBRACKET
+    (25) expressao -> expressao . PLUS expressao
+    (26) expressao -> expressao . MINUS expressao
+    (27) expressao -> expressao . TIMES expressao
+    (28) expressao -> expressao . DIVIDE expressao
 
-    RBRACKET        shift and go to state 86
-    PLUS            shift and go to state 57
-    MINUS           shift and go to state 58
-    TIMES           shift and go to state 59
-    DIVIDE          shift and go to state 60
+    RBRACKET        shift and go to state 92
+    PLUS            shift and go to state 65
+    MINUS           shift and go to state 66
+    TIMES           shift and go to state 67
+    DIVIDE          shift and go to state 68
 
 
 state 70
 
-    (33) repeticao -> FOR LBRACKET declaracao . SEMICOLON condicao SEMICOLON incrementacao RBRACKET : comando
+    (49) call -> ID LBRACKET RBRACKET SEMICOLON .
 
-    SEMICOLON       shift and go to state 87
+    ID              reduce using rule 49 (call -> ID LBRACKET RBRACKET SEMICOLON .)
+    WRITE           reduce using rule 49 (call -> ID LBRACKET RBRACKET SEMICOLON .)
+    IF              reduce using rule 49 (call -> ID LBRACKET RBRACKET SEMICOLON .)
+    FOR             reduce using rule 49 (call -> ID LBRACKET RBRACKET SEMICOLON .)
+    WHILE           reduce using rule 49 (call -> ID LBRACKET RBRACKET SEMICOLON .)
+    $end            reduce using rule 49 (call -> ID LBRACKET RBRACKET SEMICOLON .)
+    RETURN          reduce using rule 49 (call -> ID LBRACKET RBRACKET SEMICOLON .)
+    RCBRACKET       reduce using rule 49 (call -> ID LBRACKET RBRACKET SEMICOLON .)
 
 
 state 71
 
-    (34) repeticao -> WHILE LBRACKET condicao . RBRACKET : comandos
+    (19) atribuicao -> ID ASSIGN leitura .
 
-    RBRACKET        shift and go to state 88
+    ID              reduce using rule 19 (atribuicao -> ID ASSIGN leitura .)
+    WRITE           reduce using rule 19 (atribuicao -> ID ASSIGN leitura .)
+    IF              reduce using rule 19 (atribuicao -> ID ASSIGN leitura .)
+    FOR             reduce using rule 19 (atribuicao -> ID ASSIGN leitura .)
+    WHILE           reduce using rule 19 (atribuicao -> ID ASSIGN leitura .)
+    $end            reduce using rule 19 (atribuicao -> ID ASSIGN leitura .)
+    RETURN          reduce using rule 19 (atribuicao -> ID ASSIGN leitura .)
+    RCBRACKET       reduce using rule 19 (atribuicao -> ID ASSIGN leitura .)
 
 
 state 72
 
-    (46) funcao -> FUNCTION ID : comandos . RETURN expressao SEMICOLON
-    (10) comandos -> comandos . comando
-    (11) comando -> . atribuicao
-    (12) comando -> . escrita
-    (13) comando -> . selecao
-    (14) comando -> . repeticao
-    (15) comando -> . call
-    (17) atribuicao -> . ID ASSIGN expressao SEMICOLON
-    (18) atribuicao -> . ID ASSIGN leitura SEMICOLON
-    (19) escrita -> . WRITE LBRACKET argumento RBRACKET SEMICOLON
-    (31) selecao -> . IF condicao : comandos
-    (32) selecao -> . IF condicao : comandos ELSE comandos
-    (33) repeticao -> . FOR LBRACKET declaracao SEMICOLON condicao SEMICOLON incrementacao RBRACKET : comando
-    (34) repeticao -> . WHILE LBRACKET condicao RBRACKET : comandos
-    (47) call -> . ID LBRACKET RBRACKET SEMICOLON
+    (20) escrita -> WRITE LBRACKET argumento RBRACKET . SEMICOLON
 
-    RETURN          shift and go to state 89
-    ID              shift and go to state 32
-    WRITE           shift and go to state 22
-    IF              shift and go to state 23
-    FOR             shift and go to state 24
-    WHILE           shift and go to state 25
+    SEMICOLON       shift and go to state 93
 
-    comando                        shift and go to state 33
-    atribuicao                     shift and go to state 17
-    escrita                        shift and go to state 18
-    selecao                        shift and go to state 19
-    repeticao                      shift and go to state 20
-    call                           shift and go to state 21
 
 state 73
 
-    (16) leitura -> READ LBRACKET texto . RBRACKET SEMICOLON
+    (23) texto -> QUOTE STRING . QUOTE
 
-    RBRACKET        shift and go to state 90
+    QUOTE           shift and go to state 94
 
 
 state 74
 
-    (18) atribuicao -> ID ASSIGN leitura SEMICOLON .
+    (32) selecao -> IF LBRACKET condicao RBRACKET . LCBRACKET comandos RCBRACKET
+    (33) selecao -> IF LBRACKET condicao RBRACKET . LCBRACKET comandos RCBRACKET ELSE LCBRACKET comandos RCBRACKET
 
-    ID              reduce using rule 18 (atribuicao -> ID ASSIGN leitura SEMICOLON .)
-    WRITE           reduce using rule 18 (atribuicao -> ID ASSIGN leitura SEMICOLON .)
-    IF              reduce using rule 18 (atribuicao -> ID ASSIGN leitura SEMICOLON .)
-    FOR             reduce using rule 18 (atribuicao -> ID ASSIGN leitura SEMICOLON .)
-    WHILE           reduce using rule 18 (atribuicao -> ID ASSIGN leitura SEMICOLON .)
-    $end            reduce using rule 18 (atribuicao -> ID ASSIGN leitura SEMICOLON .)
-    RETURN          reduce using rule 18 (atribuicao -> ID ASSIGN leitura SEMICOLON .)
-    ELSE            reduce using rule 18 (atribuicao -> ID ASSIGN leitura SEMICOLON .)
+    LCBRACKET       shift and go to state 95
 
 
 state 75
 
-    (17) atribuicao -> ID ASSIGN expressao SEMICOLON .
+    (38) condicao -> condicao operador . condicao
+    (38) condicao -> . condicao operador condicao
+    (39) condicao -> . expressao
+    (24) expressao -> . fator
+    (25) expressao -> . expressao PLUS expressao
+    (26) expressao -> . expressao MINUS expressao
+    (27) expressao -> . expressao TIMES expressao
+    (28) expressao -> . expressao DIVIDE expressao
+    (29) fator -> . ID
+    (30) fator -> . NUMBER
+    (31) fator -> . LBRACKET expressao RBRACKET
 
-    ID              reduce using rule 17 (atribuicao -> ID ASSIGN expressao SEMICOLON .)
-    WRITE           reduce using rule 17 (atribuicao -> ID ASSIGN expressao SEMICOLON .)
-    IF              reduce using rule 17 (atribuicao -> ID ASSIGN expressao SEMICOLON .)
-    FOR             reduce using rule 17 (atribuicao -> ID ASSIGN expressao SEMICOLON .)
-    WHILE           reduce using rule 17 (atribuicao -> ID ASSIGN expressao SEMICOLON .)
-    $end            reduce using rule 17 (atribuicao -> ID ASSIGN expressao SEMICOLON .)
-    RETURN          reduce using rule 17 (atribuicao -> ID ASSIGN expressao SEMICOLON .)
-    ELSE            reduce using rule 17 (atribuicao -> ID ASSIGN expressao SEMICOLON .)
+    ID              shift and go to state 45
+    NUMBER          shift and go to state 57
+    LBRACKET        shift and go to state 49
 
+    condicao                       shift and go to state 96
+    expressao                      shift and go to state 59
+    fator                          shift and go to state 50
 
 state 76
 
-    (47) call -> ID LBRACKET RBRACKET SEMICOLON .
+    (40) operador -> GT .
 
-    ID              reduce using rule 47 (call -> ID LBRACKET RBRACKET SEMICOLON .)
-    WRITE           reduce using rule 47 (call -> ID LBRACKET RBRACKET SEMICOLON .)
-    IF              reduce using rule 47 (call -> ID LBRACKET RBRACKET SEMICOLON .)
-    FOR             reduce using rule 47 (call -> ID LBRACKET RBRACKET SEMICOLON .)
-    WHILE           reduce using rule 47 (call -> ID LBRACKET RBRACKET SEMICOLON .)
-    $end            reduce using rule 47 (call -> ID LBRACKET RBRACKET SEMICOLON .)
-    RETURN          reduce using rule 47 (call -> ID LBRACKET RBRACKET SEMICOLON .)
-    ELSE            reduce using rule 47 (call -> ID LBRACKET RBRACKET SEMICOLON .)
+    ID              reduce using rule 40 (operador -> GT .)
+    NUMBER          reduce using rule 40 (operador -> GT .)
+    LBRACKET        reduce using rule 40 (operador -> GT .)
 
 
 state 77
 
-    (18) atribuicao -> ID ASSIGN leitura . SEMICOLON
+    (41) operador -> LT .
 
-    SEMICOLON       shift and go to state 74
+    ID              reduce using rule 41 (operador -> LT .)
+    NUMBER          reduce using rule 41 (operador -> LT .)
+    LBRACKET        reduce using rule 41 (operador -> LT .)
 
 
 state 78
 
-    (19) escrita -> WRITE LBRACKET argumento RBRACKET . SEMICOLON
+    (42) operador -> GE .
 
-    SEMICOLON       shift and go to state 91
+    ID              reduce using rule 42 (operador -> GE .)
+    NUMBER          reduce using rule 42 (operador -> GE .)
+    LBRACKET        reduce using rule 42 (operador -> GE .)
 
 
 state 79
 
-    (22) texto -> QUOTE STRING . QUOTE
+    (43) operador -> LE .
 
-    QUOTE           shift and go to state 92
+    ID              reduce using rule 43 (operador -> LE .)
+    NUMBER          reduce using rule 43 (operador -> LE .)
+    LBRACKET        reduce using rule 43 (operador -> LE .)
 
 
 state 80
 
-    (31) selecao -> IF condicao : comandos .
-    (32) selecao -> IF condicao : comandos . ELSE comandos
-    (10) comandos -> comandos . comando
-    (11) comando -> . atribuicao
-    (12) comando -> . escrita
-    (13) comando -> . selecao
-    (14) comando -> . repeticao
-    (15) comando -> . call
-    (17) atribuicao -> . ID ASSIGN expressao SEMICOLON
-    (18) atribuicao -> . ID ASSIGN leitura SEMICOLON
-    (19) escrita -> . WRITE LBRACKET argumento RBRACKET SEMICOLON
-    (31) selecao -> . IF condicao : comandos
-    (32) selecao -> . IF condicao : comandos ELSE comandos
-    (33) repeticao -> . FOR LBRACKET declaracao SEMICOLON condicao SEMICOLON incrementacao RBRACKET : comando
-    (34) repeticao -> . WHILE LBRACKET condicao RBRACKET : comandos
-    (47) call -> . ID LBRACKET RBRACKET SEMICOLON
+    (44) operador -> EQ .
 
-  ! shift/reduce conflict for ELSE resolved as shift
-  ! shift/reduce conflict for ID resolved as shift
-  ! shift/reduce conflict for WRITE resolved as shift
-  ! shift/reduce conflict for IF resolved as shift
-  ! shift/reduce conflict for FOR resolved as shift
-  ! shift/reduce conflict for WHILE resolved as shift
-    $end            reduce using rule 31 (selecao -> IF condicao : comandos .)
-    RETURN          reduce using rule 31 (selecao -> IF condicao : comandos .)
-    ELSE            shift and go to state 93
-    ID              shift and go to state 32
-    WRITE           shift and go to state 22
-    IF              shift and go to state 23
-    FOR             shift and go to state 24
-    WHILE           shift and go to state 25
+    ID              reduce using rule 44 (operador -> EQ .)
+    NUMBER          reduce using rule 44 (operador -> EQ .)
+    LBRACKET        reduce using rule 44 (operador -> EQ .)
 
-  ! ID              [ reduce using rule 31 (selecao -> IF condicao : comandos .) ]
-  ! WRITE           [ reduce using rule 31 (selecao -> IF condicao : comandos .) ]
-  ! IF              [ reduce using rule 31 (selecao -> IF condicao : comandos .) ]
-  ! FOR             [ reduce using rule 31 (selecao -> IF condicao : comandos .) ]
-  ! WHILE           [ reduce using rule 31 (selecao -> IF condicao : comandos .) ]
-  ! ELSE            [ reduce using rule 31 (selecao -> IF condicao : comandos .) ]
-
-    comando                        shift and go to state 33
-    atribuicao                     shift and go to state 17
-    escrita                        shift and go to state 18
-    selecao                        shift and go to state 19
-    repeticao                      shift and go to state 20
-    call                           shift and go to state 21
 
 state 81
 
-    (37) condicao -> expressao operador expressao .
-    (24) expressao -> expressao . PLUS expressao
-    (25) expressao -> expressao . MINUS expressao
-    (26) expressao -> expressao . TIMES expressao
-    (27) expressao -> expressao . DIVIDE expressao
+    (45) operador -> JUNGLE_DIFF .
 
-    :               reduce using rule 37 (condicao -> expressao operador expressao .)
-    RBRACKET        reduce using rule 37 (condicao -> expressao operador expressao .)
-    SEMICOLON       reduce using rule 37 (condicao -> expressao operador expressao .)
-    PLUS            shift and go to state 57
-    MINUS           shift and go to state 58
-    TIMES           shift and go to state 59
-    DIVIDE          shift and go to state 60
+    ID              reduce using rule 45 (operador -> JUNGLE_DIFF .)
+    NUMBER          reduce using rule 45 (operador -> JUNGLE_DIFF .)
+    LBRACKET        reduce using rule 45 (operador -> JUNGLE_DIFF .)
 
 
 state 82
 
-    (24) expressao -> expressao PLUS expressao .
-    (24) expressao -> expressao . PLUS expressao
-    (25) expressao -> expressao . MINUS expressao
-    (26) expressao -> expressao . TIMES expressao
-    (27) expressao -> expressao . DIVIDE expressao
+    (46) operador -> OR .
 
-  ! shift/reduce conflict for PLUS resolved as shift
-  ! shift/reduce conflict for MINUS resolved as shift
-  ! shift/reduce conflict for TIMES resolved as shift
-  ! shift/reduce conflict for DIVIDE resolved as shift
-    GT              reduce using rule 24 (expressao -> expressao PLUS expressao .)
-    LT              reduce using rule 24 (expressao -> expressao PLUS expressao .)
-    GE              reduce using rule 24 (expressao -> expressao PLUS expressao .)
-    LE              reduce using rule 24 (expressao -> expressao PLUS expressao .)
-    EQ              reduce using rule 24 (expressao -> expressao PLUS expressao .)
-    JUNGLE_DIFF     reduce using rule 24 (expressao -> expressao PLUS expressao .)
-    OR              reduce using rule 24 (expressao -> expressao PLUS expressao .)
-    AND             reduce using rule 24 (expressao -> expressao PLUS expressao .)
-    SEMICOLON       reduce using rule 24 (expressao -> expressao PLUS expressao .)
-    RBRACKET        reduce using rule 24 (expressao -> expressao PLUS expressao .)
-    :               reduce using rule 24 (expressao -> expressao PLUS expressao .)
-    PLUS            shift and go to state 57
-    MINUS           shift and go to state 58
-    TIMES           shift and go to state 59
-    DIVIDE          shift and go to state 60
-
-  ! PLUS            [ reduce using rule 24 (expressao -> expressao PLUS expressao .) ]
-  ! MINUS           [ reduce using rule 24 (expressao -> expressao PLUS expressao .) ]
-  ! TIMES           [ reduce using rule 24 (expressao -> expressao PLUS expressao .) ]
-  ! DIVIDE          [ reduce using rule 24 (expressao -> expressao PLUS expressao .) ]
+    ID              reduce using rule 46 (operador -> OR .)
+    NUMBER          reduce using rule 46 (operador -> OR .)
+    LBRACKET        reduce using rule 46 (operador -> OR .)
 
 
 state 83
 
-    (25) expressao -> expressao MINUS expressao .
-    (24) expressao -> expressao . PLUS expressao
-    (25) expressao -> expressao . MINUS expressao
-    (26) expressao -> expressao . TIMES expressao
-    (27) expressao -> expressao . DIVIDE expressao
+    (47) operador -> AND .
 
-  ! shift/reduce conflict for PLUS resolved as shift
-  ! shift/reduce conflict for MINUS resolved as shift
-  ! shift/reduce conflict for TIMES resolved as shift
-  ! shift/reduce conflict for DIVIDE resolved as shift
-    GT              reduce using rule 25 (expressao -> expressao MINUS expressao .)
-    LT              reduce using rule 25 (expressao -> expressao MINUS expressao .)
-    GE              reduce using rule 25 (expressao -> expressao MINUS expressao .)
-    LE              reduce using rule 25 (expressao -> expressao MINUS expressao .)
-    EQ              reduce using rule 25 (expressao -> expressao MINUS expressao .)
-    JUNGLE_DIFF     reduce using rule 25 (expressao -> expressao MINUS expressao .)
-    OR              reduce using rule 25 (expressao -> expressao MINUS expressao .)
-    AND             reduce using rule 25 (expressao -> expressao MINUS expressao .)
-    SEMICOLON       reduce using rule 25 (expressao -> expressao MINUS expressao .)
-    RBRACKET        reduce using rule 25 (expressao -> expressao MINUS expressao .)
-    :               reduce using rule 25 (expressao -> expressao MINUS expressao .)
-    PLUS            shift and go to state 57
-    MINUS           shift and go to state 58
-    TIMES           shift and go to state 59
-    DIVIDE          shift and go to state 60
-
-  ! PLUS            [ reduce using rule 25 (expressao -> expressao MINUS expressao .) ]
-  ! MINUS           [ reduce using rule 25 (expressao -> expressao MINUS expressao .) ]
-  ! TIMES           [ reduce using rule 25 (expressao -> expressao MINUS expressao .) ]
-  ! DIVIDE          [ reduce using rule 25 (expressao -> expressao MINUS expressao .) ]
+    ID              reduce using rule 47 (operador -> AND .)
+    NUMBER          reduce using rule 47 (operador -> AND .)
+    LBRACKET        reduce using rule 47 (operador -> AND .)
 
 
 state 84
 
-    (26) expressao -> expressao TIMES expressao .
-    (24) expressao -> expressao . PLUS expressao
-    (25) expressao -> expressao . MINUS expressao
-    (26) expressao -> expressao . TIMES expressao
-    (27) expressao -> expressao . DIVIDE expressao
+    (34) repeticao -> FOR LBRACKET declaracao condicao . SEMICOLON incrementacao RBRACKET LCBRACKET comandos RCBRACKET
+    (38) condicao -> condicao . operador condicao
+    (40) operador -> . GT
+    (41) operador -> . LT
+    (42) operador -> . GE
+    (43) operador -> . LE
+    (44) operador -> . EQ
+    (45) operador -> . JUNGLE_DIFF
+    (46) operador -> . OR
+    (47) operador -> . AND
 
-  ! shift/reduce conflict for PLUS resolved as shift
-  ! shift/reduce conflict for MINUS resolved as shift
-  ! shift/reduce conflict for TIMES resolved as shift
-  ! shift/reduce conflict for DIVIDE resolved as shift
-    GT              reduce using rule 26 (expressao -> expressao TIMES expressao .)
-    LT              reduce using rule 26 (expressao -> expressao TIMES expressao .)
-    GE              reduce using rule 26 (expressao -> expressao TIMES expressao .)
-    LE              reduce using rule 26 (expressao -> expressao TIMES expressao .)
-    EQ              reduce using rule 26 (expressao -> expressao TIMES expressao .)
-    JUNGLE_DIFF     reduce using rule 26 (expressao -> expressao TIMES expressao .)
-    OR              reduce using rule 26 (expressao -> expressao TIMES expressao .)
-    AND             reduce using rule 26 (expressao -> expressao TIMES expressao .)
-    SEMICOLON       reduce using rule 26 (expressao -> expressao TIMES expressao .)
-    RBRACKET        reduce using rule 26 (expressao -> expressao TIMES expressao .)
-    :               reduce using rule 26 (expressao -> expressao TIMES expressao .)
-    PLUS            shift and go to state 57
-    MINUS           shift and go to state 58
-    TIMES           shift and go to state 59
-    DIVIDE          shift and go to state 60
+    SEMICOLON       shift and go to state 97
+    GT              shift and go to state 76
+    LT              shift and go to state 77
+    GE              shift and go to state 78
+    LE              shift and go to state 79
+    EQ              shift and go to state 80
+    JUNGLE_DIFF     shift and go to state 81
+    OR              shift and go to state 82
+    AND             shift and go to state 83
 
-  ! PLUS            [ reduce using rule 26 (expressao -> expressao TIMES expressao .) ]
-  ! MINUS           [ reduce using rule 26 (expressao -> expressao TIMES expressao .) ]
-  ! TIMES           [ reduce using rule 26 (expressao -> expressao TIMES expressao .) ]
-  ! DIVIDE          [ reduce using rule 26 (expressao -> expressao TIMES expressao .) ]
-
+    operador                       shift and go to state 75
 
 state 85
 
-    (27) expressao -> expressao DIVIDE expressao .
-    (24) expressao -> expressao . PLUS expressao
-    (25) expressao -> expressao . MINUS expressao
-    (26) expressao -> expressao . TIMES expressao
-    (27) expressao -> expressao . DIVIDE expressao
+    (35) repeticao -> WHILE LBRACKET condicao RBRACKET . LCBRACKET comandos RCBRACKET
 
-  ! shift/reduce conflict for PLUS resolved as shift
-  ! shift/reduce conflict for MINUS resolved as shift
-  ! shift/reduce conflict for TIMES resolved as shift
-  ! shift/reduce conflict for DIVIDE resolved as shift
-    GT              reduce using rule 27 (expressao -> expressao DIVIDE expressao .)
-    LT              reduce using rule 27 (expressao -> expressao DIVIDE expressao .)
-    GE              reduce using rule 27 (expressao -> expressao DIVIDE expressao .)
-    LE              reduce using rule 27 (expressao -> expressao DIVIDE expressao .)
-    EQ              reduce using rule 27 (expressao -> expressao DIVIDE expressao .)
-    JUNGLE_DIFF     reduce using rule 27 (expressao -> expressao DIVIDE expressao .)
-    OR              reduce using rule 27 (expressao -> expressao DIVIDE expressao .)
-    AND             reduce using rule 27 (expressao -> expressao DIVIDE expressao .)
-    SEMICOLON       reduce using rule 27 (expressao -> expressao DIVIDE expressao .)
-    RBRACKET        reduce using rule 27 (expressao -> expressao DIVIDE expressao .)
-    :               reduce using rule 27 (expressao -> expressao DIVIDE expressao .)
-    PLUS            shift and go to state 57
-    MINUS           shift and go to state 58
-    TIMES           shift and go to state 59
-    DIVIDE          shift and go to state 60
-
-  ! PLUS            [ reduce using rule 27 (expressao -> expressao DIVIDE expressao .) ]
-  ! MINUS           [ reduce using rule 27 (expressao -> expressao DIVIDE expressao .) ]
-  ! TIMES           [ reduce using rule 27 (expressao -> expressao DIVIDE expressao .) ]
-  ! DIVIDE          [ reduce using rule 27 (expressao -> expressao DIVIDE expressao .) ]
+    LCBRACKET       shift and go to state 98
 
 
 state 86
 
-    (30) fator -> LBRACKET expressao RBRACKET .
+    (48) funcao -> FUNCTION ID LCBRACKET comandos RETURN . expressao RCBRACKET SEMICOLON
+    (24) expressao -> . fator
+    (25) expressao -> . expressao PLUS expressao
+    (26) expressao -> . expressao MINUS expressao
+    (27) expressao -> . expressao TIMES expressao
+    (28) expressao -> . expressao DIVIDE expressao
+    (29) fator -> . ID
+    (30) fator -> . NUMBER
+    (31) fator -> . LBRACKET expressao RBRACKET
 
-    PLUS            reduce using rule 30 (fator -> LBRACKET expressao RBRACKET .)
-    MINUS           reduce using rule 30 (fator -> LBRACKET expressao RBRACKET .)
-    TIMES           reduce using rule 30 (fator -> LBRACKET expressao RBRACKET .)
-    DIVIDE          reduce using rule 30 (fator -> LBRACKET expressao RBRACKET .)
-    GT              reduce using rule 30 (fator -> LBRACKET expressao RBRACKET .)
-    LT              reduce using rule 30 (fator -> LBRACKET expressao RBRACKET .)
-    GE              reduce using rule 30 (fator -> LBRACKET expressao RBRACKET .)
-    LE              reduce using rule 30 (fator -> LBRACKET expressao RBRACKET .)
-    EQ              reduce using rule 30 (fator -> LBRACKET expressao RBRACKET .)
-    JUNGLE_DIFF     reduce using rule 30 (fator -> LBRACKET expressao RBRACKET .)
-    OR              reduce using rule 30 (fator -> LBRACKET expressao RBRACKET .)
-    AND             reduce using rule 30 (fator -> LBRACKET expressao RBRACKET .)
-    SEMICOLON       reduce using rule 30 (fator -> LBRACKET expressao RBRACKET .)
-    RBRACKET        reduce using rule 30 (fator -> LBRACKET expressao RBRACKET .)
-    :               reduce using rule 30 (fator -> LBRACKET expressao RBRACKET .)
+    ID              shift and go to state 45
+    NUMBER          shift and go to state 57
+    LBRACKET        shift and go to state 49
 
+    expressao                      shift and go to state 99
+    fator                          shift and go to state 50
 
 state 87
 
-    (33) repeticao -> FOR LBRACKET declaracao SEMICOLON . condicao SEMICOLON incrementacao RBRACKET : comando
-    (37) condicao -> . expressao operador expressao
-    (23) expressao -> . fator
-    (24) expressao -> . expressao PLUS expressao
-    (25) expressao -> . expressao MINUS expressao
-    (26) expressao -> . expressao TIMES expressao
-    (27) expressao -> . expressao DIVIDE expressao
-    (28) fator -> . ID
-    (29) fator -> . NUMBER
-    (30) fator -> . LBRACKET expressao RBRACKET
+    (17) leitura -> READ LBRACKET texto RBRACKET . SEMICOLON
 
-    ID              shift and go to state 38
-    NUMBER          shift and go to state 39
-    LBRACKET        shift and go to state 40
+    SEMICOLON       shift and go to state 100
 
-    condicao                       shift and go to state 94
-    expressao                      shift and go to state 36
-    fator                          shift and go to state 37
 
 state 88
 
-    (34) repeticao -> WHILE LBRACKET condicao RBRACKET . : comandos
+    (25) expressao -> expressao PLUS expressao .
+    (25) expressao -> expressao . PLUS expressao
+    (26) expressao -> expressao . MINUS expressao
+    (27) expressao -> expressao . TIMES expressao
+    (28) expressao -> expressao . DIVIDE expressao
 
-    :               shift and go to state 95
+    SEMICOLON       reduce using rule 25 (expressao -> expressao PLUS expressao .)
+    PLUS            reduce using rule 25 (expressao -> expressao PLUS expressao .)
+    MINUS           reduce using rule 25 (expressao -> expressao PLUS expressao .)
+    RBRACKET        reduce using rule 25 (expressao -> expressao PLUS expressao .)
+    GT              reduce using rule 25 (expressao -> expressao PLUS expressao .)
+    LT              reduce using rule 25 (expressao -> expressao PLUS expressao .)
+    GE              reduce using rule 25 (expressao -> expressao PLUS expressao .)
+    LE              reduce using rule 25 (expressao -> expressao PLUS expressao .)
+    EQ              reduce using rule 25 (expressao -> expressao PLUS expressao .)
+    JUNGLE_DIFF     reduce using rule 25 (expressao -> expressao PLUS expressao .)
+    OR              reduce using rule 25 (expressao -> expressao PLUS expressao .)
+    AND             reduce using rule 25 (expressao -> expressao PLUS expressao .)
+    RCBRACKET       reduce using rule 25 (expressao -> expressao PLUS expressao .)
+    TIMES           shift and go to state 67
+    DIVIDE          shift and go to state 68
+
+  ! TIMES           [ reduce using rule 25 (expressao -> expressao PLUS expressao .) ]
+  ! DIVIDE          [ reduce using rule 25 (expressao -> expressao PLUS expressao .) ]
+  ! PLUS            [ shift and go to state 65 ]
+  ! MINUS           [ shift and go to state 66 ]
 
 
 state 89
 
-    (46) funcao -> FUNCTION ID : comandos RETURN . expressao SEMICOLON
-    (23) expressao -> . fator
-    (24) expressao -> . expressao PLUS expressao
-    (25) expressao -> . expressao MINUS expressao
-    (26) expressao -> . expressao TIMES expressao
-    (27) expressao -> . expressao DIVIDE expressao
-    (28) fator -> . ID
-    (29) fator -> . NUMBER
-    (30) fator -> . LBRACKET expressao RBRACKET
+    (26) expressao -> expressao MINUS expressao .
+    (25) expressao -> expressao . PLUS expressao
+    (26) expressao -> expressao . MINUS expressao
+    (27) expressao -> expressao . TIMES expressao
+    (28) expressao -> expressao . DIVIDE expressao
 
-    ID              shift and go to state 38
-    NUMBER          shift and go to state 39
-    LBRACKET        shift and go to state 40
+    SEMICOLON       reduce using rule 26 (expressao -> expressao MINUS expressao .)
+    PLUS            reduce using rule 26 (expressao -> expressao MINUS expressao .)
+    MINUS           reduce using rule 26 (expressao -> expressao MINUS expressao .)
+    RBRACKET        reduce using rule 26 (expressao -> expressao MINUS expressao .)
+    GT              reduce using rule 26 (expressao -> expressao MINUS expressao .)
+    LT              reduce using rule 26 (expressao -> expressao MINUS expressao .)
+    GE              reduce using rule 26 (expressao -> expressao MINUS expressao .)
+    LE              reduce using rule 26 (expressao -> expressao MINUS expressao .)
+    EQ              reduce using rule 26 (expressao -> expressao MINUS expressao .)
+    JUNGLE_DIFF     reduce using rule 26 (expressao -> expressao MINUS expressao .)
+    OR              reduce using rule 26 (expressao -> expressao MINUS expressao .)
+    AND             reduce using rule 26 (expressao -> expressao MINUS expressao .)
+    RCBRACKET       reduce using rule 26 (expressao -> expressao MINUS expressao .)
+    TIMES           shift and go to state 67
+    DIVIDE          shift and go to state 68
 
-    expressao                      shift and go to state 96
-    fator                          shift and go to state 37
+  ! TIMES           [ reduce using rule 26 (expressao -> expressao MINUS expressao .) ]
+  ! DIVIDE          [ reduce using rule 26 (expressao -> expressao MINUS expressao .) ]
+  ! PLUS            [ shift and go to state 65 ]
+  ! MINUS           [ shift and go to state 66 ]
+
 
 state 90
 
-    (16) leitura -> READ LBRACKET texto RBRACKET . SEMICOLON
+    (27) expressao -> expressao TIMES expressao .
+    (25) expressao -> expressao . PLUS expressao
+    (26) expressao -> expressao . MINUS expressao
+    (27) expressao -> expressao . TIMES expressao
+    (28) expressao -> expressao . DIVIDE expressao
 
-    SEMICOLON       shift and go to state 97
+    SEMICOLON       reduce using rule 27 (expressao -> expressao TIMES expressao .)
+    PLUS            reduce using rule 27 (expressao -> expressao TIMES expressao .)
+    MINUS           reduce using rule 27 (expressao -> expressao TIMES expressao .)
+    TIMES           reduce using rule 27 (expressao -> expressao TIMES expressao .)
+    DIVIDE          reduce using rule 27 (expressao -> expressao TIMES expressao .)
+    RBRACKET        reduce using rule 27 (expressao -> expressao TIMES expressao .)
+    GT              reduce using rule 27 (expressao -> expressao TIMES expressao .)
+    LT              reduce using rule 27 (expressao -> expressao TIMES expressao .)
+    GE              reduce using rule 27 (expressao -> expressao TIMES expressao .)
+    LE              reduce using rule 27 (expressao -> expressao TIMES expressao .)
+    EQ              reduce using rule 27 (expressao -> expressao TIMES expressao .)
+    JUNGLE_DIFF     reduce using rule 27 (expressao -> expressao TIMES expressao .)
+    OR              reduce using rule 27 (expressao -> expressao TIMES expressao .)
+    AND             reduce using rule 27 (expressao -> expressao TIMES expressao .)
+    RCBRACKET       reduce using rule 27 (expressao -> expressao TIMES expressao .)
+
+  ! PLUS            [ shift and go to state 65 ]
+  ! MINUS           [ shift and go to state 66 ]
+  ! TIMES           [ shift and go to state 67 ]
+  ! DIVIDE          [ shift and go to state 68 ]
 
 
 state 91
 
-    (19) escrita -> WRITE LBRACKET argumento RBRACKET SEMICOLON .
+    (28) expressao -> expressao DIVIDE expressao .
+    (25) expressao -> expressao . PLUS expressao
+    (26) expressao -> expressao . MINUS expressao
+    (27) expressao -> expressao . TIMES expressao
+    (28) expressao -> expressao . DIVIDE expressao
 
-    ID              reduce using rule 19 (escrita -> WRITE LBRACKET argumento RBRACKET SEMICOLON .)
-    WRITE           reduce using rule 19 (escrita -> WRITE LBRACKET argumento RBRACKET SEMICOLON .)
-    IF              reduce using rule 19 (escrita -> WRITE LBRACKET argumento RBRACKET SEMICOLON .)
-    FOR             reduce using rule 19 (escrita -> WRITE LBRACKET argumento RBRACKET SEMICOLON .)
-    WHILE           reduce using rule 19 (escrita -> WRITE LBRACKET argumento RBRACKET SEMICOLON .)
-    $end            reduce using rule 19 (escrita -> WRITE LBRACKET argumento RBRACKET SEMICOLON .)
-    RETURN          reduce using rule 19 (escrita -> WRITE LBRACKET argumento RBRACKET SEMICOLON .)
-    ELSE            reduce using rule 19 (escrita -> WRITE LBRACKET argumento RBRACKET SEMICOLON .)
+    SEMICOLON       reduce using rule 28 (expressao -> expressao DIVIDE expressao .)
+    PLUS            reduce using rule 28 (expressao -> expressao DIVIDE expressao .)
+    MINUS           reduce using rule 28 (expressao -> expressao DIVIDE expressao .)
+    TIMES           reduce using rule 28 (expressao -> expressao DIVIDE expressao .)
+    DIVIDE          reduce using rule 28 (expressao -> expressao DIVIDE expressao .)
+    RBRACKET        reduce using rule 28 (expressao -> expressao DIVIDE expressao .)
+    GT              reduce using rule 28 (expressao -> expressao DIVIDE expressao .)
+    LT              reduce using rule 28 (expressao -> expressao DIVIDE expressao .)
+    GE              reduce using rule 28 (expressao -> expressao DIVIDE expressao .)
+    LE              reduce using rule 28 (expressao -> expressao DIVIDE expressao .)
+    EQ              reduce using rule 28 (expressao -> expressao DIVIDE expressao .)
+    JUNGLE_DIFF     reduce using rule 28 (expressao -> expressao DIVIDE expressao .)
+    OR              reduce using rule 28 (expressao -> expressao DIVIDE expressao .)
+    AND             reduce using rule 28 (expressao -> expressao DIVIDE expressao .)
+    RCBRACKET       reduce using rule 28 (expressao -> expressao DIVIDE expressao .)
+
+  ! PLUS            [ shift and go to state 65 ]
+  ! MINUS           [ shift and go to state 66 ]
+  ! TIMES           [ shift and go to state 67 ]
+  ! DIVIDE          [ shift and go to state 68 ]
 
 
 state 92
 
-    (22) texto -> QUOTE STRING QUOTE .
+    (31) fator -> LBRACKET expressao RBRACKET .
 
-    RBRACKET        reduce using rule 22 (texto -> QUOTE STRING QUOTE .)
+    SEMICOLON       reduce using rule 31 (fator -> LBRACKET expressao RBRACKET .)
+    PLUS            reduce using rule 31 (fator -> LBRACKET expressao RBRACKET .)
+    MINUS           reduce using rule 31 (fator -> LBRACKET expressao RBRACKET .)
+    TIMES           reduce using rule 31 (fator -> LBRACKET expressao RBRACKET .)
+    DIVIDE          reduce using rule 31 (fator -> LBRACKET expressao RBRACKET .)
+    RBRACKET        reduce using rule 31 (fator -> LBRACKET expressao RBRACKET .)
+    GT              reduce using rule 31 (fator -> LBRACKET expressao RBRACKET .)
+    LT              reduce using rule 31 (fator -> LBRACKET expressao RBRACKET .)
+    GE              reduce using rule 31 (fator -> LBRACKET expressao RBRACKET .)
+    LE              reduce using rule 31 (fator -> LBRACKET expressao RBRACKET .)
+    EQ              reduce using rule 31 (fator -> LBRACKET expressao RBRACKET .)
+    JUNGLE_DIFF     reduce using rule 31 (fator -> LBRACKET expressao RBRACKET .)
+    OR              reduce using rule 31 (fator -> LBRACKET expressao RBRACKET .)
+    AND             reduce using rule 31 (fator -> LBRACKET expressao RBRACKET .)
+    RCBRACKET       reduce using rule 31 (fator -> LBRACKET expressao RBRACKET .)
 
 
 state 93
 
-    (32) selecao -> IF condicao : comandos ELSE . comandos
-    (9) comandos -> . comando
-    (10) comandos -> . comandos comando
-    (11) comando -> . atribuicao
-    (12) comando -> . escrita
-    (13) comando -> . selecao
-    (14) comando -> . repeticao
-    (15) comando -> . call
-    (17) atribuicao -> . ID ASSIGN expressao SEMICOLON
-    (18) atribuicao -> . ID ASSIGN leitura SEMICOLON
-    (19) escrita -> . WRITE LBRACKET argumento RBRACKET SEMICOLON
-    (31) selecao -> . IF condicao : comandos
-    (32) selecao -> . IF condicao : comandos ELSE comandos
-    (33) repeticao -> . FOR LBRACKET declaracao SEMICOLON condicao SEMICOLON incrementacao RBRACKET : comando
-    (34) repeticao -> . WHILE LBRACKET condicao RBRACKET : comandos
-    (47) call -> . ID LBRACKET RBRACKET SEMICOLON
+    (20) escrita -> WRITE LBRACKET argumento RBRACKET SEMICOLON .
 
-    ID              shift and go to state 32
-    WRITE           shift and go to state 22
-    IF              shift and go to state 23
-    FOR             shift and go to state 24
-    WHILE           shift and go to state 25
+    ID              reduce using rule 20 (escrita -> WRITE LBRACKET argumento RBRACKET SEMICOLON .)
+    WRITE           reduce using rule 20 (escrita -> WRITE LBRACKET argumento RBRACKET SEMICOLON .)
+    IF              reduce using rule 20 (escrita -> WRITE LBRACKET argumento RBRACKET SEMICOLON .)
+    FOR             reduce using rule 20 (escrita -> WRITE LBRACKET argumento RBRACKET SEMICOLON .)
+    WHILE           reduce using rule 20 (escrita -> WRITE LBRACKET argumento RBRACKET SEMICOLON .)
+    $end            reduce using rule 20 (escrita -> WRITE LBRACKET argumento RBRACKET SEMICOLON .)
+    RETURN          reduce using rule 20 (escrita -> WRITE LBRACKET argumento RBRACKET SEMICOLON .)
+    RCBRACKET       reduce using rule 20 (escrita -> WRITE LBRACKET argumento RBRACKET SEMICOLON .)
 
-    comandos                       shift and go to state 98
-    comando                        shift and go to state 16
-    atribuicao                     shift and go to state 17
-    escrita                        shift and go to state 18
-    selecao                        shift and go to state 19
-    repeticao                      shift and go to state 20
-    call                           shift and go to state 21
 
 state 94
 
-    (33) repeticao -> FOR LBRACKET declaracao SEMICOLON condicao . SEMICOLON incrementacao RBRACKET : comando
+    (23) texto -> QUOTE STRING QUOTE .
 
-    SEMICOLON       shift and go to state 99
+    RBRACKET        reduce using rule 23 (texto -> QUOTE STRING QUOTE .)
 
 
 state 95
 
-    (34) repeticao -> WHILE LBRACKET condicao RBRACKET : . comandos
+    (32) selecao -> IF LBRACKET condicao RBRACKET LCBRACKET . comandos RCBRACKET
+    (33) selecao -> IF LBRACKET condicao RBRACKET LCBRACKET . comandos RCBRACKET ELSE LCBRACKET comandos RCBRACKET
     (9) comandos -> . comando
     (10) comandos -> . comandos comando
     (11) comando -> . atribuicao
@@ -1591,283 +1578,493 @@ state 95
     (13) comando -> . selecao
     (14) comando -> . repeticao
     (15) comando -> . call
-    (17) atribuicao -> . ID ASSIGN expressao SEMICOLON
-    (18) atribuicao -> . ID ASSIGN leitura SEMICOLON
-    (19) escrita -> . WRITE LBRACKET argumento RBRACKET SEMICOLON
-    (31) selecao -> . IF condicao : comandos
-    (32) selecao -> . IF condicao : comandos ELSE comandos
-    (33) repeticao -> . FOR LBRACKET declaracao SEMICOLON condicao SEMICOLON incrementacao RBRACKET : comando
-    (34) repeticao -> . WHILE LBRACKET condicao RBRACKET : comandos
-    (47) call -> . ID LBRACKET RBRACKET SEMICOLON
+    (16) comando -> . incrementacao SEMICOLON
+    (18) atribuicao -> . ID ASSIGN expressao SEMICOLON
+    (19) atribuicao -> . ID ASSIGN leitura
+    (20) escrita -> . WRITE LBRACKET argumento RBRACKET SEMICOLON
+    (32) selecao -> . IF LBRACKET condicao RBRACKET LCBRACKET comandos RCBRACKET
+    (33) selecao -> . IF LBRACKET condicao RBRACKET LCBRACKET comandos RCBRACKET ELSE LCBRACKET comandos RCBRACKET
+    (34) repeticao -> . FOR LBRACKET declaracao condicao SEMICOLON incrementacao RBRACKET LCBRACKET comandos RCBRACKET
+    (35) repeticao -> . WHILE LBRACKET condicao RBRACKET LCBRACKET comandos RCBRACKET
+    (49) call -> . ID LBRACKET RBRACKET SEMICOLON
+    (36) incrementacao -> . ID INCREMENT
+    (37) incrementacao -> . ID DECREMENT
 
-    ID              shift and go to state 32
-    WRITE           shift and go to state 22
-    IF              shift and go to state 23
-    FOR             shift and go to state 24
-    WHILE           shift and go to state 25
+    ID              shift and go to state 35
+    WRITE           shift and go to state 23
+    IF              shift and go to state 24
+    FOR             shift and go to state 25
+    WHILE           shift and go to state 26
 
-    comandos                       shift and go to state 100
+    comandos                       shift and go to state 101
     comando                        shift and go to state 16
     atribuicao                     shift and go to state 17
     escrita                        shift and go to state 18
     selecao                        shift and go to state 19
     repeticao                      shift and go to state 20
     call                           shift and go to state 21
+    incrementacao                  shift and go to state 22
 
 state 96
 
-    (46) funcao -> FUNCTION ID : comandos RETURN expressao . SEMICOLON
-    (24) expressao -> expressao . PLUS expressao
-    (25) expressao -> expressao . MINUS expressao
-    (26) expressao -> expressao . TIMES expressao
-    (27) expressao -> expressao . DIVIDE expressao
+    (38) condicao -> condicao operador condicao .
+    (38) condicao -> condicao . operador condicao
+    (40) operador -> . GT
+    (41) operador -> . LT
+    (42) operador -> . GE
+    (43) operador -> . LE
+    (44) operador -> . EQ
+    (45) operador -> . JUNGLE_DIFF
+    (46) operador -> . OR
+    (47) operador -> . AND
 
-    SEMICOLON       shift and go to state 101
-    PLUS            shift and go to state 57
-    MINUS           shift and go to state 58
-    TIMES           shift and go to state 59
-    DIVIDE          shift and go to state 60
+  ! shift/reduce conflict for GT resolved as shift
+  ! shift/reduce conflict for LT resolved as shift
+  ! shift/reduce conflict for GE resolved as shift
+  ! shift/reduce conflict for LE resolved as shift
+  ! shift/reduce conflict for EQ resolved as shift
+  ! shift/reduce conflict for JUNGLE_DIFF resolved as shift
+  ! shift/reduce conflict for OR resolved as shift
+  ! shift/reduce conflict for AND resolved as shift
+    RBRACKET        reduce using rule 38 (condicao -> condicao operador condicao .)
+    SEMICOLON       reduce using rule 38 (condicao -> condicao operador condicao .)
+    GT              shift and go to state 76
+    LT              shift and go to state 77
+    GE              shift and go to state 78
+    LE              shift and go to state 79
+    EQ              shift and go to state 80
+    JUNGLE_DIFF     shift and go to state 81
+    OR              shift and go to state 82
+    AND             shift and go to state 83
 
+  ! GT              [ reduce using rule 38 (condicao -> condicao operador condicao .) ]
+  ! LT              [ reduce using rule 38 (condicao -> condicao operador condicao .) ]
+  ! GE              [ reduce using rule 38 (condicao -> condicao operador condicao .) ]
+  ! LE              [ reduce using rule 38 (condicao -> condicao operador condicao .) ]
+  ! EQ              [ reduce using rule 38 (condicao -> condicao operador condicao .) ]
+  ! JUNGLE_DIFF     [ reduce using rule 38 (condicao -> condicao operador condicao .) ]
+  ! OR              [ reduce using rule 38 (condicao -> condicao operador condicao .) ]
+  ! AND             [ reduce using rule 38 (condicao -> condicao operador condicao .) ]
+
+    operador                       shift and go to state 75
 
 state 97
 
-    (16) leitura -> READ LBRACKET texto RBRACKET SEMICOLON .
-
-    ID              reduce using rule 16 (leitura -> READ LBRACKET texto RBRACKET SEMICOLON .)
-    FUNCTION        reduce using rule 16 (leitura -> READ LBRACKET texto RBRACKET SEMICOLON .)
-    WRITE           reduce using rule 16 (leitura -> READ LBRACKET texto RBRACKET SEMICOLON .)
-    IF              reduce using rule 16 (leitura -> READ LBRACKET texto RBRACKET SEMICOLON .)
-    FOR             reduce using rule 16 (leitura -> READ LBRACKET texto RBRACKET SEMICOLON .)
-    WHILE           reduce using rule 16 (leitura -> READ LBRACKET texto RBRACKET SEMICOLON .)
-    SEMICOLON       reduce using rule 16 (leitura -> READ LBRACKET texto RBRACKET SEMICOLON .)
-
-
-state 98
-
-    (32) selecao -> IF condicao : comandos ELSE comandos .
-    (10) comandos -> comandos . comando
-    (11) comando -> . atribuicao
-    (12) comando -> . escrita
-    (13) comando -> . selecao
-    (14) comando -> . repeticao
-    (15) comando -> . call
-    (17) atribuicao -> . ID ASSIGN expressao SEMICOLON
-    (18) atribuicao -> . ID ASSIGN leitura SEMICOLON
-    (19) escrita -> . WRITE LBRACKET argumento RBRACKET SEMICOLON
-    (31) selecao -> . IF condicao : comandos
-    (32) selecao -> . IF condicao : comandos ELSE comandos
-    (33) repeticao -> . FOR LBRACKET declaracao SEMICOLON condicao SEMICOLON incrementacao RBRACKET : comando
-    (34) repeticao -> . WHILE LBRACKET condicao RBRACKET : comandos
-    (47) call -> . ID LBRACKET RBRACKET SEMICOLON
-
-  ! shift/reduce conflict for ID resolved as shift
-  ! shift/reduce conflict for WRITE resolved as shift
-  ! shift/reduce conflict for IF resolved as shift
-  ! shift/reduce conflict for FOR resolved as shift
-  ! shift/reduce conflict for WHILE resolved as shift
-    $end            reduce using rule 32 (selecao -> IF condicao : comandos ELSE comandos .)
-    RETURN          reduce using rule 32 (selecao -> IF condicao : comandos ELSE comandos .)
-    ELSE            reduce using rule 32 (selecao -> IF condicao : comandos ELSE comandos .)
-    ID              shift and go to state 32
-    WRITE           shift and go to state 22
-    IF              shift and go to state 23
-    FOR             shift and go to state 24
-    WHILE           shift and go to state 25
-
-  ! ID              [ reduce using rule 32 (selecao -> IF condicao : comandos ELSE comandos .) ]
-  ! WRITE           [ reduce using rule 32 (selecao -> IF condicao : comandos ELSE comandos .) ]
-  ! IF              [ reduce using rule 32 (selecao -> IF condicao : comandos ELSE comandos .) ]
-  ! FOR             [ reduce using rule 32 (selecao -> IF condicao : comandos ELSE comandos .) ]
-  ! WHILE           [ reduce using rule 32 (selecao -> IF condicao : comandos ELSE comandos .) ]
-
-    comando                        shift and go to state 33
-    atribuicao                     shift and go to state 17
-    escrita                        shift and go to state 18
-    selecao                        shift and go to state 19
-    repeticao                      shift and go to state 20
-    call                           shift and go to state 21
-
-state 99
-
-    (33) repeticao -> FOR LBRACKET declaracao SEMICOLON condicao SEMICOLON . incrementacao RBRACKET : comando
-    (35) incrementacao -> . ID INCREMENT
-    (36) incrementacao -> . ID DECREMENT
+    (34) repeticao -> FOR LBRACKET declaracao condicao SEMICOLON . incrementacao RBRACKET LCBRACKET comandos RCBRACKET
+    (36) incrementacao -> . ID INCREMENT
+    (37) incrementacao -> . ID DECREMENT
 
     ID              shift and go to state 103
 
     incrementacao                  shift and go to state 102
 
+state 98
+
+    (35) repeticao -> WHILE LBRACKET condicao RBRACKET LCBRACKET . comandos RCBRACKET
+    (9) comandos -> . comando
+    (10) comandos -> . comandos comando
+    (11) comando -> . atribuicao
+    (12) comando -> . escrita
+    (13) comando -> . selecao
+    (14) comando -> . repeticao
+    (15) comando -> . call
+    (16) comando -> . incrementacao SEMICOLON
+    (18) atribuicao -> . ID ASSIGN expressao SEMICOLON
+    (19) atribuicao -> . ID ASSIGN leitura
+    (20) escrita -> . WRITE LBRACKET argumento RBRACKET SEMICOLON
+    (32) selecao -> . IF LBRACKET condicao RBRACKET LCBRACKET comandos RCBRACKET
+    (33) selecao -> . IF LBRACKET condicao RBRACKET LCBRACKET comandos RCBRACKET ELSE LCBRACKET comandos RCBRACKET
+    (34) repeticao -> . FOR LBRACKET declaracao condicao SEMICOLON incrementacao RBRACKET LCBRACKET comandos RCBRACKET
+    (35) repeticao -> . WHILE LBRACKET condicao RBRACKET LCBRACKET comandos RCBRACKET
+    (49) call -> . ID LBRACKET RBRACKET SEMICOLON
+    (36) incrementacao -> . ID INCREMENT
+    (37) incrementacao -> . ID DECREMENT
+
+    ID              shift and go to state 35
+    WRITE           shift and go to state 23
+    IF              shift and go to state 24
+    FOR             shift and go to state 25
+    WHILE           shift and go to state 26
+
+    comandos                       shift and go to state 104
+    comando                        shift and go to state 16
+    atribuicao                     shift and go to state 17
+    escrita                        shift and go to state 18
+    selecao                        shift and go to state 19
+    repeticao                      shift and go to state 20
+    call                           shift and go to state 21
+    incrementacao                  shift and go to state 22
+
+state 99
+
+    (48) funcao -> FUNCTION ID LCBRACKET comandos RETURN expressao . RCBRACKET SEMICOLON
+    (25) expressao -> expressao . PLUS expressao
+    (26) expressao -> expressao . MINUS expressao
+    (27) expressao -> expressao . TIMES expressao
+    (28) expressao -> expressao . DIVIDE expressao
+
+    RCBRACKET       shift and go to state 105
+    PLUS            shift and go to state 65
+    MINUS           shift and go to state 66
+    TIMES           shift and go to state 67
+    DIVIDE          shift and go to state 68
+
+
 state 100
 
-    (34) repeticao -> WHILE LBRACKET condicao RBRACKET : comandos .
+    (17) leitura -> READ LBRACKET texto RBRACKET SEMICOLON .
+
+    ID              reduce using rule 17 (leitura -> READ LBRACKET texto RBRACKET SEMICOLON .)
+    FUNCTION        reduce using rule 17 (leitura -> READ LBRACKET texto RBRACKET SEMICOLON .)
+    WRITE           reduce using rule 17 (leitura -> READ LBRACKET texto RBRACKET SEMICOLON .)
+    IF              reduce using rule 17 (leitura -> READ LBRACKET texto RBRACKET SEMICOLON .)
+    FOR             reduce using rule 17 (leitura -> READ LBRACKET texto RBRACKET SEMICOLON .)
+    WHILE           reduce using rule 17 (leitura -> READ LBRACKET texto RBRACKET SEMICOLON .)
+    NUMBER          reduce using rule 17 (leitura -> READ LBRACKET texto RBRACKET SEMICOLON .)
+    LBRACKET        reduce using rule 17 (leitura -> READ LBRACKET texto RBRACKET SEMICOLON .)
+    $end            reduce using rule 17 (leitura -> READ LBRACKET texto RBRACKET SEMICOLON .)
+    RETURN          reduce using rule 17 (leitura -> READ LBRACKET texto RBRACKET SEMICOLON .)
+    RCBRACKET       reduce using rule 17 (leitura -> READ LBRACKET texto RBRACKET SEMICOLON .)
+
+
+state 101
+
+    (32) selecao -> IF LBRACKET condicao RBRACKET LCBRACKET comandos . RCBRACKET
+    (33) selecao -> IF LBRACKET condicao RBRACKET LCBRACKET comandos . RCBRACKET ELSE LCBRACKET comandos RCBRACKET
     (10) comandos -> comandos . comando
     (11) comando -> . atribuicao
     (12) comando -> . escrita
     (13) comando -> . selecao
     (14) comando -> . repeticao
     (15) comando -> . call
-    (17) atribuicao -> . ID ASSIGN expressao SEMICOLON
-    (18) atribuicao -> . ID ASSIGN leitura SEMICOLON
-    (19) escrita -> . WRITE LBRACKET argumento RBRACKET SEMICOLON
-    (31) selecao -> . IF condicao : comandos
-    (32) selecao -> . IF condicao : comandos ELSE comandos
-    (33) repeticao -> . FOR LBRACKET declaracao SEMICOLON condicao SEMICOLON incrementacao RBRACKET : comando
-    (34) repeticao -> . WHILE LBRACKET condicao RBRACKET : comandos
-    (47) call -> . ID LBRACKET RBRACKET SEMICOLON
+    (16) comando -> . incrementacao SEMICOLON
+    (18) atribuicao -> . ID ASSIGN expressao SEMICOLON
+    (19) atribuicao -> . ID ASSIGN leitura
+    (20) escrita -> . WRITE LBRACKET argumento RBRACKET SEMICOLON
+    (32) selecao -> . IF LBRACKET condicao RBRACKET LCBRACKET comandos RCBRACKET
+    (33) selecao -> . IF LBRACKET condicao RBRACKET LCBRACKET comandos RCBRACKET ELSE LCBRACKET comandos RCBRACKET
+    (34) repeticao -> . FOR LBRACKET declaracao condicao SEMICOLON incrementacao RBRACKET LCBRACKET comandos RCBRACKET
+    (35) repeticao -> . WHILE LBRACKET condicao RBRACKET LCBRACKET comandos RCBRACKET
+    (49) call -> . ID LBRACKET RBRACKET SEMICOLON
+    (36) incrementacao -> . ID INCREMENT
+    (37) incrementacao -> . ID DECREMENT
 
-  ! shift/reduce conflict for ID resolved as shift
-  ! shift/reduce conflict for WRITE resolved as shift
-  ! shift/reduce conflict for IF resolved as shift
-  ! shift/reduce conflict for FOR resolved as shift
-  ! shift/reduce conflict for WHILE resolved as shift
-    $end            reduce using rule 34 (repeticao -> WHILE LBRACKET condicao RBRACKET : comandos .)
-    RETURN          reduce using rule 34 (repeticao -> WHILE LBRACKET condicao RBRACKET : comandos .)
-    ELSE            reduce using rule 34 (repeticao -> WHILE LBRACKET condicao RBRACKET : comandos .)
-    ID              shift and go to state 32
-    WRITE           shift and go to state 22
-    IF              shift and go to state 23
-    FOR             shift and go to state 24
-    WHILE           shift and go to state 25
+    RCBRACKET       shift and go to state 106
+    ID              shift and go to state 35
+    WRITE           shift and go to state 23
+    IF              shift and go to state 24
+    FOR             shift and go to state 25
+    WHILE           shift and go to state 26
 
-  ! ID              [ reduce using rule 34 (repeticao -> WHILE LBRACKET condicao RBRACKET : comandos .) ]
-  ! WRITE           [ reduce using rule 34 (repeticao -> WHILE LBRACKET condicao RBRACKET : comandos .) ]
-  ! IF              [ reduce using rule 34 (repeticao -> WHILE LBRACKET condicao RBRACKET : comandos .) ]
-  ! FOR             [ reduce using rule 34 (repeticao -> WHILE LBRACKET condicao RBRACKET : comandos .) ]
-  ! WHILE           [ reduce using rule 34 (repeticao -> WHILE LBRACKET condicao RBRACKET : comandos .) ]
-
-    comando                        shift and go to state 33
+    comando                        shift and go to state 36
     atribuicao                     shift and go to state 17
     escrita                        shift and go to state 18
     selecao                        shift and go to state 19
     repeticao                      shift and go to state 20
     call                           shift and go to state 21
-
-state 101
-
-    (46) funcao -> FUNCTION ID : comandos RETURN expressao SEMICOLON .
-
-    ID              reduce using rule 46 (funcao -> FUNCTION ID : comandos RETURN expressao SEMICOLON .)
-    FUNCTION        reduce using rule 46 (funcao -> FUNCTION ID : comandos RETURN expressao SEMICOLON .)
-    WRITE           reduce using rule 46 (funcao -> FUNCTION ID : comandos RETURN expressao SEMICOLON .)
-    IF              reduce using rule 46 (funcao -> FUNCTION ID : comandos RETURN expressao SEMICOLON .)
-    FOR             reduce using rule 46 (funcao -> FUNCTION ID : comandos RETURN expressao SEMICOLON .)
-    WHILE           reduce using rule 46 (funcao -> FUNCTION ID : comandos RETURN expressao SEMICOLON .)
-    SEMICOLON       reduce using rule 46 (funcao -> FUNCTION ID : comandos RETURN expressao SEMICOLON .)
-
+    incrementacao                  shift and go to state 22
 
 state 102
 
-    (33) repeticao -> FOR LBRACKET declaracao SEMICOLON condicao SEMICOLON incrementacao . RBRACKET : comando
+    (34) repeticao -> FOR LBRACKET declaracao condicao SEMICOLON incrementacao . RBRACKET LCBRACKET comandos RCBRACKET
 
-    RBRACKET        shift and go to state 104
+    RBRACKET        shift and go to state 107
 
 
 state 103
 
-    (35) incrementacao -> ID . INCREMENT
-    (36) incrementacao -> ID . DECREMENT
+    (36) incrementacao -> ID . INCREMENT
+    (37) incrementacao -> ID . DECREMENT
 
-    INCREMENT       shift and go to state 105
-    DECREMENT       shift and go to state 106
+    INCREMENT       shift and go to state 33
+    DECREMENT       shift and go to state 34
 
 
 state 104
 
-    (33) repeticao -> FOR LBRACKET declaracao SEMICOLON condicao SEMICOLON incrementacao RBRACKET . : comando
-
-    :               shift and go to state 107
-
-
-state 105
-
-    (35) incrementacao -> ID INCREMENT .
-
-    RBRACKET        reduce using rule 35 (incrementacao -> ID INCREMENT .)
-
-
-state 106
-
-    (36) incrementacao -> ID DECREMENT .
-
-    RBRACKET        reduce using rule 36 (incrementacao -> ID DECREMENT .)
-
-
-state 107
-
-    (33) repeticao -> FOR LBRACKET declaracao SEMICOLON condicao SEMICOLON incrementacao RBRACKET : . comando
+    (35) repeticao -> WHILE LBRACKET condicao RBRACKET LCBRACKET comandos . RCBRACKET
+    (10) comandos -> comandos . comando
     (11) comando -> . atribuicao
     (12) comando -> . escrita
     (13) comando -> . selecao
     (14) comando -> . repeticao
     (15) comando -> . call
-    (17) atribuicao -> . ID ASSIGN expressao SEMICOLON
-    (18) atribuicao -> . ID ASSIGN leitura SEMICOLON
-    (19) escrita -> . WRITE LBRACKET argumento RBRACKET SEMICOLON
-    (31) selecao -> . IF condicao : comandos
-    (32) selecao -> . IF condicao : comandos ELSE comandos
-    (33) repeticao -> . FOR LBRACKET declaracao SEMICOLON condicao SEMICOLON incrementacao RBRACKET : comando
-    (34) repeticao -> . WHILE LBRACKET condicao RBRACKET : comandos
-    (47) call -> . ID LBRACKET RBRACKET SEMICOLON
+    (16) comando -> . incrementacao SEMICOLON
+    (18) atribuicao -> . ID ASSIGN expressao SEMICOLON
+    (19) atribuicao -> . ID ASSIGN leitura
+    (20) escrita -> . WRITE LBRACKET argumento RBRACKET SEMICOLON
+    (32) selecao -> . IF LBRACKET condicao RBRACKET LCBRACKET comandos RCBRACKET
+    (33) selecao -> . IF LBRACKET condicao RBRACKET LCBRACKET comandos RCBRACKET ELSE LCBRACKET comandos RCBRACKET
+    (34) repeticao -> . FOR LBRACKET declaracao condicao SEMICOLON incrementacao RBRACKET LCBRACKET comandos RCBRACKET
+    (35) repeticao -> . WHILE LBRACKET condicao RBRACKET LCBRACKET comandos RCBRACKET
+    (49) call -> . ID LBRACKET RBRACKET SEMICOLON
+    (36) incrementacao -> . ID INCREMENT
+    (37) incrementacao -> . ID DECREMENT
 
-    ID              shift and go to state 32
-    WRITE           shift and go to state 22
-    IF              shift and go to state 23
-    FOR             shift and go to state 24
-    WHILE           shift and go to state 25
+    RCBRACKET       shift and go to state 108
+    ID              shift and go to state 35
+    WRITE           shift and go to state 23
+    IF              shift and go to state 24
+    FOR             shift and go to state 25
+    WHILE           shift and go to state 26
 
-    comando                        shift and go to state 108
+    comando                        shift and go to state 36
+    atribuicao                     shift and go to state 17
+    escrita                        shift and go to state 18
+    selecao                        shift and go to state 19
+    repeticao                      shift and go to state 20
+    call                           shift and go to state 21
+    incrementacao                  shift and go to state 22
+
+state 105
+
+    (48) funcao -> FUNCTION ID LCBRACKET comandos RETURN expressao RCBRACKET . SEMICOLON
+
+    SEMICOLON       shift and go to state 109
+
+
+state 106
+
+    (32) selecao -> IF LBRACKET condicao RBRACKET LCBRACKET comandos RCBRACKET .
+    (33) selecao -> IF LBRACKET condicao RBRACKET LCBRACKET comandos RCBRACKET . ELSE LCBRACKET comandos RCBRACKET
+
+    ID              reduce using rule 32 (selecao -> IF LBRACKET condicao RBRACKET LCBRACKET comandos RCBRACKET .)
+    WRITE           reduce using rule 32 (selecao -> IF LBRACKET condicao RBRACKET LCBRACKET comandos RCBRACKET .)
+    IF              reduce using rule 32 (selecao -> IF LBRACKET condicao RBRACKET LCBRACKET comandos RCBRACKET .)
+    FOR             reduce using rule 32 (selecao -> IF LBRACKET condicao RBRACKET LCBRACKET comandos RCBRACKET .)
+    WHILE           reduce using rule 32 (selecao -> IF LBRACKET condicao RBRACKET LCBRACKET comandos RCBRACKET .)
+    $end            reduce using rule 32 (selecao -> IF LBRACKET condicao RBRACKET LCBRACKET comandos RCBRACKET .)
+    RETURN          reduce using rule 32 (selecao -> IF LBRACKET condicao RBRACKET LCBRACKET comandos RCBRACKET .)
+    RCBRACKET       reduce using rule 32 (selecao -> IF LBRACKET condicao RBRACKET LCBRACKET comandos RCBRACKET .)
+    ELSE            shift and go to state 110
+
+
+state 107
+
+    (34) repeticao -> FOR LBRACKET declaracao condicao SEMICOLON incrementacao RBRACKET . LCBRACKET comandos RCBRACKET
+
+    LCBRACKET       shift and go to state 111
+
+
+state 108
+
+    (35) repeticao -> WHILE LBRACKET condicao RBRACKET LCBRACKET comandos RCBRACKET .
+
+    ID              reduce using rule 35 (repeticao -> WHILE LBRACKET condicao RBRACKET LCBRACKET comandos RCBRACKET .)
+    WRITE           reduce using rule 35 (repeticao -> WHILE LBRACKET condicao RBRACKET LCBRACKET comandos RCBRACKET .)
+    IF              reduce using rule 35 (repeticao -> WHILE LBRACKET condicao RBRACKET LCBRACKET comandos RCBRACKET .)
+    FOR             reduce using rule 35 (repeticao -> WHILE LBRACKET condicao RBRACKET LCBRACKET comandos RCBRACKET .)
+    WHILE           reduce using rule 35 (repeticao -> WHILE LBRACKET condicao RBRACKET LCBRACKET comandos RCBRACKET .)
+    $end            reduce using rule 35 (repeticao -> WHILE LBRACKET condicao RBRACKET LCBRACKET comandos RCBRACKET .)
+    RETURN          reduce using rule 35 (repeticao -> WHILE LBRACKET condicao RBRACKET LCBRACKET comandos RCBRACKET .)
+    RCBRACKET       reduce using rule 35 (repeticao -> WHILE LBRACKET condicao RBRACKET LCBRACKET comandos RCBRACKET .)
+
+
+state 109
+
+    (48) funcao -> FUNCTION ID LCBRACKET comandos RETURN expressao RCBRACKET SEMICOLON .
+
+    ID              reduce using rule 48 (funcao -> FUNCTION ID LCBRACKET comandos RETURN expressao RCBRACKET SEMICOLON .)
+    FUNCTION        reduce using rule 48 (funcao -> FUNCTION ID LCBRACKET comandos RETURN expressao RCBRACKET SEMICOLON .)
+    WRITE           reduce using rule 48 (funcao -> FUNCTION ID LCBRACKET comandos RETURN expressao RCBRACKET SEMICOLON .)
+    IF              reduce using rule 48 (funcao -> FUNCTION ID LCBRACKET comandos RETURN expressao RCBRACKET SEMICOLON .)
+    FOR             reduce using rule 48 (funcao -> FUNCTION ID LCBRACKET comandos RETURN expressao RCBRACKET SEMICOLON .)
+    WHILE           reduce using rule 48 (funcao -> FUNCTION ID LCBRACKET comandos RETURN expressao RCBRACKET SEMICOLON .)
+    NUMBER          reduce using rule 48 (funcao -> FUNCTION ID LCBRACKET comandos RETURN expressao RCBRACKET SEMICOLON .)
+    LBRACKET        reduce using rule 48 (funcao -> FUNCTION ID LCBRACKET comandos RETURN expressao RCBRACKET SEMICOLON .)
+
+
+state 110
+
+    (33) selecao -> IF LBRACKET condicao RBRACKET LCBRACKET comandos RCBRACKET ELSE . LCBRACKET comandos RCBRACKET
+
+    LCBRACKET       shift and go to state 112
+
+
+state 111
+
+    (34) repeticao -> FOR LBRACKET declaracao condicao SEMICOLON incrementacao RBRACKET LCBRACKET . comandos RCBRACKET
+    (9) comandos -> . comando
+    (10) comandos -> . comandos comando
+    (11) comando -> . atribuicao
+    (12) comando -> . escrita
+    (13) comando -> . selecao
+    (14) comando -> . repeticao
+    (15) comando -> . call
+    (16) comando -> . incrementacao SEMICOLON
+    (18) atribuicao -> . ID ASSIGN expressao SEMICOLON
+    (19) atribuicao -> . ID ASSIGN leitura
+    (20) escrita -> . WRITE LBRACKET argumento RBRACKET SEMICOLON
+    (32) selecao -> . IF LBRACKET condicao RBRACKET LCBRACKET comandos RCBRACKET
+    (33) selecao -> . IF LBRACKET condicao RBRACKET LCBRACKET comandos RCBRACKET ELSE LCBRACKET comandos RCBRACKET
+    (34) repeticao -> . FOR LBRACKET declaracao condicao SEMICOLON incrementacao RBRACKET LCBRACKET comandos RCBRACKET
+    (35) repeticao -> . WHILE LBRACKET condicao RBRACKET LCBRACKET comandos RCBRACKET
+    (49) call -> . ID LBRACKET RBRACKET SEMICOLON
+    (36) incrementacao -> . ID INCREMENT
+    (37) incrementacao -> . ID DECREMENT
+
+    ID              shift and go to state 35
+    WRITE           shift and go to state 23
+    IF              shift and go to state 24
+    FOR             shift and go to state 25
+    WHILE           shift and go to state 26
+
+    incrementacao                  shift and go to state 22
+    comandos                       shift and go to state 113
+    comando                        shift and go to state 16
     atribuicao                     shift and go to state 17
     escrita                        shift and go to state 18
     selecao                        shift and go to state 19
     repeticao                      shift and go to state 20
     call                           shift and go to state 21
 
-state 108
+state 112
 
-    (33) repeticao -> FOR LBRACKET declaracao SEMICOLON condicao SEMICOLON incrementacao RBRACKET : comando .
+    (33) selecao -> IF LBRACKET condicao RBRACKET LCBRACKET comandos RCBRACKET ELSE LCBRACKET . comandos RCBRACKET
+    (9) comandos -> . comando
+    (10) comandos -> . comandos comando
+    (11) comando -> . atribuicao
+    (12) comando -> . escrita
+    (13) comando -> . selecao
+    (14) comando -> . repeticao
+    (15) comando -> . call
+    (16) comando -> . incrementacao SEMICOLON
+    (18) atribuicao -> . ID ASSIGN expressao SEMICOLON
+    (19) atribuicao -> . ID ASSIGN leitura
+    (20) escrita -> . WRITE LBRACKET argumento RBRACKET SEMICOLON
+    (32) selecao -> . IF LBRACKET condicao RBRACKET LCBRACKET comandos RCBRACKET
+    (33) selecao -> . IF LBRACKET condicao RBRACKET LCBRACKET comandos RCBRACKET ELSE LCBRACKET comandos RCBRACKET
+    (34) repeticao -> . FOR LBRACKET declaracao condicao SEMICOLON incrementacao RBRACKET LCBRACKET comandos RCBRACKET
+    (35) repeticao -> . WHILE LBRACKET condicao RBRACKET LCBRACKET comandos RCBRACKET
+    (49) call -> . ID LBRACKET RBRACKET SEMICOLON
+    (36) incrementacao -> . ID INCREMENT
+    (37) incrementacao -> . ID DECREMENT
 
-    ID              reduce using rule 33 (repeticao -> FOR LBRACKET declaracao SEMICOLON condicao SEMICOLON incrementacao RBRACKET : comando .)
-    WRITE           reduce using rule 33 (repeticao -> FOR LBRACKET declaracao SEMICOLON condicao SEMICOLON incrementacao RBRACKET : comando .)
-    IF              reduce using rule 33 (repeticao -> FOR LBRACKET declaracao SEMICOLON condicao SEMICOLON incrementacao RBRACKET : comando .)
-    FOR             reduce using rule 33 (repeticao -> FOR LBRACKET declaracao SEMICOLON condicao SEMICOLON incrementacao RBRACKET : comando .)
-    WHILE           reduce using rule 33 (repeticao -> FOR LBRACKET declaracao SEMICOLON condicao SEMICOLON incrementacao RBRACKET : comando .)
-    $end            reduce using rule 33 (repeticao -> FOR LBRACKET declaracao SEMICOLON condicao SEMICOLON incrementacao RBRACKET : comando .)
-    RETURN          reduce using rule 33 (repeticao -> FOR LBRACKET declaracao SEMICOLON condicao SEMICOLON incrementacao RBRACKET : comando .)
-    ELSE            reduce using rule 33 (repeticao -> FOR LBRACKET declaracao SEMICOLON condicao SEMICOLON incrementacao RBRACKET : comando .)
+    ID              shift and go to state 35
+    WRITE           shift and go to state 23
+    IF              shift and go to state 24
+    FOR             shift and go to state 25
+    WHILE           shift and go to state 26
+
+    comandos                       shift and go to state 114
+    comando                        shift and go to state 16
+    atribuicao                     shift and go to state 17
+    escrita                        shift and go to state 18
+    selecao                        shift and go to state 19
+    repeticao                      shift and go to state 20
+    call                           shift and go to state 21
+    incrementacao                  shift and go to state 22
+
+state 113
+
+    (34) repeticao -> FOR LBRACKET declaracao condicao SEMICOLON incrementacao RBRACKET LCBRACKET comandos . RCBRACKET
+    (10) comandos -> comandos . comando
+    (11) comando -> . atribuicao
+    (12) comando -> . escrita
+    (13) comando -> . selecao
+    (14) comando -> . repeticao
+    (15) comando -> . call
+    (16) comando -> . incrementacao SEMICOLON
+    (18) atribuicao -> . ID ASSIGN expressao SEMICOLON
+    (19) atribuicao -> . ID ASSIGN leitura
+    (20) escrita -> . WRITE LBRACKET argumento RBRACKET SEMICOLON
+    (32) selecao -> . IF LBRACKET condicao RBRACKET LCBRACKET comandos RCBRACKET
+    (33) selecao -> . IF LBRACKET condicao RBRACKET LCBRACKET comandos RCBRACKET ELSE LCBRACKET comandos RCBRACKET
+    (34) repeticao -> . FOR LBRACKET declaracao condicao SEMICOLON incrementacao RBRACKET LCBRACKET comandos RCBRACKET
+    (35) repeticao -> . WHILE LBRACKET condicao RBRACKET LCBRACKET comandos RCBRACKET
+    (49) call -> . ID LBRACKET RBRACKET SEMICOLON
+    (36) incrementacao -> . ID INCREMENT
+    (37) incrementacao -> . ID DECREMENT
+
+    RCBRACKET       shift and go to state 115
+    ID              shift and go to state 35
+    WRITE           shift and go to state 23
+    IF              shift and go to state 24
+    FOR             shift and go to state 25
+    WHILE           shift and go to state 26
+
+    incrementacao                  shift and go to state 22
+    comando                        shift and go to state 36
+    atribuicao                     shift and go to state 17
+    escrita                        shift and go to state 18
+    selecao                        shift and go to state 19
+    repeticao                      shift and go to state 20
+    call                           shift and go to state 21
+
+state 114
+
+    (33) selecao -> IF LBRACKET condicao RBRACKET LCBRACKET comandos RCBRACKET ELSE LCBRACKET comandos . RCBRACKET
+    (10) comandos -> comandos . comando
+    (11) comando -> . atribuicao
+    (12) comando -> . escrita
+    (13) comando -> . selecao
+    (14) comando -> . repeticao
+    (15) comando -> . call
+    (16) comando -> . incrementacao SEMICOLON
+    (18) atribuicao -> . ID ASSIGN expressao SEMICOLON
+    (19) atribuicao -> . ID ASSIGN leitura
+    (20) escrita -> . WRITE LBRACKET argumento RBRACKET SEMICOLON
+    (32) selecao -> . IF LBRACKET condicao RBRACKET LCBRACKET comandos RCBRACKET
+    (33) selecao -> . IF LBRACKET condicao RBRACKET LCBRACKET comandos RCBRACKET ELSE LCBRACKET comandos RCBRACKET
+    (34) repeticao -> . FOR LBRACKET declaracao condicao SEMICOLON incrementacao RBRACKET LCBRACKET comandos RCBRACKET
+    (35) repeticao -> . WHILE LBRACKET condicao RBRACKET LCBRACKET comandos RCBRACKET
+    (49) call -> . ID LBRACKET RBRACKET SEMICOLON
+    (36) incrementacao -> . ID INCREMENT
+    (37) incrementacao -> . ID DECREMENT
+
+    RCBRACKET       shift and go to state 116
+    ID              shift and go to state 35
+    WRITE           shift and go to state 23
+    IF              shift and go to state 24
+    FOR             shift and go to state 25
+    WHILE           shift and go to state 26
+
+    comando                        shift and go to state 36
+    atribuicao                     shift and go to state 17
+    escrita                        shift and go to state 18
+    selecao                        shift and go to state 19
+    repeticao                      shift and go to state 20
+    call                           shift and go to state 21
+    incrementacao                  shift and go to state 22
+
+state 115
+
+    (34) repeticao -> FOR LBRACKET declaracao condicao SEMICOLON incrementacao RBRACKET LCBRACKET comandos RCBRACKET .
+
+    ID              reduce using rule 34 (repeticao -> FOR LBRACKET declaracao condicao SEMICOLON incrementacao RBRACKET LCBRACKET comandos RCBRACKET .)
+    WRITE           reduce using rule 34 (repeticao -> FOR LBRACKET declaracao condicao SEMICOLON incrementacao RBRACKET LCBRACKET comandos RCBRACKET .)
+    IF              reduce using rule 34 (repeticao -> FOR LBRACKET declaracao condicao SEMICOLON incrementacao RBRACKET LCBRACKET comandos RCBRACKET .)
+    FOR             reduce using rule 34 (repeticao -> FOR LBRACKET declaracao condicao SEMICOLON incrementacao RBRACKET LCBRACKET comandos RCBRACKET .)
+    WHILE           reduce using rule 34 (repeticao -> FOR LBRACKET declaracao condicao SEMICOLON incrementacao RBRACKET LCBRACKET comandos RCBRACKET .)
+    $end            reduce using rule 34 (repeticao -> FOR LBRACKET declaracao condicao SEMICOLON incrementacao RBRACKET LCBRACKET comandos RCBRACKET .)
+    RETURN          reduce using rule 34 (repeticao -> FOR LBRACKET declaracao condicao SEMICOLON incrementacao RBRACKET LCBRACKET comandos RCBRACKET .)
+    RCBRACKET       reduce using rule 34 (repeticao -> FOR LBRACKET declaracao condicao SEMICOLON incrementacao RBRACKET LCBRACKET comandos RCBRACKET .)
+
+
+state 116
+
+    (33) selecao -> IF LBRACKET condicao RBRACKET LCBRACKET comandos RCBRACKET ELSE LCBRACKET comandos RCBRACKET .
+
+    ID              reduce using rule 33 (selecao -> IF LBRACKET condicao RBRACKET LCBRACKET comandos RCBRACKET ELSE LCBRACKET comandos RCBRACKET .)
+    WRITE           reduce using rule 33 (selecao -> IF LBRACKET condicao RBRACKET LCBRACKET comandos RCBRACKET ELSE LCBRACKET comandos RCBRACKET .)
+    IF              reduce using rule 33 (selecao -> IF LBRACKET condicao RBRACKET LCBRACKET comandos RCBRACKET ELSE LCBRACKET comandos RCBRACKET .)
+    FOR             reduce using rule 33 (selecao -> IF LBRACKET condicao RBRACKET LCBRACKET comandos RCBRACKET ELSE LCBRACKET comandos RCBRACKET .)
+    WHILE           reduce using rule 33 (selecao -> IF LBRACKET condicao RBRACKET LCBRACKET comandos RCBRACKET ELSE LCBRACKET comandos RCBRACKET .)
+    $end            reduce using rule 33 (selecao -> IF LBRACKET condicao RBRACKET LCBRACKET comandos RCBRACKET ELSE LCBRACKET comandos RCBRACKET .)
+    RETURN          reduce using rule 33 (selecao -> IF LBRACKET condicao RBRACKET LCBRACKET comandos RCBRACKET ELSE LCBRACKET comandos RCBRACKET .)
+    RCBRACKET       reduce using rule 33 (selecao -> IF LBRACKET condicao RBRACKET LCBRACKET comandos RCBRACKET ELSE LCBRACKET comandos RCBRACKET .)
 
 WARNING: 
 WARNING: Conflicts:
 WARNING: 
 WARNING: shift/reduce conflict for SEMICOLON in state 46 resolved as shift
-WARNING: shift/reduce conflict for ELSE in state 80 resolved as shift
-WARNING: shift/reduce conflict for ID in state 80 resolved as shift
-WARNING: shift/reduce conflict for WRITE in state 80 resolved as shift
-WARNING: shift/reduce conflict for IF in state 80 resolved as shift
-WARNING: shift/reduce conflict for FOR in state 80 resolved as shift
-WARNING: shift/reduce conflict for WHILE in state 80 resolved as shift
-WARNING: shift/reduce conflict for PLUS in state 82 resolved as shift
-WARNING: shift/reduce conflict for MINUS in state 82 resolved as shift
-WARNING: shift/reduce conflict for TIMES in state 82 resolved as shift
-WARNING: shift/reduce conflict for DIVIDE in state 82 resolved as shift
-WARNING: shift/reduce conflict for PLUS in state 83 resolved as shift
-WARNING: shift/reduce conflict for MINUS in state 83 resolved as shift
-WARNING: shift/reduce conflict for TIMES in state 83 resolved as shift
-WARNING: shift/reduce conflict for DIVIDE in state 83 resolved as shift
-WARNING: shift/reduce conflict for PLUS in state 84 resolved as shift
-WARNING: shift/reduce conflict for MINUS in state 84 resolved as shift
-WARNING: shift/reduce conflict for TIMES in state 84 resolved as shift
-WARNING: shift/reduce conflict for DIVIDE in state 84 resolved as shift
-WARNING: shift/reduce conflict for PLUS in state 85 resolved as shift
-WARNING: shift/reduce conflict for MINUS in state 85 resolved as shift
-WARNING: shift/reduce conflict for TIMES in state 85 resolved as shift
-WARNING: shift/reduce conflict for DIVIDE in state 85 resolved as shift
-WARNING: shift/reduce conflict for ID in state 98 resolved as shift
-WARNING: shift/reduce conflict for WRITE in state 98 resolved as shift
-WARNING: shift/reduce conflict for IF in state 98 resolved as shift
-WARNING: shift/reduce conflict for FOR in state 98 resolved as shift
-WARNING: shift/reduce conflict for WHILE in state 98 resolved as shift
-WARNING: shift/reduce conflict for ID in state 100 resolved as shift
-WARNING: shift/reduce conflict for WRITE in state 100 resolved as shift
-WARNING: shift/reduce conflict for IF in state 100 resolved as shift
-WARNING: shift/reduce conflict for FOR in state 100 resolved as shift
-WARNING: shift/reduce conflict for WHILE in state 100 resolved as shift
+WARNING: shift/reduce conflict for GT in state 96 resolved as shift
+WARNING: shift/reduce conflict for LT in state 96 resolved as shift
+WARNING: shift/reduce conflict for GE in state 96 resolved as shift
+WARNING: shift/reduce conflict for LE in state 96 resolved as shift
+WARNING: shift/reduce conflict for EQ in state 96 resolved as shift
+WARNING: shift/reduce conflict for JUNGLE_DIFF in state 96 resolved as shift
+WARNING: shift/reduce conflict for OR in state 96 resolved as shift
+WARNING: shift/reduce conflict for AND in state 96 resolved as shift
+WARNING: reduce/reduce conflict in state 47 resolved using rule (declaracao -> ID ASSIGN leitura)
+WARNING: rejected rule (atribuicao -> ID ASSIGN leitura) in state 47

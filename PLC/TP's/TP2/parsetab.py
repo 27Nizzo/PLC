@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = "programaAND ASSIGN BEGIN DECREMENT DIVIDE ELSE END EQ FOR FUNCTION GE GT ID IF INCREMENT INTEGER JUNGLE_DIFF LBRACKET LE LT MINUS NUMBER NUMBER_REAL OR PLC PLUS QUOTE RBRACKET READ RETURN SEMICOLON STRING THEN TIMES VAR WHILE WRITE\n    programa : plc\n    \n    plc : PLC ID VAR declaracoes comandos\n    declaracoes : declaracao \n                | declaracoes declaracao\n    declaracao : ID SEMICOLON \n    \n    declaracao : ID ASSIGN NUMBER SEMICOLON \n    \n    declaracao : ID ASSIGN leitura \n    \n    declaracao : funcao\n    \n    comandos : comando\n             | comandos comando\n    \n    comando : atribuicao\n            | escrita\n            | selecao\n            | repeticao\n            | call\n    \n    leitura : READ LBRACKET texto RBRACKET SEMICOLON\n    \n    atribuicao : ID ASSIGN expressao SEMICOLON\n    \n    atribuicao : ID ASSIGN leitura SEMICOLON\n    \n    escrita : WRITE LBRACKET argumento RBRACKET SEMICOLON\n    \n    argumento : texto\n    \n    argumento : expressao\n    \n    texto : QUOTE STRING QUOTE\n    \n    expressao : fator\n              | expressao PLUS expressao\n              | expressao MINUS expressao\n              | expressao TIMES expressao\n              | expressao DIVIDE expressao\n    fator : ID\n          | NUMBER \n          | LBRACKET expressao RBRACKET\n    \n    selecao : IF condicao ':' comandos\n            | IF condicao ':' comandos ELSE comandos\n    repeticao : FOR LBRACKET declaracao SEMICOLON condicao SEMICOLON incrementacao RBRACKET ':' comando\n    \n    repeticao : WHILE LBRACKET condicao RBRACKET ':' comandos\n    \n    incrementacao : ID INCREMENT\n                  | ID DECREMENT\n    \n    condicao : expressao operador expressao\n    \n    operador  : GT\n              | LT \n              | GE \n              | LE \n              | EQ \n              | JUNGLE_DIFF\n              | OR\n              | AND\n    \n    funcao : FUNCTION ID ':' comandos RETURN expressao SEMICOLONcall : ID LBRACKET RBRACKET SEMICOLON"
+_lr_signature = 'programaleftPLUSMINUSleftTIMESDIVIDEAND ASSIGN BEGIN DECREMENT DIVIDE ELSE END EQ FOR FUNCTION GE GT ID IF INCREMENT INTEGER JUNGLE_DIFF LBRACKET LCBRACKET LE LT MINUS NUMBER NUMBER_REAL OR PLC PLUS QUOTE RBRACKET RCBRACKET READ RETURN SEMICOLON STRING THEN TIMES VAR WHILE WRITE\n    programa : plc\n    \n    plc : PLC ID VAR declaracoes comandos\n    declaracoes : declaracao \n                | declaracoes declaracao\n    declaracao : ID SEMICOLON \n    \n    declaracao : ID ASSIGN NUMBER SEMICOLON \n    \n    declaracao : ID ASSIGN leitura \n    \n    declaracao : funcao\n    \n    comandos : comando\n             | comandos comando\n    \n    comando : atribuicao\n            | escrita\n            | selecao\n            | repeticao\n            | call\n            | incrementacao SEMICOLON\n    \n    leitura : READ LBRACKET texto RBRACKET SEMICOLON\n    \n    atribuicao : ID ASSIGN expressao SEMICOLON\n    \n    atribuicao : ID ASSIGN leitura\n    \n    escrita : WRITE LBRACKET argumento RBRACKET SEMICOLON\n    \n    argumento : texto\n    \n    argumento : expressao\n    \n    texto : QUOTE STRING QUOTE\n    \n    expressao : fator\n              | expressao PLUS expressao\n              | expressao MINUS expressao\n              | expressao TIMES expressao\n              | expressao DIVIDE expressao\n              \n    fator : ID\n          | NUMBER \n          | LBRACKET expressao RBRACKET\n    \n    selecao : IF LBRACKET condicao RBRACKET LCBRACKET comandos RCBRACKET\n            | IF LBRACKET condicao RBRACKET LCBRACKET comandos RCBRACKET ELSE LCBRACKET comandos RCBRACKET\n    repeticao : FOR LBRACKET declaracao condicao SEMICOLON incrementacao RBRACKET LCBRACKET comandos RCBRACKET\n    \n    repeticao : WHILE LBRACKET condicao RBRACKET LCBRACKET comandos RCBRACKET\n    \n    incrementacao : ID INCREMENT\n                  | ID DECREMENT\n    \n    condicao : condicao operador condicao\n             | expressao\n    \n    operador  : GT\n              | LT \n              | GE \n              | LE \n              | EQ \n              | JUNGLE_DIFF\n              | OR\n              | AND\n    \n    funcao : FUNCTION ID LCBRACKET comandos RETURN expressao RCBRACKET SEMICOLONcall : ID LBRACKET RBRACKET SEMICOLON'
     
-_lr_action_items = {'PLC':([0,],[3,]),'$end':([1,2,14,16,17,18,19,20,21,33,74,75,76,80,91,98,100,108,],[0,-1,-2,-9,-11,-12,-13,-14,-15,-10,-18,-17,-47,-31,-19,-32,-34,-33,]),'ID':([3,5,7,8,9,10,11,14,15,16,17,18,19,20,21,23,28,30,33,34,40,41,42,43,44,47,50,55,56,57,58,59,60,61,62,63,64,65,66,67,68,72,74,75,76,80,87,89,91,93,95,97,98,99,100,101,107,108,],[4,6,13,-3,-8,26,-5,32,-4,-9,-11,-12,-13,-14,-15,38,-7,38,-10,38,38,6,38,32,-6,-7,38,32,38,38,38,38,38,-38,-39,-40,-41,-42,-43,-44,-45,32,-18,-17,-47,32,38,38,-19,32,32,-16,32,103,32,-46,32,-33,]),'VAR':([4,],[5,]),'FUNCTION':([5,7,8,9,11,15,28,41,44,47,97,101,],[10,10,-3,-8,-5,-4,-7,10,-6,-7,-16,-46,]),'SEMICOLON':([6,9,11,13,27,28,37,38,39,44,46,47,48,49,70,77,78,81,82,83,84,85,86,90,94,96,97,101,],[11,-8,-5,11,44,-7,-23,-28,-29,-6,44,74,75,76,87,74,91,-37,-24,-25,-26,-27,-30,97,99,101,-16,-46,]),'ASSIGN':([6,13,32,],[12,30,50,]),'WRITE':([7,8,9,11,14,15,16,17,18,19,20,21,28,33,43,44,47,55,72,74,75,76,80,91,93,95,97,98,100,101,107,108,],[22,-3,-8,-5,22,-4,-9,-11,-12,-13,-14,-15,-7,-10,22,-6,-7,22,22,-18,-17,-47,22,-19,22,22,-16,22,22,-46,22,-33,]),'IF':([7,8,9,11,14,15,16,17,18,19,20,21,28,33,43,44,47,55,72,74,75,76,80,91,93,95,97,98,100,101,107,108,],[23,-3,-8,-5,23,-4,-9,-11,-12,-13,-14,-15,-7,-10,23,-6,-7,23,23,-18,-17,-47,23,-19,23,23,-16,23,23,-46,23,-33,]),'FOR':([7,8,9,11,14,15,16,17,18,19,20,21,28,33,43,44,47,55,72,74,75,76,80,91,93,95,97,98,100,101,107,108,],[24,-3,-8,-5,24,-4,-9,-11,-12,-13,-14,-15,-7,-10,24,-6,-7,24,24,-18,-17,-47,24,-19,24,24,-16,24,24,-46,24,-33,]),'WHILE':([7,8,9,11,14,15,16,17,18,19,20,21,28,33,43,44,47,55,72,74,75,76,80,91,93,95,97,98,100,101,107,108,],[25,-3,-8,-5,25,-4,-9,-11,-12,-13,-14,-15,-7,-10,25,-6,-7,25,25,-18,-17,-47,25,-19,25,25,-16,25,25,-46,25,-33,]),'NUMBER':([12,23,30,34,40,42,50,56,57,58,59,60,61,62,63,64,65,66,67,68,87,89,],[27,39,46,39,39,39,39,39,39,39,39,39,-38,-39,-40,-41,-42,-43,-44,-45,39,39,]),'READ':([12,30,50,],[29,29,29,]),'LBRACKET':([13,22,23,24,25,29,30,32,34,40,42,50,56,57,58,59,60,61,62,63,64,65,66,67,68,87,89,],[31,34,40,41,42,45,40,31,40,40,40,40,40,40,40,40,40,-38,-39,-40,-41,-42,-43,-44,-45,40,40,]),'RETURN':([16,17,18,19,20,21,33,72,74,75,76,80,91,98,100,108,],[-9,-11,-12,-13,-14,-15,-10,89,-18,-17,-47,-31,-19,-32,-34,-33,]),'ELSE':([16,17,18,19,20,21,33,74,75,76,80,91,98,100,108,],[-9,-11,-12,-13,-14,-15,-10,-18,-17,-47,93,-19,-32,-34,-33,]),':':([26,35,37,38,39,81,82,83,84,85,86,88,104,],[43,55,-23,-28,-29,-37,-24,-25,-26,-27,-30,95,107,]),'RBRACKET':([31,37,38,39,51,52,53,69,71,73,81,82,83,84,85,86,92,102,105,106,],[49,-23,-28,-29,78,-20,-21,86,88,90,-37,-24,-25,-26,-27,-30,-22,104,-35,-36,]),'QUOTE':([34,45,79,],[54,54,92,]),'PLUS':([36,37,38,39,46,48,53,69,81,82,83,84,85,86,96,],[57,-23,-28,-29,-29,57,57,57,57,57,57,57,57,-30,57,]),'MINUS':([36,37,38,39,46,48,53,69,81,82,83,84,85,86,96,],[58,-23,-28,-29,-29,58,58,58,58,58,58,58,58,-30,58,]),'TIMES':([36,37,38,39,46,48,53,69,81,82,83,84,85,86,96,],[59,-23,-28,-29,-29,59,59,59,59,59,59,59,59,-30,59,]),'DIVIDE':([36,37,38,39,46,48,53,69,81,82,83,84,85,86,96,],[60,-23,-28,-29,-29,60,60,60,60,60,60,60,60,-30,60,]),'GT':([36,37,38,39,82,83,84,85,86,],[61,-23,-28,-29,-24,-25,-26,-27,-30,]),'LT':([36,37,38,39,82,83,84,85,86,],[62,-23,-28,-29,-24,-25,-26,-27,-30,]),'GE':([36,37,38,39,82,83,84,85,86,],[63,-23,-28,-29,-24,-25,-26,-27,-30,]),'LE':([36,37,38,39,82,83,84,85,86,],[64,-23,-28,-29,-24,-25,-26,-27,-30,]),'EQ':([36,37,38,39,82,83,84,85,86,],[65,-23,-28,-29,-24,-25,-26,-27,-30,]),'JUNGLE_DIFF':([36,37,38,39,82,83,84,85,86,],[66,-23,-28,-29,-24,-25,-26,-27,-30,]),'OR':([36,37,38,39,82,83,84,85,86,],[67,-23,-28,-29,-24,-25,-26,-27,-30,]),'AND':([36,37,38,39,82,83,84,85,86,],[68,-23,-28,-29,-24,-25,-26,-27,-30,]),'STRING':([54,],[79,]),'INCREMENT':([103,],[105,]),'DECREMENT':([103,],[106,]),}
+_lr_action_items = {'PLC':([0,],[3,]),'$end':([1,2,14,16,17,18,19,20,21,36,37,47,64,70,71,93,100,106,108,115,116,],[0,-1,-2,-9,-11,-12,-13,-14,-15,-10,-16,-19,-18,-49,-19,-20,-17,-32,-35,-34,-33,]),'ID':([3,5,7,8,9,10,11,14,15,16,17,18,19,20,21,29,31,36,37,38,39,40,41,42,43,47,49,52,60,62,64,65,66,67,68,70,71,75,76,77,78,79,80,81,82,83,86,93,95,97,98,100,101,104,106,108,109,111,112,113,114,115,116,],[4,6,13,-3,-8,27,-5,35,-4,-9,-11,-12,-13,-14,-15,-7,45,-10,-16,45,45,6,45,35,-6,-7,45,45,45,35,-18,45,45,45,45,-49,-19,45,-40,-41,-42,-43,-44,-45,-46,-47,45,-20,35,103,35,-17,35,35,-32,-35,-48,35,35,35,35,-34,-33,]),'VAR':([4,],[5,]),'FUNCTION':([5,7,8,9,11,15,29,40,43,47,100,109,],[10,10,-3,-8,-5,-4,-7,10,-6,-7,-17,-48,]),'SEMICOLON':([6,13,22,28,33,34,45,46,48,50,51,57,59,72,84,87,88,89,90,91,92,96,105,],[11,11,37,43,-36,-37,-29,43,64,-24,70,-30,-39,93,97,100,-25,-26,-27,-28,-31,-38,109,]),'ASSIGN':([6,13,35,],[12,31,52,]),'WRITE':([7,8,9,11,14,15,16,17,18,19,20,21,29,36,37,42,43,47,62,64,70,71,93,95,98,100,101,104,106,108,109,111,112,113,114,115,116,],[23,-3,-8,-5,23,-4,-9,-11,-12,-13,-14,-15,-7,-10,-16,23,-6,-7,23,-18,-49,-19,-20,23,23,-17,23,23,-32,-35,-48,23,23,23,23,-34,-33,]),'IF':([7,8,9,11,14,15,16,17,18,19,20,21,29,36,37,42,43,47,62,64,70,71,93,95,98,100,101,104,106,108,109,111,112,113,114,115,116,],[24,-3,-8,-5,24,-4,-9,-11,-12,-13,-14,-15,-7,-10,-16,24,-6,-7,24,-18,-49,-19,-20,24,24,-17,24,24,-32,-35,-48,24,24,24,24,-34,-33,]),'FOR':([7,8,9,11,14,15,16,17,18,19,20,21,29,36,37,42,43,47,62,64,70,71,93,95,98,100,101,104,106,108,109,111,112,113,114,115,116,],[25,-3,-8,-5,25,-4,-9,-11,-12,-13,-14,-15,-7,-10,-16,25,-6,-7,25,-18,-49,-19,-20,25,25,-17,25,25,-32,-35,-48,25,25,25,25,-34,-33,]),'WHILE':([7,8,9,11,14,15,16,17,18,19,20,21,29,36,37,42,43,47,62,64,70,71,93,95,98,100,101,104,106,108,109,111,112,113,114,115,116,],[26,-3,-8,-5,26,-4,-9,-11,-12,-13,-14,-15,-7,-10,-16,26,-6,-7,26,-18,-49,-19,-20,26,26,-17,26,26,-32,-35,-48,26,26,26,26,-34,-33,]),'NUMBER':([9,11,12,29,31,38,39,41,43,49,52,60,65,66,67,68,75,76,77,78,79,80,81,82,83,86,100,109,],[-8,-5,28,-7,46,57,57,57,-6,57,57,57,57,57,57,57,57,-40,-41,-42,-43,-44,-45,-46,-47,57,-17,-48,]),'LBRACKET':([9,11,13,23,24,25,26,29,30,31,35,38,39,41,43,49,52,60,65,66,67,68,75,76,77,78,79,80,81,82,83,86,100,109,],[-8,-5,32,38,39,40,41,-7,44,49,32,49,49,49,-6,49,49,49,49,49,49,49,49,-40,-41,-42,-43,-44,-45,-46,-47,49,-17,-48,]),'READ':([12,31,52,],[30,30,30,]),'INCREMENT':([13,35,103,],[33,33,33,]),'DECREMENT':([13,35,103,],[34,34,34,]),'RETURN':([16,17,18,19,20,21,36,37,62,64,70,71,93,100,106,108,115,116,],[-9,-11,-12,-13,-14,-15,-10,-16,86,-18,-49,-19,-20,-17,-32,-35,-34,-33,]),'RCBRACKET':([16,17,18,19,20,21,36,37,45,50,57,64,70,71,88,89,90,91,92,93,99,100,101,104,106,108,113,114,115,116,],[-9,-11,-12,-13,-14,-15,-10,-16,-29,-24,-30,-18,-49,-19,-25,-26,-27,-28,-31,-20,105,-17,106,108,-32,-35,115,116,-34,-33,]),'LCBRACKET':([27,74,85,107,110,],[42,95,98,111,112,]),'RBRACKET':([32,33,34,45,50,53,54,55,57,58,59,61,63,69,88,89,90,91,92,94,96,102,],[51,-36,-37,-29,-24,72,-21,-22,-30,74,-39,85,87,92,-25,-26,-27,-28,-31,-23,-38,107,]),'QUOTE':([38,44,73,],[56,56,94,]),'PLUS':([45,46,48,50,55,57,59,69,88,89,90,91,92,99,],[-29,-30,65,-24,65,-30,65,65,-25,-26,-27,-28,-31,65,]),'MINUS':([45,46,48,50,55,57,59,69,88,89,90,91,92,99,],[-29,-30,66,-24,66,-30,66,66,-25,-26,-27,-28,-31,66,]),'TIMES':([45,46,48,50,55,57,59,69,88,89,90,91,92,99,],[-29,-30,67,-24,67,-30,67,67,67,67,-27,-28,-31,67,]),'DIVIDE':([45,46,48,50,55,57,59,69,88,89,90,91,92,99,],[-29,-30,68,-24,68,-30,68,68,68,68,-27,-28,-31,68,]),'GT':([45,50,57,58,59,61,84,88,89,90,91,92,96,],[-29,-24,-30,76,-39,76,76,-25,-26,-27,-28,-31,76,]),'LT':([45,50,57,58,59,61,84,88,89,90,91,92,96,],[-29,-24,-30,77,-39,77,77,-25,-26,-27,-28,-31,77,]),'GE':([45,50,57,58,59,61,84,88,89,90,91,92,96,],[-29,-24,-30,78,-39,78,78,-25,-26,-27,-28,-31,78,]),'LE':([45,50,57,58,59,61,84,88,89,90,91,92,96,],[-29,-24,-30,79,-39,79,79,-25,-26,-27,-28,-31,79,]),'EQ':([45,50,57,58,59,61,84,88,89,90,91,92,96,],[-29,-24,-30,80,-39,80,80,-25,-26,-27,-28,-31,80,]),'JUNGLE_DIFF':([45,50,57,58,59,61,84,88,89,90,91,92,96,],[-29,-24,-30,81,-39,81,81,-25,-26,-27,-28,-31,81,]),'OR':([45,50,57,58,59,61,84,88,89,90,91,92,96,],[-29,-24,-30,82,-39,82,82,-25,-26,-27,-28,-31,82,]),'AND':([45,50,57,58,59,61,84,88,89,90,91,92,96,],[-29,-24,-30,83,-39,83,83,-25,-26,-27,-28,-31,83,]),'STRING':([56,],[73,]),'ELSE':([106,],[110,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'programa':([0,],[1,]),'plc':([0,],[2,]),'declaracoes':([5,],[7,]),'declaracao':([5,7,41,],[8,15,70,]),'funcao':([5,7,41,],[9,9,9,]),'comandos':([7,43,55,93,95,],[14,72,80,98,100,]),'comando':([7,14,43,55,72,80,93,95,98,100,107,],[16,33,16,16,33,33,16,16,33,33,108,]),'atribuicao':([7,14,43,55,72,80,93,95,98,100,107,],[17,17,17,17,17,17,17,17,17,17,17,]),'escrita':([7,14,43,55,72,80,93,95,98,100,107,],[18,18,18,18,18,18,18,18,18,18,18,]),'selecao':([7,14,43,55,72,80,93,95,98,100,107,],[19,19,19,19,19,19,19,19,19,19,19,]),'repeticao':([7,14,43,55,72,80,93,95,98,100,107,],[20,20,20,20,20,20,20,20,20,20,20,]),'call':([7,14,43,55,72,80,93,95,98,100,107,],[21,21,21,21,21,21,21,21,21,21,21,]),'leitura':([12,30,50,],[28,47,77,]),'condicao':([23,42,87,],[35,71,94,]),'expressao':([23,30,34,40,42,50,56,57,58,59,60,87,89,],[36,48,53,69,36,48,81,82,83,84,85,36,96,]),'fator':([23,30,34,40,42,50,56,57,58,59,60,87,89,],[37,37,37,37,37,37,37,37,37,37,37,37,37,]),'argumento':([34,],[51,]),'texto':([34,45,],[52,73,]),'operador':([36,],[56,]),'incrementacao':([99,],[102,]),}
+_lr_goto_items = {'programa':([0,],[1,]),'plc':([0,],[2,]),'declaracoes':([5,],[7,]),'declaracao':([5,7,40,],[8,15,60,]),'funcao':([5,7,40,],[9,9,9,]),'comandos':([7,42,95,98,111,112,],[14,62,101,104,113,114,]),'comando':([7,14,42,62,95,98,101,104,111,112,113,114,],[16,36,16,36,16,16,36,36,16,16,36,36,]),'atribuicao':([7,14,42,62,95,98,101,104,111,112,113,114,],[17,17,17,17,17,17,17,17,17,17,17,17,]),'escrita':([7,14,42,62,95,98,101,104,111,112,113,114,],[18,18,18,18,18,18,18,18,18,18,18,18,]),'selecao':([7,14,42,62,95,98,101,104,111,112,113,114,],[19,19,19,19,19,19,19,19,19,19,19,19,]),'repeticao':([7,14,42,62,95,98,101,104,111,112,113,114,],[20,20,20,20,20,20,20,20,20,20,20,20,]),'call':([7,14,42,62,95,98,101,104,111,112,113,114,],[21,21,21,21,21,21,21,21,21,21,21,21,]),'incrementacao':([7,14,42,62,95,97,98,101,104,111,112,113,114,],[22,22,22,22,22,102,22,22,22,22,22,22,22,]),'leitura':([12,31,52,],[29,47,71,]),'expressao':([31,38,39,41,49,52,60,65,66,67,68,75,86,],[48,55,59,59,69,48,59,88,89,90,91,59,99,]),'fator':([31,38,39,41,49,52,60,65,66,67,68,75,86,],[50,50,50,50,50,50,50,50,50,50,50,50,50,]),'argumento':([38,],[53,]),'texto':([38,44,],[54,63,]),'condicao':([39,41,60,75,],[58,61,84,96,]),'operador':([58,61,84,96,],[75,75,75,75,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -27,51 +27,53 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> programa","S'",1,None,None,None),
-  ('programa -> plc','programa',1,'p_programa','parser.py',8),
-  ('plc -> PLC ID VAR declaracoes comandos','plc',5,'p_plc','parser.py',14),
-  ('declaracoes -> declaracao','declaracoes',1,'p_declaracoes','parser.py',19),
-  ('declaracoes -> declaracoes declaracao','declaracoes',2,'p_declaracoes','parser.py',20),
-  ('declaracao -> ID SEMICOLON','declaracao',2,'p_declaracao_vazia','parser.py',30),
-  ('declaracao -> ID ASSIGN NUMBER SEMICOLON','declaracao',4,'p_declaracao_numero','parser.py',39),
-  ('declaracao -> ID ASSIGN leitura','declaracao',3,'p_declaracao_leitura','parser.py',47),
-  ('declaracao -> funcao','declaracao',1,'p_declaracao_funcao','parser.py',59),
-  ('comandos -> comando','comandos',1,'p_comandos','parser.py',65),
-  ('comandos -> comandos comando','comandos',2,'p_comandos','parser.py',66),
-  ('comando -> atribuicao','comando',1,'p_comando','parser.py',72),
-  ('comando -> escrita','comando',1,'p_comando','parser.py',73),
-  ('comando -> selecao','comando',1,'p_comando','parser.py',74),
-  ('comando -> repeticao','comando',1,'p_comando','parser.py',75),
-  ('comando -> call','comando',1,'p_comando','parser.py',76),
-  ('leitura -> READ LBRACKET texto RBRACKET SEMICOLON','leitura',5,'p_leitura','parser.py',82),
-  ('atribuicao -> ID ASSIGN expressao SEMICOLON','atribuicao',4,'p_atribuicao_expr','parser.py',90),
-  ('atribuicao -> ID ASSIGN leitura SEMICOLON','atribuicao',4,'p_atribuicao_leit','parser.py',100),
-  ('escrita -> WRITE LBRACKET argumento RBRACKET SEMICOLON','escrita',5,'p_escrita','parser.py',110),
-  ('argumento -> texto','argumento',1,'p_argumento_texto','parser.py',116),
-  ('argumento -> expressao','argumento',1,'p_argumento_expr','parser.py',122),
-  ('texto -> QUOTE STRING QUOTE','texto',3,'p_texto','parser.py',128),
-  ('expressao -> fator','expressao',1,'p_expressao','parser.py',140),
-  ('expressao -> expressao PLUS expressao','expressao',3,'p_expressao','parser.py',141),
-  ('expressao -> expressao MINUS expressao','expressao',3,'p_expressao','parser.py',142),
-  ('expressao -> expressao TIMES expressao','expressao',3,'p_expressao','parser.py',143),
-  ('expressao -> expressao DIVIDE expressao','expressao',3,'p_expressao','parser.py',144),
-  ('fator -> ID','fator',1,'p_fator','parser.py',158),
-  ('fator -> NUMBER','fator',1,'p_fator','parser.py',159),
-  ('fator -> LBRACKET expressao RBRACKET','fator',3,'p_fator','parser.py',160),
-  ('selecao -> IF condicao : comandos','selecao',4,'p_selecao','parser.py',171),
-  ('selecao -> IF condicao : comandos ELSE comandos','selecao',6,'p_selecao','parser.py',172),
-  ('repeticao -> FOR LBRACKET declaracao SEMICOLON condicao SEMICOLON incrementacao RBRACKET : comando','repeticao',10,'p_repeticao_for','parser.py',199),
-  ('repeticao -> WHILE LBRACKET condicao RBRACKET : comandos','repeticao',6,'p_repeticao_while','parser.py',208),
-  ('incrementacao -> ID INCREMENT','incrementacao',2,'p_incrementacao','parser.py',221),
-  ('incrementacao -> ID DECREMENT','incrementacao',2,'p_incrementacao','parser.py',222),
-  ('condicao -> expressao operador expressao','condicao',3,'p_condicao','parser.py',235),
-  ('operador -> GT','operador',1,'p_operador','parser.py',252),
-  ('operador -> LT','operador',1,'p_operador','parser.py',253),
-  ('operador -> GE','operador',1,'p_operador','parser.py',254),
-  ('operador -> LE','operador',1,'p_operador','parser.py',255),
-  ('operador -> EQ','operador',1,'p_operador','parser.py',256),
-  ('operador -> JUNGLE_DIFF','operador',1,'p_operador','parser.py',257),
-  ('operador -> OR','operador',1,'p_operador','parser.py',258),
-  ('operador -> AND','operador',1,'p_operador','parser.py',259),
-  ('funcao -> FUNCTION ID : comandos RETURN expressao SEMICOLON','funcao',7,'p_funcao','parser.py',294),
-  ('call -> ID LBRACKET RBRACKET SEMICOLON','call',4,'p_chamadaF','parser.py',305),
+  ('programa -> plc','programa',1,'p_programa','parser.py',9),
+  ('plc -> PLC ID VAR declaracoes comandos','plc',5,'p_plc','parser.py',15),
+  ('declaracoes -> declaracao','declaracoes',1,'p_declaracoes','parser.py',20),
+  ('declaracoes -> declaracoes declaracao','declaracoes',2,'p_declaracoes','parser.py',21),
+  ('declaracao -> ID SEMICOLON','declaracao',2,'p_declaracao_vazia','parser.py',31),
+  ('declaracao -> ID ASSIGN NUMBER SEMICOLON','declaracao',4,'p_declaracao_numero','parser.py',43),
+  ('declaracao -> ID ASSIGN leitura','declaracao',3,'p_declaracao_leitura','parser.py',55),
+  ('declaracao -> funcao','declaracao',1,'p_declaracao_funcao','parser.py',67),
+  ('comandos -> comando','comandos',1,'p_comandos','parser.py',73),
+  ('comandos -> comandos comando','comandos',2,'p_comandos','parser.py',74),
+  ('comando -> atribuicao','comando',1,'p_comando','parser.py',80),
+  ('comando -> escrita','comando',1,'p_comando','parser.py',81),
+  ('comando -> selecao','comando',1,'p_comando','parser.py',82),
+  ('comando -> repeticao','comando',1,'p_comando','parser.py',83),
+  ('comando -> call','comando',1,'p_comando','parser.py',84),
+  ('comando -> incrementacao SEMICOLON','comando',2,'p_comando','parser.py',85),
+  ('leitura -> READ LBRACKET texto RBRACKET SEMICOLON','leitura',5,'p_leitura','parser.py',91),
+  ('atribuicao -> ID ASSIGN expressao SEMICOLON','atribuicao',4,'p_atribuicao_expr','parser.py',99),
+  ('atribuicao -> ID ASSIGN leitura','atribuicao',3,'p_atribuicao_leit','parser.py',109),
+  ('escrita -> WRITE LBRACKET argumento RBRACKET SEMICOLON','escrita',5,'p_escrita','parser.py',119),
+  ('argumento -> texto','argumento',1,'p_argumento_texto','parser.py',125),
+  ('argumento -> expressao','argumento',1,'p_argumento_expr','parser.py',131),
+  ('texto -> QUOTE STRING QUOTE','texto',3,'p_texto','parser.py',137),
+  ('expressao -> fator','expressao',1,'p_expressao','parser.py',149),
+  ('expressao -> expressao PLUS expressao','expressao',3,'p_expressao','parser.py',150),
+  ('expressao -> expressao MINUS expressao','expressao',3,'p_expressao','parser.py',151),
+  ('expressao -> expressao TIMES expressao','expressao',3,'p_expressao','parser.py',152),
+  ('expressao -> expressao DIVIDE expressao','expressao',3,'p_expressao','parser.py',153),
+  ('fator -> ID','fator',1,'p_fator','parser.py',168),
+  ('fator -> NUMBER','fator',1,'p_fator','parser.py',169),
+  ('fator -> LBRACKET expressao RBRACKET','fator',3,'p_fator','parser.py',170),
+  ('selecao -> IF LBRACKET condicao RBRACKET LCBRACKET comandos RCBRACKET','selecao',7,'p_selecao','parser.py',181),
+  ('selecao -> IF LBRACKET condicao RBRACKET LCBRACKET comandos RCBRACKET ELSE LCBRACKET comandos RCBRACKET','selecao',11,'p_selecao','parser.py',182),
+  ('repeticao -> FOR LBRACKET declaracao condicao SEMICOLON incrementacao RBRACKET LCBRACKET comandos RCBRACKET','repeticao',10,'p_repeticao_for','parser.py',203),
+  ('repeticao -> WHILE LBRACKET condicao RBRACKET LCBRACKET comandos RCBRACKET','repeticao',7,'p_repeticao_while','parser.py',212),
+  ('incrementacao -> ID INCREMENT','incrementacao',2,'p_incrementacao','parser.py',226),
+  ('incrementacao -> ID DECREMENT','incrementacao',2,'p_incrementacao','parser.py',227),
+  ('condicao -> condicao operador condicao','condicao',3,'p_condicao','parser.py',240),
+  ('condicao -> expressao','condicao',1,'p_condicao','parser.py',241),
+  ('operador -> GT','operador',1,'p_operador','parser.py',261),
+  ('operador -> LT','operador',1,'p_operador','parser.py',262),
+  ('operador -> GE','operador',1,'p_operador','parser.py',263),
+  ('operador -> LE','operador',1,'p_operador','parser.py',264),
+  ('operador -> EQ','operador',1,'p_operador','parser.py',265),
+  ('operador -> JUNGLE_DIFF','operador',1,'p_operador','parser.py',266),
+  ('operador -> OR','operador',1,'p_operador','parser.py',267),
+  ('operador -> AND','operador',1,'p_operador','parser.py',268),
+  ('funcao -> FUNCTION ID LCBRACKET comandos RETURN expressao RCBRACKET SEMICOLON','funcao',8,'p_funcao','parser.py',303),
+  ('call -> ID LBRACKET RBRACKET SEMICOLON','call',4,'p_chamadaF','parser.py',316),
 ]

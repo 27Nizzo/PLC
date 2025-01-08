@@ -1,7 +1,7 @@
 START
 PUSHI 10
 PUSHI 0
-JUMP END_FUNC_olaIgnore
+JUMP FUNC_olaIgnore
 FUNC_ola:
 PUSHS "vai te embora brazileiro"
 WRITES
@@ -9,7 +9,7 @@ WRITES
 PUSHI 0
 
 RETURN
-END_FUNC_olaIgnore:
+FUNC_olaIgnore:
 PUSHG 0
 PUSHI 1
 

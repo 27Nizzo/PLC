@@ -1,5 +1,6 @@
 import ply.yacc as yacc
 from analex import lexer,LexerPLC
+import sys
 
 tokens = LexerPLC.tokens
 
@@ -29,18 +30,25 @@ def p_declaracao_vazia(p):
     '''
     declaracao : ID SEMICOLON 
     '''
-
-    p.parser.registos[p[1]] = p.parser.gp
-    p.parser.gp += 1 
-    p[0] = "PUSHI 0"
+    if p[1] not in p.parser.registos:
+        p.parser.registos[p[1]] = p.parser.gp
+        p.parser.gp += 1 
+        p[0] = "PUSHI 0"
+    else:
+        print("Erro: Variável já inicializada")
+        p.parser.success = False
 
 def p_declaracao_numero(p):
     '''
     declaracao : ID ASSIGN NUMBER SEMICOLON 
     '''
-    p.parser.registos[p[1]] = p.parser.gp
-    p.parser.gp += 1
-    p[0] = f"PUSHI {p[3]}"
+    if p[1] not in p.parser.registos:
+        p.parser.registos[p[1]] = p.parser.gp
+        p.parser.gp += 1
+        p[0] = f"PUSHI {p[3]}"
+    else:
+        print("Erro: Variável já inicializada")
+        p.parser.success = False
 
 def p_declaracao_leitura(p):
     '''
@@ -74,6 +82,7 @@ def p_comando(p):
             | selecao
             | repeticao
             | call
+            | incrementacao SEMICOLON
     '''
     p[0] = p[1]
 
@@ -97,7 +106,7 @@ def p_atribuicao_expr(p):
 
 def p_atribuicao_leit(p):
     '''
-    atribuicao : ID ASSIGN leitura SEMICOLON
+    atribuicao : ID ASSIGN leitura
     '''
     if p[1] in p.parser.registos:
         p[0] = f'{p[3]}READ\nATOI\nSTOREG {p.parser.registos.get(p[1])}\n'
@@ -127,7 +136,7 @@ def p_texto(p):
     '''
     texto : QUOTE STRING QUOTE
     '''
-    p[0] = f'PUSHS "{p[2]}"\nWRITES\n'
+    p[0] = f'PUSHS "{p[2]}"\nWRITES\nWRITELN\n'
 
 def texto_vazio(p):
     '''
@@ -141,7 +150,8 @@ def p_expressao(p):
               | expressao PLUS expressao
               | expressao MINUS expressao
               | expressao TIMES expressao
-              | expressao DIVIDE expressao'''
+              | expressao DIVIDE expressao
+              '''
     if len(p) == 2:
         p[0] = p[1]
     elif p[2] == '+':
@@ -168,53 +178,47 @@ def p_fator(p):
 
 def p_selecao(p): 
     '''
-    selecao : IF condicao ':' comandos
-            | IF condicao ':' comandos ELSE comandos'''
+    selecao : IF LBRACKET condicao RBRACKET LCBRACKET comandos RCBRACKET
+            | IF LBRACKET condicao RBRACKET LCBRACKET comandos RCBRACKET ELSE LCBRACKET comandos RCBRACKET'''
     
     #! NOTA: labels são marcadores no código assembly que indicam pontos especificos no programa para onde o fluxo de execução pode ser direcionado
 
-    if len(p) == 6:
+    if len(p) == 8:
         # Condição if simples:
 
         label_fim = gerar_label()
-        p[0] = f"{p[2]}\n"
+        p[0] = f"{p[3]}\n"
         p[0] += f"JZ {label_fim}\n"
-        p[0] += f"{p[4]}\n"
-        p[0] += f"{label_fim}:"
+        p[0] += f"{p[6]}\n"
+        p[0] += f"{label_fim}: NOP\n"
     else:
         # Comdição if-else:
 
-        label_else = gerar_label()
         label_fim = gerar_label()
-        p[0] = f"{p[2]}\n"
-        p[0] += f"JZ {label_else}\n"
-        p[0] += f"{p[4]}\n"
-        p[0] += f"JUMP {label_fim}\n"
-        p[0] += f"f{label_else}:\n"
-        p[0] += f"{p[6]}\n"
-        p[0] += f"{label_fim}:"
+        p[0] = f'{p[3]}JZ {label_fim}\n{p[6]}JUMP {label_fim}f\n{label_fim}: NOP\n{p[10]}{label_fim}f: NOP\n'
 
 def p_repeticao_for(p):
     '''
-    repeticao : FOR LBRACKET declaracao SEMICOLON condicao SEMICOLON incrementacao RBRACKET ':' comando
+    repeticao : FOR LBRACKET declaracao condicao SEMICOLON incrementacao RBRACKET LCBRACKET comandos RCBRACKET
     '''
     label_inicio = gerar_label()
     label_fim = gerar_label()
 
-    p[0] = f"{p[3]}\n{label_inicio}:\n{p[5]}\nJZ{label_fim}\n{p[10]}\n{p[7]}\nJUMP {label_inicio}\n{label_fim}:"
+    p[0] = f"{p[3]}\n{label_inicio}:\n{p[4]}\nJZ{label_fim}\n{p[9]}\n{p[6]}\nJUMP {label_inicio}\n{label_fim}:\n"
 
 def p_repeticao_while(p):
     '''
-    repeticao : WHILE LBRACKET condicao RBRACKET ':' comandos
+    repeticao : WHILE LBRACKET condicao RBRACKET LCBRACKET comandos RCBRACKET
     '''
     label_inicio = gerar_label()
     label_fim = gerar_label()
 
     p[0] = f"{label_inicio}:\n"
-    p[0] += f"{p[2]}\n"
+    p[0] += f"{p[3]}\n"
     p[0] += f"JZ {label_fim}\n"
+    p[0] += f"{p[6]}\n"
     p[0] += f"JUMP {label_inicio}\n"
-    p[0] += f"{label_fim}:"
+    p[0] += f"{label_fim}:\n"
 
 def p_incrementacao(p):
     '''
@@ -222,19 +226,23 @@ def p_incrementacao(p):
                   | ID DECREMENT
     '''
     if p[2] == '++':
-        parser.registos[p[1]] += 1
+        parser.registos[p[1]]
         p[0] = f"PUSHG {parser.registos[p[1]]}\nPUSHI 1\nADD\nSTOREG {parser.registos[p[1]]}\n"
         
     else:
-        parser.registos[p[1]] -=1
+        parser.registos[p[1]]
         p[0] = f"PUSHG {parser.registos[p[1]]}\nPUSHI 1\nSUB\nSTOREG {parser.registos[p[1]]}\n"
         
 
 def p_condicao(p):
     '''
-    condicao : expressao operador expressao
+    condicao : condicao operador condicao
+             | expressao
     '''
-    p[0] = f'{p[1]}{p[3]}{p[2]}'
+    if len(p) == 2:
+        p[0] = p[1]
+    else:
+        p[0] = f'{p[1]}{p[3]}{p[2]}'
 
 condition_map ={
     ">": "SUP\n",
@@ -243,8 +251,8 @@ condition_map ={
     "<=": "INFEQ\n",
     "==": "EQUAL\n",
     "/=": "EQUAL\nNOT\n",
-    "or": "ADD\nPUSHI 1\nSUPEQ\n",
-    "and": "ADD\nPUSHI 2\nSUPEQ\n",
+    "||": "ADD\nPUSHI 1\nSUPEQ\n",
+    "&&": "ADD\nPUSHI 2\nSUPEQ\n",
 }
 
 def p_operador(p):
@@ -258,7 +266,7 @@ def p_operador(p):
               | OR
               | AND
     '''
-    p[0] = f'{condition_map(p[1])}'
+    p[0] = f'{condition_map[p[1]]}'
 
     
 
@@ -291,7 +299,7 @@ Esta implementação:
 
 def p_funcao(p):
     '''
-    funcao : FUNCTION ID ':' comandos RETURN expressao SEMICOLON'''
+    funcao : FUNCTION ID LCBRACKET comandos RETURN expressao RCBRACKET SEMICOLON'''
     label_funcao = f"FUNC_{p[2]}"
     p[0] = f"JUMP {label_funcao}Ignore\n"
     p[0] += f"{label_funcao}:\n"
@@ -346,6 +354,11 @@ def p_error(p):
     else:
         print("Erro de sintaxe: fim inesperado do ficheiro")
 
+precedence = (
+    ("left", "PLUS", "MINUS"),
+    ("left", "TIMES", "DIVIDE")
+)
+
 lexer = LexerPLC()
 parser = yacc.yacc(start="programa")
 
@@ -357,19 +370,18 @@ parser.funcoes = {}
 
 
 
-def compile(filename,p):
+def compile(p):
     try:
-        with open(filename, 'r') as file:
-            input_text = file.read()
+        with open(f"tests/{sys.argv[1]}.plc") as f:
+            content = f.read()
 
-        result = p.parse(input=input_text, lexer=lexer)
+        result = p.parse(input=content, lexer=lexer)
         print(p.assembly)
         
         if p.success:
             print("Ficheiro lido com sucesso")
-            output_filename = filename.replace('.plc', '.vm')
-            with open(output_filename, 'w+') as f_out:
-                f_out.write(p.assembly)
+            with open(f'tests/{sys.argv[1]}.vm', 'w+') as f_out:
+                f_out.write(parser.assembly)
                 f_out.close()
             print("Código assembly gerado e guardado.")
         else:
@@ -378,10 +390,11 @@ def compile(filename,p):
         return result
         
     except FileNotFoundError:
-        print(f"Erro: O ficheiro {filename} não foi encontrado.")
+        print(f"Erro: O ficheiro {sys.argv[1]} não foi encontrado.")
     except Exception as e:
         print(f"Erro ao processar o ficheiro: {str(e)}")
+        print(p.registos,p.funcoes)
 
 if __name__ == "__main__":
     teste = "teste3.plc"
-    compile(teste,parser)
+    compile(parser)

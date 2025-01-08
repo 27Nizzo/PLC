@@ -18,14 +18,15 @@ comandos      : comando
               | comandos comando 
 
 comando       : atribuicao
-              | leitura
               | escrita
               | selecao
               | repeticao
+              | call
+              | incrementacao SEMICOLON
 
 
 atribuicao    : ID ASSIGN expressao SEMICOLON
-              | ID ASSIGN leitura SEMICOLON
+              | ID ASSIGN leitura
 
 leitura       : READ LBRACKET texto RBRACKET SEMICOLON
 
@@ -34,11 +35,11 @@ escrita       : WRITE LBRACKET argumento RBRACKET SEMICOLON
 argumento     : expressao
               | texto
 
-selecao       : IF condicao ':' comandos
-              | IF condicao ':' comandos  ELSE comandos
+selecao       : IF LBRACKET condicao RBRACKET LCBRACKET comandos RCBRACKET
+              | IF LBRACKET condicao RBRACKET LCBRACKET comandos RCBRACKET ELSE LCBRACKET comandos RCBRACKET
 
-repeticao     : FOR LBRACKET declaracao SEMICOLON condicao SEMICOLON incrementação RBRACKET ':' comando
-              | WHILE LBRACKET condicao RBRACKET ':' comandos
+repeticao     : FOR LBRACKET declaracao SEMICOLON condicao SEMICOLON incrementação RBRACKET LCBRACKET comandos RCBRACKET
+              | WHILE LBRACKET condicao RBRACKET LCBRACKET comandos RCBRACKET
 
 
 expressao     : fator
@@ -57,7 +58,8 @@ texto         : QUOTE STRING QUOTE
 
 
 
-condicao      : expressao operador expressao
+condicao      : condicao operador condicao
+              | expressao
 
 incrementacao : ID INCREMENT
               | ID DECREMENT
@@ -71,4 +73,6 @@ operador      : GT
               | OR
               | AND
 
-funcao        : FUNCTION ID ':' comandos RETURN expressao SEMICOLON
+funcao        : FUNCTION ID LCBRACKET comandos RETURN expressao RCBRACKET SEMICOLON
+
+call          : ID LBRACKET RBRACKET SEMICOLON

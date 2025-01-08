@@ -1,4 +1,5 @@
 import ply.lex as lex
+import sys
 
 # Lista de tokens
 class LexerPLC(object):
@@ -10,6 +11,8 @@ class LexerPLC(object):
         "ASSIGN", # =
         "LBRACKET", # (
         "RBRACKET", # )
+        "LCBRACKET", # {
+        "RCBRACKET", # }
         "SEMICOLON", # ;
         "GT", # >
         "LT", # <
@@ -59,6 +62,8 @@ class LexerPLC(object):
 
     t_LBRACKET = r'\('
     t_RBRACKET = r'\)'
+    t_LCBRACKET = r'\{'
+    t_RCBRACKET = r'\}'
     t_SEMICOLON = r'\;'
     t_QUOTE = r'\"'
     t_GT = r'\>'
@@ -100,7 +105,7 @@ class LexerPLC(object):
         return t
 
     def t_COMMENT(self,t):
-        r'//.* | \*[\s\S]*?\*/'
+        r'//.*\n'
         pass
 
     def t_ID(self,t):
@@ -133,7 +138,7 @@ class LexerPLC(object):
         self.lexer.input(s)
         self.token_stream = iter(self.lexer.token,None)
 
-with open(f"teste3.plc") as f:
+with open(f"tests/{sys.argv[1]}.plc") as f:
     content = f.read()
 
 lexer = LexerPLC()
