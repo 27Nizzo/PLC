@@ -236,13 +236,9 @@ def p_incrementacao(p):
 
 def p_condicao(p):
     '''
-    condicao : condicao operador condicao
-             | expressao
+    condicao : expressao operador expressao 
     '''
-    if len(p) == 2:
-        p[0] = p[1]
-    else:
-        p[0] = f'{p[1]}{p[3]}{p[2]}'
+    p[0] = f'{p[1]}{p[3]}{p[2]}' # Mudado!!!!!!!!!!!!!
 
 condition_map ={
     ">": "SUP\n",
@@ -251,8 +247,8 @@ condition_map ={
     "<=": "INFEQ\n",
     "==": "EQUAL\n",
     "/=": "EQUAL\nNOT\n",
-    "||": "ADD\nPUSHI 1\nSUPEQ\n",
-    "&&": "ADD\nPUSHI 2\nSUPEQ\n",
+    "||": "ADD\nPUSHI 1\nSUPEQ\n\n",
+    "&&": "ADD\nPUSHI 2\nSUPEQ\n\n",
 }
 
 def p_operador(p):
@@ -351,5 +347,4 @@ def compile(p):
         print(p.registos,p.funcoes)
 
 if __name__ == "__main__":
-    teste = "teste3.plc"
     compile(parser)

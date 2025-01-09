@@ -23,9 +23,7 @@ class LexerPLC(object):
         "INCREMENT", # ++
         "DECREMENT", # --
         "ID", #!  NAO ESQUECER: é o token que representa os nomes de variáveis, funções e outros no programa
-        "INTEGER",
         "NUMBER",
-        "NUMBER_REAL",
         "STRING",
         "OR",
         "AND",
@@ -93,11 +91,6 @@ class LexerPLC(object):
     def t_NUMBER(self,t):
         r'\d+'
         t.value = int(t.value)
-        return t
-
-    def t_NUMBER_REAL(self,t):
-        r'\d+\.\d+'
-        t.value = float(t.value)
         return t
 
     def t_STRING(self,t):

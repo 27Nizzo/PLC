@@ -9,7 +9,7 @@ declaracoes   : declaracao
               | declaracoes declaracao
 
 declaracao    : ID SEMICOLON              
-              | ID ASSIGN INTEGER SEMICOLON
+              | ID ASSIGN NUMBER SEMICOLON
               | ID ASSIGN leitura
               | funcao
                 
@@ -58,8 +58,7 @@ texto         : QUOTE STRING QUOTE
 
 
 
-condicao      : condicao operador condicao
-              | expressao
+condicao      : expressao operador expressao
 
 incrementacao : ID INCREMENT
               | ID DECREMENT

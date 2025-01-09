@@ -12,19 +12,18 @@ var
     write("Result: ");
     write(result);
     
-    // Testing if-else
-    if (result > 50){
-        write("Result is greater than 50");
-    }
-    else {
-        write("Result is less than or equal to 50");
-    }
-    
     // Testing while loop
     while (counter < 5){
         write("Counter: ");
         write(counter);
         counter ++;
+        // Testing if-else
+        if (result > 50){
+            write("Result is greater than 50");
+        }
+        else {
+            write("Result is less than or equal to 50");
+        }
     }
     
     // Testing for loop
@@ -37,8 +36,10 @@ var
     a = read("Enter a number: ");
     
     // Testing compound conditions
-    if (a > 0 && a < 10){
-        write("Number is between 0 and 10");
+    if (a > 0){
+        if (a < 10){
+            write("Number is between 0 and 10");
+        }
     }
     
     // Testing multiple operations
